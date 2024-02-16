@@ -13,21 +13,23 @@ import org.springframework.format.annotation.NumberFormat;
 public class User {
     @Id
     @Column(name = "id")
-    public int id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer id;
     @Column(name = "user_name")
     @Nullable
     public String userName;
     @Column(name = "email")
     @Nullable
     public String email;
+    @Nullable
     @Column(name = "tell")
-    public long tell;
+    public Long tell;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -39,21 +41,15 @@ public class User {
         this.userName = userName;
     }
 
+    @Nullable
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(@Nullable String email) {
         this.email = email;
     }
 
-    public long getTell() {
-        try {
-            return tell;
-        }catch (NullPointerException  e){
-            return tell=000000;
-        }
-    }
 
     public void setTell(long tell) {
         this.tell = tell;
@@ -61,16 +57,15 @@ public class User {
 
     public User() {
     }
-    public User(int id,String userName,String email,long tell){
+    public User(Integer id,String userName,String email,long tell){
         this.id=id;
         this.userName=userName;
         this.email=email;
         this.tell=tell;
     }
-    public User(int id,String userName,String email){
-        this.id=id;
-        this.userName=userName;
-        this.email=email;
-    }
 
+    @Nullable
+    public Long getTell() {
+        return tell;
+    }
 }

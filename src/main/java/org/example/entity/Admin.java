@@ -15,7 +15,6 @@ public class Admin {
     @Nullable
     public String adminName;
     @Column(name ="password")
-    @Nullable
     public String password;
 
     public int getId() {
@@ -26,7 +25,7 @@ public class Admin {
         this.id = id;
     }
 
-    @Nullable
+
     public String getAdminName() {
         return adminName;
     }

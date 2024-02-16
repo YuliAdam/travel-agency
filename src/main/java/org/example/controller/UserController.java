@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import org.example.controller.request.UserRequest;
+import org.example.controller.response.UserResponse;
 import org.example.entity.Admin;
 import org.example.entity.User;
 import org.example.service.UserService;
@@ -13,24 +15,24 @@ import java.util.List;
 public class UserController {
     @Autowired
     public UserService userService;
-    @GetMapping("/all")
-    public List<User> getAllUser(){
+    @GetMapping
+    public List<UserResponse> getAllUser(){
     return userService.getAllUser();
     }
     @GetMapping("/name")
     public List<User> findUserByName(@RequestParam String name){
         return userService.findUserByName(name);
     }
-    @DeleteMapping("/delete/id")
+    @DeleteMapping("/id")
     public String deleteUser(@RequestParam int id){
         return userService.deleteUser(id);
     }
-    @PostMapping("/create")
-    public User createUser(@RequestBody User user){
-        return userService.createUser(user);
+    @PostMapping
+    public UserResponse createUser(@RequestBody UserRequest userRequest){
+        return userService.createUser(userRequest);
     }
     @PutMapping("/id")
-    public User updateUser(@RequestParam int id,@RequestBody User user){
-        return userService.updateUser(id,user);
+    public User updateUser(@RequestParam int id,@RequestBody UserRequest userRequest){
+        return userService.updateUser(id,userRequest);
     }
 }

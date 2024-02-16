@@ -13,20 +13,20 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @GetMapping("/all")
+    @GetMapping
     public List<Admin> getAllAdmin(){
         return adminService.getAllAdmin();
     }
-    @DeleteMapping("/delete/id")
-    public String deleteAdmin(@RequestParam int id){
+    @DeleteMapping("/{id}")
+    public String deleteAdmin(@PathVariable int id){
         return adminService.deleteAdmin(id);
     }
-    @PostMapping("/create")
+    @PostMapping
     public Admin createAdmin(@RequestBody Admin admin){
         return adminService.createAdmin(admin);
     }
-    @PutMapping("/id")
-    public Admin updateAdmin(@RequestParam int id,@RequestBody Admin admin){
+    @PutMapping("/{id}")
+    public Admin updateAdmin(@PathVariable int id,@RequestBody Admin admin){
         return adminService.updateAdmin(id,admin);
     }
 }

@@ -8,9 +8,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Integer>
-{
-@Query(value = "SELECT * FROM touristvoucher.user",nativeQuery = true)
-List<User> findAllUsers();
+public interface UserRepository extends JpaRepository<User, Integer> {
+    @Query(value = "SELECT user.id,user.user_name,user.email,user.tell FROM touristvoucher.order LEFT JOIN touristvoucher.user ON user.id=order.user_id", nativeQuery = true)
+    List<User> findAllUsers();
+
+    @Query(value = "SELECT * FROM touristvoucher.user ON ", nativeQuery = true)
+    List<User> findAllUsers1();
 }
+
 

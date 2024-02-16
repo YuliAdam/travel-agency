@@ -24,9 +24,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" object-ref="schemas/touristvoucher/tables/order" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" />
@@ -36,7 +34,7 @@
     <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.offer" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.hotel" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.user" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.admin" active-filter-id="">
+    <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.admin" active-filter-id="EMPTY_FILTER">
       <filter id="7681166c-ca5b-4723-9dc3-6f9a4b062c62" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="id" operator="=" value="" active="true" />
       </filter>

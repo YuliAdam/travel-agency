@@ -1,43 +1,76 @@
 package org.example.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import net.bytebuddy.implementation.bind.annotation.Empty;
+import org.example.entity.characteristic.Type;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.format.annotation.NumberFormat;
 
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class User {
     @Id
+    @Column(name = "id")
     public int id;
     @Column(name = "user_name")
-    public String user_name;
+    @Nullable
+    public String userName;
     @Column(name = "email")
+    @Nullable
     public String email;
     @Column(name = "tell")
     public long tell;
-    /*@ManyToMany
-    @JoinTable(name = "order",joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "offer_id",referencedColumnName = "id"))
-    public Set<Offer> offers = new HashSet<Offer>();
 
-    public Set<Offer> getOffers() {
-        return offers;
+    public int getId() {
+        return id;
     }
 
-    public void setOffers(Set<Offer> offers) {
-        this.offers = offers;
+    public void setId(int id) {
+        this.id = id;
     }
-    public void addOffer(Offer offer){
-        offers.add(offer);
-    }*/
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public long getTell() {
+        try {
+            return tell;
+        }catch (NullPointerException  e){
+            return tell=000000;
+        }
+    }
+
+    public void setTell(long tell) {
+        this.tell = tell;
+    }
 
     public User() {
     }
-    public User(int id,String user_name,String email,long tell){
+    public User(int id,String userName,String email,long tell){
         this.id=id;
-        this.user_name=user_name;
+        this.userName=userName;
         this.email=email;
         this.tell=tell;
     }
+    public User(int id,String userName,String email){
+        this.id=id;
+        this.userName=userName;
+        this.email=email;
+    }
+
 }

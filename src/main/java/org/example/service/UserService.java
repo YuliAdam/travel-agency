@@ -23,7 +23,7 @@ public class UserService {
     }
     public String deleteUser(int id){
         try {
-            userRepository.findById(id).get();
+            userRepository.findById(id).get() ;
             userRepository.deleteById(id);
             return "User deleted";
         } catch (Exception e){

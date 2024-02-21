@@ -8,36 +8,35 @@ import org.example.entity.characteristic.Country;
 @Table(name = "hotel")
 public class Hotel {
     @Id
-    public int id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
     @Column(name = "country",columnDefinition = "ENUM('AU','EG','BY','RU','FR','IL','IT','USA')")
     @Enumerated(EnumType.STRING)
-    @Nullable
-    public Country country;
+    private Country country;
     @Column(name = "name")
-    @Nullable
-    public String name;
+    private String name;
     @Column(name = "star")
-    public int star;
+    private Integer star;
     @Column(name = "guests")
-    public int guest;
+    private Integer guest;
     @Column(name = "breakfast")
-    public boolean breakfast;
+    private Boolean breakfast;
     @Column(name = "lunch")
-    public boolean lunch;
+    private Boolean lunch;
     @Column(name = "dinner")
-    public boolean dinner;
+    private Boolean dinner;
     @Column(name = "tv")
-    public boolean tv;
+    private Boolean tv;
     @Column(name = "air_conditioner")
-    public boolean airConditioner;
+    private Boolean airConditioner;
     @Column(name = "balcony")
-    public boolean balcony;
+    private Boolean balcony;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -57,71 +56,71 @@ public class Hotel {
         this.name = name;
     }
 
-    public int getStar() {
+    public Integer getStar() {
         return star;
     }
 
-    public void setStar(int star) {
+    public void setStar(Integer star) {
         this.star = star;
     }
 
-    public int getGuest() {
+    public Integer getGuest() {
         return guest;
     }
 
-    public void setGuest(int guest) {
+    public void setGuest(Integer guest) {
         this.guest = guest;
     }
 
-    public boolean isBreakfast() {
+    public Boolean isBreakfast() {
         return breakfast;
     }
 
-    public void setBreakfast(boolean breakfast) {
+    public void setBreakfast(Boolean breakfast) {
         this.breakfast = breakfast;
     }
 
-    public boolean isLunch() {
+    public Boolean isLunch() {
         return lunch;
     }
 
-    public void setLunch(boolean lunch) {
+    public void setLunch(Boolean lunch) {
         this.lunch = lunch;
     }
 
-    public boolean isDinner() {
+    public Boolean isDinner() {
         return dinner;
     }
 
-    public void setDinner(boolean dinner) {
+    public void setDinner(Boolean dinner) {
         this.dinner = dinner;
     }
 
-    public boolean isTv() {
+    public Boolean isTv() {
         return tv;
     }
 
-    public void setTv(boolean tv) {
+    public void setTv(Boolean tv) {
         this.tv = tv;
     }
 
-    public boolean isAirConditioner() {
+    public Boolean isAirConditioner() {
         return airConditioner;
     }
 
-    public void setAirConditioner(boolean airConditioner) {
+    public void setAirConditioner(Boolean airConditioner) {
         this.airConditioner = airConditioner;
     }
 
-    public boolean isBalcony() {
+    public Boolean isBalcony() {
         return balcony;
     }
 
-    public void setBalcony(boolean balcony) {
+    public void setBalcony(Boolean balcony) {
         this.balcony = balcony;
     }
 
-    public Hotel(int id, Country country, String name, int star, int guest, boolean breakfast, boolean lunch, boolean dinner, boolean tv, boolean airConditioner, boolean balcony) {
+    public Hotel(Long id, Country country, String name, Integer star, Integer guest, Boolean breakfast, Boolean lunch, Boolean dinner, Boolean tv, Boolean airConditioner, Boolean balcony) {
         this.id = id;
         this.country = country;
         this.name = name;
@@ -134,7 +133,18 @@ public class Hotel {
         this.airConditioner = airConditioner;
         this.balcony = balcony;
     }
-    public Hotel(){
-
+    public Hotel(Country country, String name, Integer star, Integer guest, Boolean breakfast, Boolean lunch, Boolean dinner, Boolean tv, Boolean airConditioner, Boolean balcony) {
+        this.country = country;
+        this.name = name;
+        this.star = star;
+        this.guest = guest;
+        this.breakfast = breakfast;
+        this.lunch = lunch;
+        this.dinner = dinner;
+        this.tv = tv;
+        this.airConditioner = airConditioner;
+        this.balcony = balcony;
     }
+    public Hotel(){}
+    public Hotel(Long id) { this.id=id; }
 }

@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import org.example.controller.request.HotelRequest;
+import org.example.controller.response.HotelResponse;
 import org.example.entity.Admin;
 import org.example.entity.Hotel;
 import org.example.service.HotelService;
@@ -14,20 +16,20 @@ public class HotelController {
     @Autowired
     HotelService hotelService;
 
-    @GetMapping("/all")
-    public List<Hotel> getAllHotel(){
+    @GetMapping
+    public List<HotelResponse> getAllHotel(){
         return hotelService.getAllHotel();
     }
-    @DeleteMapping("/delete/id")
-    public String deleteHotel(@RequestParam int id){
+    @DeleteMapping("/{id}")
+    public String deleteHotel(@PathVariable Long id){
         return hotelService.deleteHotel(id);
     }
-    @PostMapping("/create")
-    public Hotel createHotel(@RequestBody Hotel hotel){
+    @PostMapping
+    public HotelResponse createHotel(@RequestBody HotelRequest hotel){
         return hotelService.createHotel(hotel);
     }
-    @PutMapping("/id")
-    public Hotel updateHotel(@RequestParam int id,@RequestBody Hotel hotel){
+    @PutMapping("/{id}")
+    public HotelResponse updateHotel(@PathVariable Long id,@RequestBody HotelRequest hotel){
         return hotelService.updateHotel(id,hotel);
     }
 }

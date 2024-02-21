@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import org.example.controller.request.OfferRequest;
+import org.example.controller.response.OfferResponse;
 import org.example.entity.Hotel;
 import org.example.entity.Offer;
 import org.example.service.OfferService;
@@ -14,25 +16,25 @@ public class OfferController {
     @Autowired
     OfferService offerService;
 
-    @GetMapping("/all")
-    public List<Offer> getAllOffer(){
+    @GetMapping
+    public List<OfferResponse> getAllOffer(){
         return offerService.getAllOffer();
     }
-    @GetMapping("/id")
-    public Offer findById(int id){
+    @GetMapping("/{id}")
+    public OfferResponse findById(@PathVariable Long id){
         return offerService.findById(id);
     }
-    @DeleteMapping("/delete/id")
-    public String deleteOffer(@RequestParam int id){
+    @DeleteMapping("/{id}")
+    public String deleteOffer(@PathVariable Long id){
         return offerService.deleteOffer(id);
     }
-    @PostMapping("/create")
-    public Offer createOffer(@RequestBody Offer offer){
-        return offerService.createOffer(offer);
+    @PostMapping
+    public OfferResponse createOffer(@RequestBody OfferRequest offerRequest){
+        return offerService.createOffer(offerRequest);
     }
-    @PutMapping("/id")
-    public Offer updateOffer(@RequestParam int id,@RequestBody Offer offer){
-        return offerService.updateOffer(id,offer);
+    @PutMapping("/{id}")
+    public OfferResponse updateOffer(@PathVariable Long id,@RequestBody OfferRequest offerRequest){
+        return offerService.updateOffer(id,offerRequest);
     }
 
 }

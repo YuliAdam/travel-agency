@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AdminRepository extends JpaRepository<Admin,Integer> {
+public interface AdminRepository extends JpaRepository<Admin,Long> {
     @Query(value = "SELECT * FROM touristvoucher.admin", nativeQuery = true)
     public List<Admin> findAllAdmin ();
 }

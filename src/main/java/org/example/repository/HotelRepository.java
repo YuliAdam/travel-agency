@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface HotelRepository extends JpaRepository<Hotel,Integer> {
+public interface HotelRepository extends JpaRepository<Hotel,Long> {
     @Query(value = "SELECT * FROM touristvoucher.hotel",nativeQuery = true)
     List<Hotel> findAllHotel();
 }

@@ -1,37 +1,28 @@
-package org.example.entity;
+package org.example.controller.request;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import org.example.entity.Hotel;
 import org.example.entity.characteristic.Country;
 import org.example.entity.characteristic.Transport;
 import org.example.entity.characteristic.Type;
 
 import java.sql.Date;
 
-@Entity
-@Table(name = "offer")
-public class Offer {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+public class OfferRequest {
     private Long id;
-    @Column(name = "type", columnDefinition = "ENUM ('EXCURSION','RELAX','PILGRIMAGE','WEEKEND')")
-    @Enumerated(EnumType.STRING)
+
     private Type type;
-    @Column(name = "country",columnDefinition = "ENUM('AU','EG','BY','RU','FR','IL','IT','USA')")
-    @Enumerated(EnumType.STRING)
+
     private Country country;
-    @Column(name = "num_of_the_days")
+
     private Integer numOfTheDays;
-    @Column(name = "start")
+
     private Date start;
-    @Column(name = "transport",columnDefinition ="ENUM('AIR','TRAIN','SHIP','BUS')")
-    @Enumerated(EnumType.STRING)
+
     private Transport transport;
-    @ManyToOne
-    @JoinColumn(name ="id_hotel")
+
     private Hotel hotel;
-    @Column(name = "price$")
+
     private Float price;
 
     public Long getId() {
@@ -96,7 +87,7 @@ public class Offer {
         this.price = price;
     }
 
-    public Offer(Long id, Type type, Country country, Integer numOfTheDays, Date start, Transport transport,Hotel hotel, Float price) {
+    public OfferRequest(Long id, Type type, Country country, Integer numOfTheDays, Date start, Transport transport, Hotel hotel,Float price) {
         this.id = id;
         this.type = type;
         this.country = country;
@@ -106,15 +97,6 @@ public class Offer {
         this.hotel=hotel;
         this.price = price;
     }
-    public Offer(Type type, Country country, Integer numOfTheDays, Date start, Transport transport,Hotel hotel, Float price) {
-        this.type = type;
-        this.country = country;
-        this.numOfTheDays = numOfTheDays;
-        this.start = start;
-        this.transport = transport;
-        this.hotel=hotel;
-        this.price = price;
-    }
 
-    public Offer() {}
+    public OfferRequest() {}
 }

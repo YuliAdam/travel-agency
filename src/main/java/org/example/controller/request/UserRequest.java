@@ -3,11 +3,11 @@ package org.example.controller.request;
 
 public class UserRequest {
 
-    public String userName;
+    private String userName;
 
-    public String email;
+    private String email;
 
-    public Long tell;
+    private Long tell;
 
     public UserRequest(String userName, String email, Long tell) {
         this.userName = userName;

@@ -1,54 +1,46 @@
 package org.example.controller.response;
-
-import jakarta.annotation.Nullable;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import org.example.entity.User;
 
 public class UserResponse {
 
-    private Integer id;
+    private Long id;
 
     private String userName;
 
     private String email;
 
     private Long tell;
-
-    public Long getTell() {
-        return tell;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
     }
 
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    @Nullable
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(@Nullable String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
 
-    public void setTell(long tell) {
+    public void setTell(Long tell) {
         this.tell = tell;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Long getTell() {
+        return tell;
     }
 
     public UserResponse() {
@@ -59,11 +51,8 @@ public class UserResponse {
         this.email=user.getEmail();
         this.tell=user.getTell();
     }
-    public UserResponse(Integer id,String userName,String email,long tell){
-        this.id=id;
+    public UserResponse(String userName){
         this.userName=userName;
-        this.email=email;
-        this.tell=tell;
     }
 
 }

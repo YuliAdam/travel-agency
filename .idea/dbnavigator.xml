@@ -32,6 +32,7 @@
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.order" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.offer" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher. admin" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.hotel" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.user" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.admin" active-filter-id="EMPTY_FILTER">

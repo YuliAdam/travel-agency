@@ -10,59 +10,62 @@ import java.sql.Timestamp;
 public class Orders {
     @Id
     @Column(name = "id")
-    public int id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @Nullable
-    public User user;
+    private User user;
 
-    @Nullable
     public User getUser() {
         return user;
     }
 
-    public void setUser(@Nullable User user) {
+    public void setUser( User user) {
         this.user = user;
     }
     @ManyToOne
     @JoinColumn(name = "offer_id")
-    @Nullable
-    public Offer offer;
+    private Offer offer;
     @Column(name = "order_date")
-    @Nullable
-    public Timestamp orderDate;
+    private Timestamp orderDate;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    @Nullable
     public Offer getOffer() {
         return offer;
     }
 
-    public void setOffer(@Nullable Offer offer) {
+    public void setOffer( Offer offer) {
         this.offer = offer;
     }
 
-    @Nullable
     public Timestamp getOrderDate() {
         return orderDate;
     }
-    public void setOrderDate(@Nullable Timestamp orderDate) {
+    public void setOrderDate( Timestamp orderDate) {
         this.orderDate = orderDate;
     }
-    public Orders(int id, @Nullable User user, @Nullable Offer offer, @Nullable Timestamp orderDate) {
+    public Orders(Long id, User user, Offer offer, Timestamp orderDate) {
         this.id = id;
         this.user=user;
         this.offer=offer;
         this.orderDate = orderDate;
     }
-
-    public Orders() {
+    public Orders(User user, Offer offer,Timestamp orderDate) {
+        this.user=user;
+        this.offer=offer;
+        this.orderDate=orderDate;
     }
+    public Orders(User user, Offer offer) {
+        this.user=user;
+        this.offer=offer;
+    }
+
+    public Orders() {}
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OrdersRepository extends JpaRepository<Orders,Integer> {
+public interface OrdersRepository extends JpaRepository<Orders,Long> {
     @Query(value = "SELECT * FROM touristvoucher.orders", nativeQuery = true)
     public List<Orders> findAllOrders();
 }

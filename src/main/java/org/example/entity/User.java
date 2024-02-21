@@ -2,11 +2,6 @@ package org.example.entity;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import net.bytebuddy.implementation.bind.annotation.Empty;
-import org.example.entity.characteristic.Type;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-import org.springframework.format.annotation.NumberFormat;
-
 
 @Entity
 @Table(name = "user")
@@ -14,22 +9,19 @@ public class User {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    public Integer id;
+    private Long id;
     @Column(name = "user_name")
-    @Nullable
-    public String userName;
+    private String userName;
     @Column(name = "email")
-    @Nullable
-    public String email;
-    @Nullable
+    private String email;
     @Column(name = "tell")
-    public Long tell;
+    private Long tell;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -41,31 +33,31 @@ public class User {
         this.userName = userName;
     }
 
-    @Nullable
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(@Nullable String email) {
+    public void setEmail( String email) {
         this.email = email;
     }
 
 
-    public void setTell(long tell) {
+    public void setTell(Long tell) {
         this.tell = tell;
     }
 
-    public User() {
-    }
-    public User(Integer id,String userName,String email,long tell){
+    public User() {}
+    public User(Long id,String userName,String email,long tell){
         this.id=id;
         this.userName=userName;
         this.email=email;
         this.tell=tell;
     }
-
-    @Nullable
-    public Long getTell() {
-        return tell;
+    public User(String userName,String email,long tell){
+        this.userName=userName;
+        this.email=email;
+        this.tell=tell;
     }
+
+    public Long getTell() { return tell; }
 }

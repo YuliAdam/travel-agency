@@ -1,12 +1,13 @@
 package org.example.controller;
 
 import org.example.controller.request.HotelRequest;
-import org.example.controller.response.HotelResponse;
-import org.example.entity.Admin;
 import org.example.entity.Hotel;
+import org.example.entity.characteristic.Country;
 import org.example.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -16,20 +17,54 @@ public class HotelController {
     @Autowired
     HotelService hotelService;
 
-    @GetMapping
-    public List<HotelResponse> getAllHotel(){
-        return hotelService.getAllHotel();
+    @GetMapping("/{name}/redirect/search")
+    public ModelAndView getHotelByName(Model model, @PathVariable("name") String name) {
+        model.addAttribute("countries", Country.values());
+        model.addAttribute("name", name);
+        model.addAttribute("hotelsByName", hotelService.getHotelByName(name));
+        model.addAttribute("hotels", hotelService.getAllHotel());
+        return new ModelAndView("searchHotelByName","hotels",hotelService.getHotelByName(name));
     }
-    @DeleteMapping("/{id}")
-    public String deleteHotel(@PathVariable Long id){
-        return hotelService.deleteHotel(id);
+    @GetMapping("/get")
+    public ModelAndView getAllHotel(Model model) {
+        model.addAttribute("countries", Country.values());
+        return new ModelAndView("hotels", "hotels", hotelService.getAllHotel());
     }
-    @PostMapping
-    public HotelResponse createHotel(@RequestBody HotelRequest hotel){
-        return hotelService.createHotel(hotel);
+
+    @GetMapping("/redirect/create")
+    public ModelAndView getHotel(Model model) {
+        model.addAttribute("countries", Country.values());
+        model.addAttribute("hotel", new HotelRequest());
+        return new ModelAndView("addHotel");
     }
-    @PutMapping("/{id}")
-    public HotelResponse updateHotel(@PathVariable Long id,@RequestBody HotelRequest hotel){
-        return hotelService.updateHotel(id,hotel);
+
+    @GetMapping(value = "/{id}/redirect/update")
+    public ModelAndView getHotel(@PathVariable Long id, Model model) {
+        model.addAttribute("countries", Country.values());
+        return new ModelAndView("hotel", "hotel", hotelService.getHotel(id));
+    }
+
+    @DeleteMapping("/{id}/delete")
+    public ModelAndView deleteHotel(@PathVariable Long id, Model model) {
+        hotelService.deleteHotel(id);
+        model.addAttribute("countries", Country.values());
+        model.addAttribute("hotel", new HotelRequest());
+        return new ModelAndView("hotels", "hotels", hotelService.getAllHotel());
+    }
+
+    @PostMapping("/create")
+    public ModelAndView createHotel(@ModelAttribute("hotel") HotelRequest hotel, Model model) {
+        hotelService.createHotel(hotel);
+        model.addAttribute("countries", Country.values());
+        model.addAttribute("hotel", new HotelRequest());
+        return new ModelAndView("hotels", "hotels", hotelService.getAllHotel());
+    }
+
+    @PutMapping("/update")
+    public ModelAndView updateHotel(@ModelAttribute("hotel") HotelRequest hotel, Model model) {
+        hotelService.updateHotel(hotel.getId(), hotel);
+        model.addAttribute("countries", Country.values());
+        model.addAttribute("hotel", new HotelRequest());
+        return new ModelAndView("hotels", "hotels", hotelService.getAllHotel());
     }
 }

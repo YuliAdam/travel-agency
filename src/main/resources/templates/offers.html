@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<style>
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    font: verdana 50px;
+    }
+    td {
+    padding: 5px;
+    text-align: center;
+    }
+    th {
+    color: blue;
+    text-align: center;
+    font-weight: bold;
+    }
+    body{
+    background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/ed/95/07/limak-eurasia-luxury.jpg?w=700&h=-1&s=1");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    }
+    button[name="delete button"]{
+    background-image: url('https://us.123rf.com/450wm/arhimicrostok/arhimicrostok1704/arhimicrostok170400136/76160041-simbolo-di-segno-di-spazzatura.jpg?ver=6');
+    background-size: 32px 32px;
+    height:32px;
+    width:32px;
+    border:none;
+    border-collapse: collapse;
+    }
+    img[name="true"]{
+    background-image: url(https://cdn.icon-icons.com/icons2/1506/PNG/512/emblemok_103757.png);
+    background-size: 32px 32px;
+    height:32px;
+    width:32px;
+    border:none;
+    border-collapse: collapse;
+    }
+    img[name="false"]{
+    background-image: url(https://cdn.icon-icons.com/icons2/10/PNG/256/remove_delete_exit_close_1545.png);
+    background-size: 32px 32px;
+    height:32px;
+    width:32px;
+    border:none;
+    border-collapse: collapse;
+    }
+</style>
+<head>
+    <title>Offers</title>
+</head>
+<body>
+<h1 style="text-align:center;"><b>Offers</b></h1>
+<table style="width : 100%">
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Country</th>
+        <th>Number of the days</th>
+        <th>Start trip</th>
+        <th>Transport</th>
+        <th>Hotel</th>
+        <th>Price ($)</th>
+        <th>Update</th>
+        <th hidden="hidden">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="offer : ${offers}">
+        <td><span th:text="${offer.type}">Type</span></td>
+        <td><span th:text="${offer.country}"> Country </span></td>
+        <td><span th:text="${offer.numOfTheDays}"> Number of the days </span></td>
+        <td><span th:text="${offer.start}">Start trip</span></td>
+        <td><span th:text="${offer.transport}">Transport</span></td>
+        <td> <span th:if="${offer.hotel!=null}">
+            <a th:href="@{'/hotel/{id}/redirect/update'(id=${offer.hotel.id})}" th:text="${offer.hotel.name}"></a>
+            <table style="width : 100%">
+    <thead>
+    <tr>
+        <td>Star</td>
+        <td>Guest</td>
+        <td>Breakfast</td>
+        <td>Lunch</td>
+        <td>Dinner</td>
+        <td>TV</td>
+        <td>AirConditioner</td>
+        <td>Balcony</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th><span th:text="${offer.hotel.star}"> Star </span></th>
+        <th><span th:text="${offer.hotel.guest}"> Guest </span></th>
+        <th><span th:if="${offer.hotel.breakfast}"><img name="true"></span>
+            <span th:if="${(offer.hotel.breakfast!=null)&&!offer.hotel.breakfast}"><img name="false"></span>
+        </th>
+        <th><span th:if="${offer.hotel.lunch}"><img name="true"></span>
+            <span th:if="${(offer.hotel.lunch!=null)&&!offer.hotel.lunch}"><img name="false"></span>
+        </th>
+        <th><span th:if="${offer.hotel.dinner}"><img name="true"></span>
+            <span th:if="${(offer.hotel.dinner!=null)&&!offer.hotel.dinner}"><img name="false"></span>
+        </th>
+        <th><span th:if="${offer.hotel.tv}"><img name="true"></span>
+            <span th:if="${(offer.hotel.tv!=null)&&!offer.hotel.tv}"><img name="false"></span>
+        </th>
+        <th><span th:if="${offer.hotel.airConditioner}"><img name="true"></span>
+            <span th:if="${(offer.hotel.airConditioner!=null)&&!offer.hotel.airConditioner}"><img name="false"></span>
+        </th>
+        <th><span th:if="${offer.hotel.balcony}"><img name="true"></span>
+            <span th:if="${(offer.hotel.balcony!=null)&&!offer.hotel.balcony}"><img name="false"></span>
+        </th>
+    </tr>
+    </tbody>
+</table>
+        </span>
+            <span th:if="${offer.hotel==null}">---</span>
+        </td>
+        <td><span th:text="${offer.price}">Price ($)</span></td>
+        <td><a th:href="@{'/offer/{id}/redirect/update'(id=${offer.id})}">
+            <span th:text="Update">Update</span>
+        </a>
+        <td>
+            <form action="#" th:action="@{'/offer/{id}/delete'(id=${offer.id})}" th:object="${offer}"
+                  th:method="DELETE">
+                <input type="hidden" ,value="${offer}">
+                <button type="submit" name="delete button"></button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p><a th:href="@{'/offer/redirect/create'}" th:object="${offer}" th:method="GET">Add Offer</a>
+</p>
+</body>
+</html>

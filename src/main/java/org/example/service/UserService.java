@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.controller.request.UserRequest;
 import org.example.controller.response.AdminResponse;
+import org.example.controller.response.HotelResponse;
 import org.example.controller.response.UserResponse;
 import org.example.entity.Admin;
 import org.example.entity.User;
@@ -23,6 +24,9 @@ public class UserService {
     }
     public List<UserResponse> findUserByName(String name) {
         return userRepository.findAll().stream().map(UserResponse::new).filter( user -> user.getUserName().replaceAll(" ","").equals(name)).toList();
+    }
+    public UserResponse getUser(Long id){
+        return new UserResponse(userRepository.findById(id).get());
     }
     public String deleteUser(Long id){
         try {

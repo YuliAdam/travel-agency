@@ -1,6 +1,5 @@
 package org.example.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.example.entity.characteristic.Country;
 
@@ -72,7 +71,7 @@ public class Hotel {
         this.guest = guest;
     }
 
-    public Boolean isBreakfast() {
+    public Boolean getBreakfast() {
         return breakfast;
     }
 
@@ -80,7 +79,7 @@ public class Hotel {
         this.breakfast = breakfast;
     }
 
-    public Boolean isLunch() {
+    public Boolean getLunch() {
         return lunch;
     }
 
@@ -88,7 +87,7 @@ public class Hotel {
         this.lunch = lunch;
     }
 
-    public Boolean isDinner() {
+    public Boolean getDinner() {
         return dinner;
     }
 
@@ -96,7 +95,7 @@ public class Hotel {
         this.dinner = dinner;
     }
 
-    public Boolean isTv() {
+    public Boolean getTv() {
         return tv;
     }
 
@@ -104,7 +103,7 @@ public class Hotel {
         this.tv = tv;
     }
 
-    public Boolean isAirConditioner() {
+    public Boolean getAirConditioner() {
         return airConditioner;
     }
 
@@ -112,7 +111,7 @@ public class Hotel {
         this.airConditioner = airConditioner;
     }
 
-    public Boolean isBalcony() {
+    public Boolean getBalcony() {
         return balcony;
     }
 

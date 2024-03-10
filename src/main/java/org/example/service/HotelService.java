@@ -18,6 +18,14 @@ public class HotelService {
     public List<HotelResponse> getAllHotel(){
         return hotelRepository.findAllHotel().stream().map(HotelResponse::new).toList();
     }
+    public HotelResponse getHotel(Long id){
+        return new HotelResponse(hotelRepository.findById(id).get());
+    }
+    public List<HotelResponse> getHotelByName(String name){
+        return hotelRepository.findAllHotel().stream().filter(hotel -> hotel.getName().replace(" ","")
+                        .equalsIgnoreCase(name.replace(" ",""))).map(HotelResponse::new).toList();
+
+    }
     public String deleteHotel(Long id){
         try {
             hotelRepository.findById(id).get();
@@ -30,8 +38,8 @@ public class HotelService {
     }
     public HotelResponse createHotel(HotelRequest hotelRequest){
         try {
-        Hotel hotel= new Hotel(hotelRequest.getCountry(),hotelRequest.getName(),hotelRequest.getStar(),hotelRequest.getGuest(),hotelRequest.isBreakfast(),
-                hotelRequest.isLunch(),hotelRequest.isDinner(),hotelRequest.isTv(),hotelRequest.isAirConditioner(),hotelRequest.isBalcony());
+        Hotel hotel= new Hotel(hotelRequest.getCountry(),hotelRequest.getName(),hotelRequest.getStar(),hotelRequest.getGuest(),hotelRequest.getBreakfast(),
+                hotelRequest.getLunch(),hotelRequest.getDinner(),hotelRequest.getTv(),hotelRequest.getAirConditioner(),hotelRequest.getBalcony());
         return  new HotelResponse(hotelRepository.save(hotel));
         }catch (DataIntegrityViolationException e){
             System.out.println("Error. Class HotelService. The hotel Name cannot be null. "+e);
@@ -45,12 +53,12 @@ public class HotelService {
         existingHotel.setName(hotel.getName());
         existingHotel.setStar(hotel.getStar());
         existingHotel.setGuest(hotel.getGuest());
-        existingHotel.setBreakfast(hotel.isBreakfast());
-        existingHotel.setLunch(hotel.isLunch());
-        existingHotel.setDinner(hotel.isDinner());
-        existingHotel.setTv(hotel.isTv());
-        existingHotel.setAirConditioner(hotel.isAirConditioner());
-        existingHotel.setBalcony(hotel.isBalcony());
+        existingHotel.setBreakfast(hotel.getBreakfast());
+        existingHotel.setLunch(hotel.getLunch());
+        existingHotel.setDinner(hotel.getDinner());
+        existingHotel.setTv(hotel.getTv());
+        existingHotel.setAirConditioner(hotel.getAirConditioner());
+        existingHotel.setBalcony(hotel.getBalcony());
         return new HotelResponse(hotelRepository.save(existingHotel));
         }catch (NoSuchElementException e){
             System.out.println("Error. Class HotelService. Hotel not found. "+e);

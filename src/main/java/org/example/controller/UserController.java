@@ -2,9 +2,12 @@ package org.example.controller;
 
 import org.example.controller.request.UserRequest;
 import org.example.controller.response.UserResponse;
+import org.example.entity.characteristic.Country;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -13,24 +16,46 @@ import java.util.List;
 public class UserController {
     @Autowired
     public UserService userService;
+
     @GetMapping
-    public List<UserResponse> getAllUser(){
-    return userService.getAllUser();
+    public List<UserResponse> getAllUser() {
+        return userService.getAllUser();
     }
-    @GetMapping("/{name}")
-    public List<UserResponse> findUserByName(@PathVariable String name){
-        return userService.findUserByName(name);
+
+    @GetMapping("/redirect/create")
+    public ModelAndView getUser(Model model) {
+        model.addAttribute("user", new UserRequest());
+        return new ModelAndView("addUser");
     }
-    @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id){
-        return userService.deleteUser(id);
+
+    @GetMapping("/{name}/redirect/search")
+    public  ModelAndView findUserByName(@PathVariable String name,Model model) {
+        model.addAttribute("users", userService.getAllUser());
+        return new ModelAndView("searchUser","users",userService.findUserByName(name));
     }
-    @PostMapping
-    public UserResponse createUser(@RequestBody UserRequest userRequest){
-        return userService.createUser(userRequest);
+    @GetMapping(value = "/{id}/redirect/update")
+    public ModelAndView getUser(@PathVariable Long id, Model model) {
+        return new ModelAndView("user", "user", userService.getUser(id));
     }
-    @PutMapping("/{id}")
-    public UserResponse updateUser(@PathVariable Long id,@RequestBody UserRequest userRequest){
-        return userService.updateUser(id,userRequest);
+
+    @DeleteMapping("/{id}/delete")
+    public ModelAndView deleteUser(@PathVariable Long id,Model model) {
+        userService.deleteUser(id);
+        model.addAttribute("user", new UserRequest());
+        return new ModelAndView("users","users",userService.getAllUser());
+    }
+
+    @PostMapping("/create")
+    public ModelAndView createUser(@ModelAttribute("user") UserRequest userRequest,Model model) {
+        userService.createUser(userRequest);
+        model.addAttribute("user", new UserRequest());
+        return new ModelAndView("users","users",userService.getAllUser());
+    }
+
+    @PutMapping("/update")
+    public ModelAndView updateUser(@ModelAttribute("user") UserRequest userRequest,Model model) {
+        userService.updateUser(userRequest.getId(),userRequest);
+        model.addAttribute("user", new UserRequest());
+        return new ModelAndView("users","users",userService.getAllUser());
     }
 }

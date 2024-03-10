@@ -44,28 +44,73 @@ public class HotelRequest {
         return guest;
     }
 
-    public Boolean isBreakfast() {
+    public Boolean getBreakfast() {
         return breakfast;
     }
 
-    public Boolean isLunch() {
+    public Boolean getLunch() {
         return lunch;
     }
 
-    public Boolean isDinner() {
+    public Boolean getDinner() {
         return dinner;
     }
 
-    public Boolean isTv() {
+    public Boolean getTv() {
         return tv;
     }
 
-    public Boolean isAirConditioner() {
+    public Boolean getAirConditioner() {
         return airConditioner;
     }
-    public Boolean isBalcony() {
+    public Boolean getBalcony() {
         return balcony;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setStar(Integer star) {
+        this.star = star;
+    }
+
+    public void setGuest(Integer guest) {
+        this.guest = guest;
+    }
+
+    public void setBreakfast(Boolean breakfast) {
+        this.breakfast = breakfast;
+    }
+
+    public void setLunch(Boolean lunch) {
+        this.lunch = lunch;
+    }
+
+    public void setDinner(Boolean dinner) {
+        this.dinner = dinner;
+    }
+
+    public void setTv(Boolean tv) {
+        this.tv = tv;
+    }
+
+    public void setAirConditioner(Boolean airConditioner) {
+        this.airConditioner = airConditioner;
+    }
+
+    public void setBalcony(Boolean balcony) {
+        this.balcony = balcony;
+    }
+
     public HotelRequest(Long id, Country country, String name, Integer star, Integer guest, Boolean breakfast, Boolean lunch, Boolean dinner, Boolean tv, Boolean airConditioner, Boolean balcony) {
         this.id = id;
         this.country = country;

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<style>
+    table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    font: verdana 50px;
+    }
+    td {
+    padding: 5px;
+    text-align: center;
+    }
+    th {
+    color: blue;
+    text-align: center;
+    font-weight: bold;
+    }
+    body{
+    background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/ed/95/07/limak-eurasia-luxury.jpg?w=700&h=-1&s=1");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    }
+    button[name="delete button"]{
+    background-image: url('https://us.123rf.com/450wm/arhimicrostok/arhimicrostok1704/arhimicrostok170400136/76160041-simbolo-di-segno-di-spazzatura.jpg?ver=6');
+    background-size: 32px 32px;
+    height:32px;
+    width:32px;
+    border:none;
+    border-collapse: collapse;
+    }
+    img[name="true"]{
+    background-image: url(https://cdn.icon-icons.com/icons2/1506/PNG/512/emblemok_103757.png);
+    background-size: 32px 32px;
+    height:32px;
+    width:32px;
+    border:none;
+    border-collapse: collapse;
+    }
+    img[name="false"]{
+    background-image: url(https://cdn.icon-icons.com/icons2/10/PNG/256/remove_delete_exit_close_1545.png);
+    background-size: 32px 32px;
+    height:32px;
+    width:32px;
+    border:none;
+    border-collapse: collapse;
+    }
+</style>
+<head>
+    <title>Hotels</title>
+</head>
+<body>
+<form role="search" style="text-align:right;" action="#" th:action="@{'/hotel/{name}/redirect/search'}" th:method="GET" >
+    <input type="search" th:value="${name}" name="name" />
+    <button>Search</button>
+</form>
+
+<h1 style="text-align:center;"><b>Hotels</b></h1>
+<table style="width : 100%">
+    <thead>
+    <tr>
+        <th>Country</th>
+        <th>Name</th>
+        <th>Star</th>
+        <th>Guest</th>
+        <th>Breakfast</th>
+        <th>Lunch</th>
+        <th>Dinner</th>
+        <th>TV</th>
+        <th>AirConditioner</th>
+        <th>Balcony</th>
+        <th hidden="hidden">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="hotel : ${hotels}">
+        <td><span th:text="${hotel.country}"> Country </span></td>
+        <td><a th:href="@{'/hotel/{id}/redirect/update'(id=${hotel.id})}">
+            <span th:text="${hotel.name}"> Name </span>
+        </a></td>
+        <td><span th:text="${hotel.star}"> Star </span></td>
+        <td><span th:text="${hotel.guest}"> Guest </span></td>
+        <td><span th:if="${hotel.breakfast}"><img name="true"></span>
+            <span th:if="${(hotel.breakfast!=null)&&!hotel.breakfast}"><img name="false"></span>
+        </td>
+        <td><span th:if="${hotel.lunch}"><img name="true"></span>
+            <span th:if="${(hotel.lunch!=null)&&!hotel.lunch}"><img name="false"></span>
+        </td>
+        <td><span th:if="${hotel.dinner}"><img name="true"></span>
+            <span th:if="${(hotel.dinner!=null)&&!hotel.dinner}"><img name="false"></span>
+        </td>
+        <td><span th:if="${hotel.tv}"><img name="true"></span>
+            <span th:if="${(hotel.tv!=null)&&!hotel.tv}"><img name="false"></span>
+        </td>
+        <td><span th:if="${hotel.airConditioner}"><img name="true"></span>
+            <span th:if="${(hotel.airConditioner!=null)&&!hotel.airConditioner}"><img name="false"></span>
+        </td>
+        <td><span th:if="${hotel.balcony}"><img name="true"></span>
+            <span th:if="${(hotel.balcony!=null)&&!hotel.balcony}"><img name="false"></span>
+        </td>
+        <td>
+            <form action="#" th:action="@{'/hotel/{id}/delete'(id=${hotel.id})}" th:object="${hotel}"
+                  th:method="DELETE">
+                <input type="hidden" ,value="${hotel}">
+                <button type="submit" name="delete button"></button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p><a th:href="@{'/hotel/redirect/create'}" th:object="${hotel}" th:method="GET">Add Hotel</a>
+</p>
+</body>
+</html>

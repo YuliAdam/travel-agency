@@ -45,26 +45,26 @@ public class HotelResponse {
         return guest;
     }
 
-    public Boolean isBreakfast() {
+    public Boolean getBreakfast() {
         return breakfast;
     }
 
-    public Boolean isLunch() {
+    public Boolean getLunch() {
         return lunch;
     }
 
-    public Boolean isDinner() {
+    public Boolean getDinner() {
         return dinner;
     }
 
-    public Boolean isTv() {
+    public Boolean getTv() {
         return tv;
     }
 
-    public Boolean isAirConditioner() {
+    public Boolean getAirConditioner() {
         return airConditioner;
     }
-    public Boolean isBalcony() {
+    public Boolean getBalcony() {
         return balcony;
     }
 
@@ -74,12 +74,12 @@ public class HotelResponse {
         this.name = hotel.getName();
         this.star = hotel.getStar();
         this.guest = hotel.getGuest();
-        this.breakfast = hotel.isBreakfast();
-        this.lunch = hotel.isLunch();
-        this.dinner = hotel.isDinner();
-        this.tv = hotel.isTv();
-        this.airConditioner = hotel.isAirConditioner();
-        this.balcony = hotel.isBalcony();
+        this.breakfast = hotel.getBreakfast();
+        this.lunch = hotel.getLunch();
+        this.dinner = hotel.getDinner();
+        this.tv = hotel.getTv();
+        this.airConditioner = hotel.getAirConditioner();
+        this.balcony = hotel.getBalcony();
     }
 
     public HotelResponse(){}

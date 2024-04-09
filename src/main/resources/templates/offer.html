@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<style>
+    h1{
+font-size: 40px;
+color:red;
+text-align:center;
+}
+body{
+background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/ed/95/07/limak-eurasia-luxury.jpg?w=700&h=-1&s=1");
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: cover;
+}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Update Offer</title>
+</head>
+<body>
+<h1>Update Offer</h1>
+<form style="text-align:center;" action="#" th:action="@{/offer/update}" th:object="${offer}" th:method="PUT">
+    <input type="text" th:field="*{id}" hidden="true" />
+    <p>Type: <select th:field="*{type}">
+        <option th:each="type:${types}"
+                th:value="${type}"
+                th:text="${type}">Type
+        </option>
+    </select>
+    </p>
+    <p>Country:<select th:field="*{country}">
+        <option th:each="country : ${countries}"
+                th:value="${country}"
+                th:text="${country}"> Country
+        </option>
+    </select>
+    </p>
+    <p>Number of the days:<input type="number" th:field="*{numOfTheDays}"/></p>
+    <p>Start trip:<input type="date" th:field="*{start}"/></p>
+    <p>Transport:<select th:field="*{transport}">
+        <option th:each="transport : ${transports}"
+                th:value="${transport}"
+                th:text="${transport}"> Transport
+        </option>
+    </select>
+    </p>
+    <p>Hotel:<select th:field="*{hotel.name}">
+        <option th:each="hotel:${hotels}"
+                th:value="${hotel.id}"
+                th:text="${hotel.name}"> Hotel
+        </option>
+    </select>
+    </p>
+    <p>Price ($):<input type="text" th:field="*{price}"></p>
+    <p><input type="submit" value="Update Offer"/></p>
+</form>
+</body>
+</html>

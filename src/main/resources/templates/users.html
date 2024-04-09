@@ -1,57 +1,67 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <style>
-    table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    font: verdana 50px;
-    }
-    td {
-    padding: 5px;
-    text-align: center;
-    }
-    th {
-    color: blue;
-    text-align: center;
-    font-weight: bold;
-    }
-    body{
-    background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://static.vecteezy.com/ti/vettori-gratis/p3/29337463-uomo-e-donna-vuoto-avatar-impostare-predefinito-foto-segnaposto-per-sociale-reti-riprende-forum-e-incontri-siti-maschio-e-femmina-no-foto-immagini-per-non-riempito-utente-profilo-vettore-illustrazione-vettoriale.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    }
-    button[name="delete button"]{
-    background-image: url('https://us.123rf.com/450wm/arhimicrostok/arhimicrostok1704/arhimicrostok170400136/76160041-simbolo-di-segno-di-spazzatura.jpg?ver=6');
-    background-size: 32px 32px;
-    height:32px;
-    width:32px;
-    border:none;
-    border-collapse: collapse;
-    }
-    img[name="true"]{
-    background-image: url(https://cdn.icon-icons.com/icons2/1506/PNG/512/emblemok_103757.png);
-    background-size: 32px 32px;
-    height:32px;
-    width:32px;
-    border:none;
-    border-collapse: collapse;
-    }
-    img[name="false"]{
-    background-image: url(https://cdn.icon-icons.com/icons2/10/PNG/256/remove_delete_exit_close_1545.png);
-    background-size: 32px 32px;
-    height:32px;
-    width:32px;
-    border:none;
-    border-collapse: collapse;
-    }
+    h1{
+font-size: 40px;
+color:red;
+text-align:center;
+}
+table{
+width : 100%;
+}
+table, th, td {
+border: 1px solid black;
+border-collapse: collapse;
+font: verdana 50px;
+font-size: 15px;
+}
+td {
+padding: 5px;
+text-align: center;
+}
+th {
+color: red;
+text-align: center;
+font-weight: bold;
+font-size: 20px;
+}
+body{
+background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://static.vecteezy.com/ti/vettori-gratis/p3/29337463-uomo-e-donna-vuoto-avatar-impostare-predefinito-foto-segnaposto-per-sociale-reti-riprende-forum-e-incontri-siti-maschio-e-femmina-no-foto-immagini-per-non-riempito-utente-profilo-vettore-illustrazione-vettoriale.jpg");
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: cover;
+}
+button[name="delete button"]{
+background-image: url('https://us.123rf.com/450wm/arhimicrostok/arhimicrostok1704/arhimicrostok170400136/76160041-simbolo-di-segno-di-spazzatura.jpg?ver=6');
+background-size: 32px 32px;
+height:32px;
+width:32px;
+border:none;
+border-collapse: collapse;
+}
+img[name="true"]{
+background-image: url(https://cdn.icon-icons.com/icons2/1506/PNG/512/emblemok_103757.png);
+background-size: 32px 32px;
+height:32px;
+width:32px;
+border:none;
+border-collapse: collapse;
+}
+img[name="false"]{
+background-image: url(https://cdn.icon-icons.com/icons2/10/PNG/256/remove_delete_exit_close_1545.png);
+background-size: 32px 32px;
+height:32px;
+width:32px;
+border:none;
+border-collapse: collapse;
+}
 </style>
 <head>
     <title>Users</title>
 </head>
 <body>
 <h1 style="text-align:center;"><b>Users</b></h1>
-<table style="width : 100%">
+<table>
     <thead>
     <tr>
         <th>Name</th>
@@ -65,8 +75,12 @@
         <td><a th:href="@{'/user/{id}/redirect/update'(id=${user.id})}">
             <span th:text="${user.userName}"> Name </span>
         </a></td>
-        <td><span th:text="${user.email}"> Email </span></td>
-        <td><span th:text="${user.tell}"> Tell </span></td>
+        <td><a href="email:<${user.email}>">
+            <span th:text="${user.email}"> Email </span>
+        </a></td>
+        <td><a href="tell:<${user.tell}>">
+            <span th:text="${user.tell}"> Tell </span>
+        </a></td>
         <td>
             <form action="#" th:action="@{'/user/{id}/delete'(id=${user.id})}" th:object="${user}"
                   th:method="DELETE">

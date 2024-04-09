@@ -7,6 +7,7 @@ import org.example.entity.characteristic.Transport;
 import org.example.entity.characteristic.Type;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "offer")
@@ -15,22 +16,26 @@ public class Offer {
     @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "type", columnDefinition = "ENUM ('EXCURSION','RELAX','PILGRIMAGE','WEEKEND')")
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private Type type;
-    @Column(name = "country",columnDefinition = "ENUM('AU','EG','BY','RU','FR','IL','IT','USA')")
+    @Column(name = "country")
     @Enumerated(EnumType.STRING)
     private Country country;
     @Column(name = "num_of_the_days")
     private Integer numOfTheDays;
     @Column(name = "start")
     private Date start;
-    @Column(name = "transport",columnDefinition ="ENUM('AIR','TRAIN','SHIP','BUS')")
+    @Column(name = "transport")
     @Enumerated(EnumType.STRING)
     private Transport transport;
     @ManyToOne
     @JoinColumn(name ="id_hotel")
     private Hotel hotel;
+
+    public Long getHotelId () {
+        return hotel.getId();
+    }
     @Column(name = "price$")
     private Float price;
 

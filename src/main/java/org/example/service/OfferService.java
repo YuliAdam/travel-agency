@@ -8,6 +8,7 @@ import org.example.entity.Hotel;
 import org.example.entity.Offer;
 import org.example.entity.User;
 import org.example.entity.characteristic.Type;
+import org.example.repository.HotelRepository;
 import org.example.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,6 +25,12 @@ public class OfferService {
 
     public List<OfferResponse> getAllOffer() {
         return offerRepository.findAllOffer().stream().map(OfferResponse::new).toList();
+    }
+    public List<String> getAllHotelName(){
+        return offerRepository.findAllHotelName();
+    }
+    public List<HotelResponse> getAllHotel(){
+        return offerRepository.findAllHotel().stream().map(HotelResponse::new).toList();
     }
     public OfferResponse findById(Long id) {
         return new OfferResponse(offerRepository.findById(id).get());

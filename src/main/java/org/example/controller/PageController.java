@@ -27,28 +27,32 @@ public class PageController {
     private UserService userService;
     @Autowired
     private OfferService offerService;
+
     @GetMapping("/hotels")
     public ModelAndView viewHomePageHotel(Model model) {
         model.addAttribute("countries", Country.values());
         model.addAttribute("hotel", new HotelRequest());
-        model.addAttribute("hotels",hotelService.getAllHotel());
-        return new ModelAndView("hotels","hotels",hotelService.getAllHotel());
+        model.addAttribute("hotels", hotelService.getAllHotel());
+        return new ModelAndView("hotels", "hotels", hotelService.getAllHotel());
     }
+
     @GetMapping("/users")
     public ModelAndView viewHomePageUser(Model model) {
         model.addAttribute("user", new UserRequest());
-        model.addAttribute("users",userService.getAllUser());
-        return new ModelAndView("users","users",userService.getAllUser());
+        model.addAttribute("users", userService.getAllUser());
+        return new ModelAndView("users", "users", userService.getAllUser());
     }
+
     @GetMapping("/offers")
     public ModelAndView viewHomePageOffer(Model model) {
         model.addAttribute("types", Type.values());
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
-        model.addAttribute("hotels", hotelService.getAllHotel());
+        model.addAttribute("hotels",offerService.getAllHotel());
+        model.addAttribute("hotelsName", offerService.getAllHotelName());
         model.addAttribute("offer", new OfferRequest());
-        model.addAttribute("offers",offerService.getAllOffer());
-        return new ModelAndView("offers","offers",offerService.getAllOffer());
+        model.addAttribute("offers", offerService.getAllOffer());
+        return new ModelAndView("offers", "offers", offerService.getAllOffer());
     }
 
 

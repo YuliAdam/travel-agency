@@ -11,4 +11,8 @@ import java.util.List;
 public interface OfferRepository extends JpaRepository<Offer,Long> {
     @Query(value = "SELECT * FROM touristvoucher.offer", nativeQuery = true)
     public List<Offer> findAllOffer ();
+    @Query(value = "SELECT name FROM touristvoucher.hotel", nativeQuery = true)
+    public List<String> findAllHotelName ();
+    @Query(value = "SELECT * FROM touristvoucher.hotel", nativeQuery = true)
+    public List<String> findAllHotel ();
 }

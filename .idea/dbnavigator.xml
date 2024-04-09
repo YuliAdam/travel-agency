@@ -16,8 +16,8 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb">
-      <console name="Connection" type="STANDARD" schema="" session="Main" />
+    <connection id="a663ff23-11fd-4dde-ab42-32ff626a370d">
+      <console name="Connection 1" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -27,19 +27,22 @@
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" />
+    <connection id="a663ff23-11fd-4dde-ab42-32ff626a370d" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.order" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.offer" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher. admin" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.hotel" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.user" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" dataset="touristvoucher.admin" active-filter-id="EMPTY_FILTER">
-      <filter id="7681166c-ca5b-4723-9dc3-6f9a4b062c62" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
-        <condition column="id" operator="=" value="" active="true" />
-      </filter>
-    </filter-actions>
+    <filter-actions connection-id="a663ff23-11fd-4dde-ab42-32ff626a370d" dataset="touristvoucher.hotel" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a663ff23-11fd-4dde-ab42-32ff626a370d" dataset="touristvoucher.admin" active-filter-id="EMPTY_FILTER" />
+  </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
+  </component>
+  <component name="DBNavigator.Project.MethodExecutionManager">
+    <method-browser />
+    <execution-history>
+      <group-entries value="true" />
+      <execution-inputs />
+    </execution-history>
+    <argument-values-cache />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
@@ -47,9 +50,9 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="644eb78c-fbf2-4223-ad3b-5b7e43b63beb" active="true" signed="true">
+      <connection id="a663ff23-11fd-4dde-ab42-32ff626a370d" active="true" signed="true">
         <database>
-          <name value="Connection" />
+          <name value="Connection 1" />
           <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />
@@ -59,13 +62,13 @@
           <driver value="" />
           <url-type value="DATABASE" />
           <host value="localhost" />
-          <port value="3307" />
+          <port value="3306" />
           <database value="mysql" />
           <tns-folder value="" />
           <tns-profile value="" />
           <type value="USER_PASSWORD" />
           <user value="root" />
-          <deprecated-pwd value="MTExMQ==" />
+          <deprecated-pwd value="MTIzNDU=" />
         </database>
         <properties>
           <auto-commit value="false" />
@@ -111,7 +114,8 @@
           <debugger-type value="ASK" />
         </debugger>
         <object-filters hide-empty-schemas="false" hide-pseudo-columns="false" hide-audit-columns="false">
-          <object-type-filter>
+          <object-filters />
+          <object-type-filter use-master-settings="true">
             <object-type name="SCHEMA" enabled="true" />
             <object-type name="USER" enabled="true" />
             <object-type name="ROLE" enabled="true" />
@@ -138,7 +142,6 @@
             <object-type name="CLUSTER" enabled="true" />
             <object-type name="DBLINK" enabled="true" />
           </object-type-filter>
-          <object-name-filters />
         </object-filters>
       </connection>
     </connections>
@@ -273,7 +276,6 @@
           <content-type name="JSON" enabled="true" />
           <content-type name="JSON5" enabled="true" />
           <content-type name="Groovy" enabled="true" />
-          <content-type name="AIDL" enabled="true" />
           <content-type name="YAML" enabled="true" />
           <content-type name="Manifest" enabled="true" />
         </content-types>

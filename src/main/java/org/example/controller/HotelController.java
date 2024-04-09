@@ -17,13 +17,10 @@ public class HotelController {
     @Autowired
     HotelService hotelService;
 
-    @GetMapping("/{name}/redirect/search")
-    public ModelAndView getHotelByName(Model model, @PathVariable("name") String name) {
+    @GetMapping("/search")
+    public ModelAndView getHotelByName(Model model,@RequestParam(required = false) String name,@RequestParam(required = false) String sort) {
         model.addAttribute("countries", Country.values());
-        model.addAttribute("name", name);
-        model.addAttribute("hotelsByName", hotelService.getHotelByName(name));
-        model.addAttribute("hotels", hotelService.getAllHotel());
-        return new ModelAndView("searchHotelByName","hotels",hotelService.getHotelByName(name));
+        return new ModelAndView("hotels","hotels",hotelService.getHotelByName(name,sort));
     }
     @GetMapping("/get")
     public ModelAndView getAllHotel(Model model) {

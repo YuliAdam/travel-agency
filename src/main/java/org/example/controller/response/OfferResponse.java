@@ -32,6 +32,9 @@ public class OfferResponse {
     public void setId(Long id) {
         this.id = id;
     }
+    public Long getHotelId() {
+        return this.hotel.getId();
+    }
 
     public Type getType() {
         return type;

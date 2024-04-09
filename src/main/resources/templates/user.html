@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <style>
-    body{
-    background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://static.vecteezy.com/ti/vettori-gratis/p3/29337463-uomo-e-donna-vuoto-avatar-impostare-predefinito-foto-segnaposto-per-sociale-reti-riprende-forum-e-incontri-siti-maschio-e-femmina-no-foto-immagini-per-non-riempito-utente-profilo-vettore-illustrazione-vettoriale.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    }
+    h1{
+font-size: 40px;
+color:red;
+text-align:center;
+}
+body{
+background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://static.vecteezy.com/ti/vettori-gratis/p3/29337463-uomo-e-donna-vuoto-avatar-impostare-predefinito-foto-segnaposto-per-sociale-reti-riprende-forum-e-incontri-siti-maschio-e-femmina-no-foto-immagini-per-non-riempito-utente-profilo-vettore-illustrazione-vettoriale.jpg");
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: cover;
+}
 </style>
 <head>
     <meta charset="UTF-8">
@@ -17,8 +22,9 @@
 <form style="text-align:center;" action="#" th:action="@{/user/update}" th:object="${user}" th:method="put">
     <input type="text" th:field="*{id}" hidden="true"/>
     <p>Name: <input type="text" th:field="*{userName}"/></p>
-    <p>Email: <input type="text" th:field="*{email}"/></p>
-    <p>Tell: <input type="text" th:field="*{tell}"/></p>
+    <p>Email:<label for="email"></label>
+        <input type="email" id="email" name="email" placeholder="you@email.com" pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/" th:field="*{email}"/></p>
+    <p>Tell: <input type="text" placeholder="+39 3806959384" pattern="[1-9+]{5,12}" th:field="*{tell}"/></p>
     <p><input type="submit" value="Update User"/></p>
 </form>
 </body>

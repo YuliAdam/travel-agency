@@ -1,10 +1,13 @@
 package org.example.controller;
 
 import org.example.controller.request.OfferRequest;
+import org.example.controller.response.HotelResponse;
 import org.example.controller.response.OfferResponse;
 import org.example.entity.characteristic.Country;
 import org.example.entity.characteristic.Transport;
 import org.example.entity.characteristic.Type;
+import org.example.repository.HotelRepository;
+import org.example.service.HotelService;
 import org.example.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -29,6 +32,8 @@ public class OfferController {
         model.addAttribute("types", Type.values());
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
+        model.addAttribute("hotels",offerService.getAllHotel());
+        model.addAttribute("hotelsName", offerService.getAllHotelName());
         model.addAttribute("offer", new OfferRequest());
         return new ModelAndView("offer", "offer", offerService.findById(id));
     }
@@ -68,6 +73,8 @@ public class OfferController {
         model.addAttribute("types", Type.values());
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
+        model.addAttribute("hotels",offerService.getAllHotel());
+        model.addAttribute("hotelsName", offerService.getAllHotelName());
         model.addAttribute("offer", new OfferRequest());
         return new ModelAndView("offer", "offer", offerService.getAllOffer());
     }

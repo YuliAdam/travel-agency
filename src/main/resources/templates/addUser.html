@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <style>
+    h1{
+font-size: 40px;
+color:red;
+text-align:center;
+}
 body{
 background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://static.vecteezy.com/ti/vettori-gratis/p3/29337463-uomo-e-donna-vuoto-avatar-impostare-predefinito-foto-segnaposto-per-sociale-reti-riprende-forum-e-incontri-siti-maschio-e-femmina-no-foto-immagini-per-non-riempito-utente-profilo-vettore-illustrazione-vettoriale.jpg");
 background-repeat: no-repeat;
@@ -13,12 +18,14 @@ background-size: cover;
     <title>ADD NEW User</title>
 </head>
 <body>
-<h1 style="text-align:center;"><b>ADD NEW USER </b></h1>
+<h1><b>ADD NEW USER </b></h1>
 <form style="text-align:center;" action="#" th:action="@{/user/create}" th:object="${user}" th:method="POST">
     <p>Name: <input type="text" th:field="*{userName}"/></p>
-    <p>Email: <input type="text" th:field="*{email}"/></p>
-    <p>Tell: <input type="text" th:field="*{tell}"/></p>
-    <p><input type="submit" value="Save Hotel"/></p>
+    <p>Email:<label for="email"></label>
+        <input type="email" id="email" name="email" placeholder="you@email.com" pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/" th:field="*{email}"/></p>
+
+    <p>Tell: <input type="text" placeholder="+39 3806959384" pattern="[0-9+]{5,12}" th:field="*{tell}"/></p>
+    <p><input type="submit" value="Save User"/></p>
 </form>
 </body>
 </html>

@@ -9,7 +9,7 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "country",columnDefinition = "ENUM('AU','EG','BY','RU','FR','IL','IT','USA')")
+    @Column(name = "country")
     @Enumerated(EnumType.STRING)
     private Country country;
     @Column(name = "name")

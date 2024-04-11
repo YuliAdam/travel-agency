@@ -88,12 +88,11 @@ border-collapse: collapse;
     <title>Hotels</title>
 </head>
 <body>
-<form id="searchForm" role="search" style="text-align:right;" action="#"
-      th:action="@{/hotel/search?name=*{name}&sort=*{sort}}" th:method="GET">
+<form id="searchForm" role="search" style="text-align:right;" action="#" th:action="@{/hotel/search?name=*{name}}" th:method="GET">
     <input type="search" th:value="*{name}" name="name"/>
-    <input type=text form="searchForm" name="sort" th:value="id" hidden="true"/>
     <button name="searchButton"></button>
 </form>
+<a style="align:left" th:href="@{'/hotel/search'(name='')}">All Hotel</a>
 <h1><b>Hotels</b></h1>
 <table>
     <thead>
@@ -169,5 +168,27 @@ border-collapse: collapse;
 </table>
 <p><a th:href="@{'/hotel/redirect/create'}" th:object="${hotel}" th:method="GET">Add Hotel</a>
 </p>
+
+
+<form action="#" th:action="@{'/hotel/search'(pageNumber=*{pageNumber})}" th:method="GET">
+    <input type="hidden" th:value="0" name="pageNumber"/>
+    <button style="align:left;" type="submit">1</button>
+</form>
+<form action="#" th:action="@{'/hotel/search'(pageNumber=*{pageNumber})}" th:method="GET">
+    <input type="hidden" th:value="1" name="pageNumber"/>
+    <button style="align:centre;" type="submit">2</button>
+</form>
+<form action="#" th:action="@{'/hotel/search'(pageNumber=*{pageNumber})}" th:method="GET">
+    <input type="hidden" th:value="1" name="pageNumber"/>
+    <button style="align:centre;" type="submit">2</button>
+</form>
+<form style="align:centre;" action="#" th:action="@{'/hotel/search'(pageSize=*{pageSize})}" th:method="GET">
+    <button style="align:left;" type="submit">Num. </button>
+    <select name="pageSize" >
+        <option th:value="3" name="pageSize"> 0-3 </option>
+        <option th:value="5" name="pageSize"> 0-5 </option>
+        <option th:value="10" name="pageSize"> 0-10 </option>
+    </select>
+</form>
 </body>
 </html>

@@ -15,5 +15,6 @@ public interface HotelRepository extends JpaRepository<Hotel,Long> {
     List<Hotel> findAllHotel();
     @Query(value = "SELECT * FROM touristvoucher.hotel WHERE name like %:name% ",nativeQuery = true)
     List<Hotel> findHotels(@Param("name")String name, PageRequest page);
-
+    @Query(value = "SELECT COUNT(id) FROM touristvoucher.hotel",nativeQuery = true)
+    long countHotel();
 }

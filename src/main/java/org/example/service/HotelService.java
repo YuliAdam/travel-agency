@@ -22,22 +22,22 @@ public class HotelService {
         return hotelRepository.findAllHotel().stream().map(HotelResponse::new).toList();
     }
 
-    public List<String> getAllHotelName() {
-        return hotelRepository.findAllHotel().stream().map(Hotel::getName).toList();
+    public long countHotel() {
+        return hotelRepository.countHotel();
     }
+
 
     public HotelResponse getHotel(Long id) {
         return new HotelResponse(hotelRepository.findById(id).get());
     }
 
-    public List<HotelResponse> getHotelByName(String name, String sort, Integer pageSize, Integer pageNumber) {
+    public List<HotelResponse> getHotelByName(String name, String sort, Integer pageNumber, Integer pageSize) {
         PageRequest page = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, sort));
         if (name != null) {
             return hotelRepository.findHotels(name.trim(), page).stream()
                     .map(HotelResponse::new)
                     .toList();
-        }
-        else return hotelRepository.findHotels("", page).stream()
+        } else return hotelRepository.findHotels("", page).stream()
                 .map(HotelResponse::new)
                 .toList();
     }

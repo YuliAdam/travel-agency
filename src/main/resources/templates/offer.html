@@ -19,8 +19,8 @@ background-size: cover;
 </head>
 <body>
 <h1>Update Offer</h1>
-<form style="text-align:center;" action="#" th:action="@{/offer/update}" th:object="${offer}" th:method="PUT">
-    <input type="text" th:field="*{id}" hidden="true" />
+<form style="text-align:center;" action="#" th:action="@{/offer/update}" th:object="${offer}" th:method="put">
+    <input type="text" th:field="*{id}"  hidden="true"/>
     <p>Type: <select th:field="*{type}">
         <option th:each="type:${types}"
                 th:value="${type}"
@@ -44,9 +44,10 @@ background-size: cover;
         </option>
     </select>
     </p>
-    <p>Hotel:<select th:value="*{hotel}">
-        <option th:each="hotel:${hotels}"
-                th:text="${hotel.name}"> Hotel
+    <p>Hotel:<select th:field="*{hotelId}">
+        <option th:each="hotelId:${hotelId}"
+                th:value="${hotelId}"
+                th:text="${hotelId}" > Hotel
         </option>
     </select>
     </p>

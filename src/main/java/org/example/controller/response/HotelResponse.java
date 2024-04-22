@@ -81,9 +81,11 @@ public class HotelResponse {
         this.airConditioner = hotel.getAirConditioner();
         this.balcony = hotel.getBalcony();
     }
-
     public HotelResponse(){}
     public HotelResponse(String name) {
         this.name = name;
+    }
+    public HotelResponse(Long id) {
+        this.id = id;
     }
 }

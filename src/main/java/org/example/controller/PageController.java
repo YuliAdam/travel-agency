@@ -48,10 +48,9 @@ public class PageController {
         model.addAttribute("types", Type.values());
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
-        model.addAttribute("hotels",offerService.getAllHotel());
-        model.addAttribute("hotelsName", offerService.getAllHotelName());
         model.addAttribute("offer", new OfferRequest());
         model.addAttribute("offers", offerService.getAllOffer());
+        model.addAttribute("hotels", hotelService.getAllHotel());
         return new ModelAndView("offers", "offers", offerService.getAllOffer());
     }
 

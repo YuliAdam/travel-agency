@@ -17,29 +17,19 @@ import java.util.Stack;
 public class HotelController {
     @Autowired
     HotelService hotelService;
-    Stack<Integer> pageNumbers = new Stack<>();
-    Stack<Integer> pageSizes = new Stack<>();
-    Stack<String> sorts = new Stack<>();
-    Stack<String> names = new Stack<>();
 
     @GetMapping("/search")
-    public ModelAndView getHotelByName(Model model, @RequestParam(required = false) String name,
-                                       @RequestParam(required = false) String sort,
-                                       @RequestParam(required = false) Integer pageNumber,
-                                       @RequestParam(required = false) Integer pageSize) {
-        if (pageNumbers.isEmpty()) pageNumbers.push(0);
-        if (pageNumber != null) pageNumbers.push(pageNumber);
-        if (pageSizes.isEmpty()) pageSizes.push(5);
-        if (pageSize != null) pageSizes.push(pageSize);
-        if (sorts.isEmpty()) sorts.push("id");
-        if (sort != null) sorts.push(sort);
-        if (names.isEmpty()) names.push("");
-        if (name != null) names.push(name);
-        int pages = hotelService.getAllHotel().size() / pageSizes.peek();
-        if (hotelService.countHotel() % pageSizes.peek() != 0) pages++;
-        model.addAttribute("pages", pages);
+    public ModelAndView getHotels(Model model, @RequestParam(required = false,defaultValue = "") String paramtr,
+                                       @RequestParam(required = false,defaultValue = "name") String sort,
+                                       @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+                                       @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+
+        model.addAttribute("paramtr",paramtr );
+        model.addAttribute("sort",sort );
+        model.addAttribute("pageNumber",pageNumber );
+        model.addAttribute("pageSize",pageSize );
         model.addAttribute("countries", Country.values());
-        return new ModelAndView("hotels", "hotels", hotelService.getHotelByName(names.peek(), sorts.peek(), pageNumbers.peek(), pageSizes.peek()));
+        return new ModelAndView("hotels", "hotels", hotelService.getHotelByName(paramtr, sort, pageNumber, pageSize));
     }
 
     @GetMapping("/get")

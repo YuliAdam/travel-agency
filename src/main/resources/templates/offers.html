@@ -82,48 +82,12 @@ border-collapse: collapse;
         <td><span th:text="${offer.numOfTheDays}"> Number of the days </span></td>
         <td><span th:text="${offer.start}">Start trip</span></td>
         <td><span th:text="${offer.transport}">Transport</span></td>
-        <td> <span th:if="${offer.hotel!=null}">
-            <a th:href="@{'/hotel/{id}/redirect/update'(id=${offer.hotel.id})}" th:text="${offer.hotel.name}"></a>
-            <table style="width : 100%">
-    <thead>
-    <tr>
-        <td>Star</td>
-        <td>Guest</td>
-        <td>Breakfast</td>
-        <td>Lunch</td>
-        <td>Dinner</td>
-        <td>TV</td>
-        <td>AirConditioner</td>
-        <td>Balcony</td>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th><span th:text="${offer.hotel.star}"> Star </span></th>
-        <th><span th:text="${offer.hotel.guest}"> Guest </span></th>
-        <th><span th:if="${offer.hotel.breakfast}"><img name="true"></span>
-            <span th:if="${(offer.hotel.breakfast!=null)&&!offer.hotel.breakfast}"><img name="false"></span>
-        </th>
-        <th><span th:if="${offer.hotel.lunch}"><img name="true"></span>
-            <span th:if="${(offer.hotel.lunch!=null)&&!offer.hotel.lunch}"><img name="false"></span>
-        </th>
-        <th><span th:if="${offer.hotel.dinner}"><img name="true"></span>
-            <span th:if="${(offer.hotel.dinner!=null)&&!offer.hotel.dinner}"><img name="false"></span>
-        </th>
-        <th><span th:if="${offer.hotel.tv}"><img name="true"></span>
-            <span th:if="${(offer.hotel.tv!=null)&&!offer.hotel.tv}"><img name="false"></span>
-        </th>
-        <th><span th:if="${offer.hotel.airConditioner}"><img name="true"></span>
-            <span th:if="${(offer.hotel.airConditioner!=null)&&!offer.hotel.airConditioner}"><img name="false"></span>
-        </th>
-        <th><span th:if="${offer.hotel.balcony}"><img name="true"></span>
-            <span th:if="${(offer.hotel.balcony!=null)&&!offer.hotel.balcony}"><img name="false"></span>
-        </th>
-    </tr>
-    </tbody>
-</table>
+        <td> <span th:if="${offer.hotelId!=null}">
+            <span th:each="hotel : ${hotels}" th:if="${hotel.id}==${offer.hotelId}">
+            <a th:href="@{'/hotel/{id}/redirect/update'(id=${offer.hotelId})}" th:text="${hotel.name}"></a>
         </span>
-            <span th:if="${offer.hotel==null}">---</span>
+            </span>
+            <span th:if="${offer.hotelId==null}">---</span>
         </td>
         <td><span th:text="${offer.price}">Price ($)</span></td>
         <td><a th:href="@{'/offer/{id}/redirect/update'(id=${offer.id})}">

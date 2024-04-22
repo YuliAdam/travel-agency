@@ -21,10 +21,18 @@ import java.util.List;
 public class OfferController {
     @Autowired
     OfferService offerService;
+    @Autowired
+    HotelService hotelService;
 
-    @GetMapping
-    public List<OfferResponse> getAllOffer() {
-        return offerService.getAllOffer();
+    @GetMapping("/search")
+    public ModelAndView getOffers(Model model) {
+        model.addAttribute("types", Type.values());
+        model.addAttribute("transports", Transport.values());
+        model.addAttribute("countries", Country.values());
+        model.addAttribute("offer", new OfferRequest());
+        model.addAttribute("hotelId", offerService.getAllHotelId());
+        model.addAttribute("hotels", hotelService.getAllHotel());
+        return new ModelAndView("offers", "offers", offerService.getAllOffer());
     }
 
     @GetMapping("/{id}/redirect/update")
@@ -32,9 +40,8 @@ public class OfferController {
         model.addAttribute("types", Type.values());
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
-        model.addAttribute("hotels",offerService.getAllHotel());
-        model.addAttribute("hotelsName", offerService.getAllHotelName());
         model.addAttribute("offer", new OfferRequest());
+        model.addAttribute("hotelId", offerService.getAllHotelId());
         return new ModelAndView("offer", "offer", offerService.findById(id));
     }
 
@@ -43,6 +50,7 @@ public class OfferController {
         model.addAttribute("types", Type.values());
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
+        model.addAttribute("hotelId", offerService.getAllHotelId());
         model.addAttribute("offer", new OfferRequest());
         return new ModelAndView("addOffer");
     }
@@ -63,8 +71,9 @@ public class OfferController {
         model.addAttribute("types", Type.values());
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
+        model.addAttribute("hotels", hotelService.getAllHotel());
         model.addAttribute("offer", new OfferRequest());
-        return new ModelAndView("offer", "offer", offerService.getAllOffer());
+        return new ModelAndView("offers", "offers", offerService.getAllOffer());
     }
 
     @PutMapping("/update")
@@ -73,9 +82,9 @@ public class OfferController {
         model.addAttribute("types", Type.values());
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
-        model.addAttribute("hotels",offerService.getAllHotel());
-        model.addAttribute("hotelsName", offerService.getAllHotelName());
+        model.addAttribute("hotelId", offerService.getAllHotelId());
+        model.addAttribute("hotels", hotelService.getAllHotel());
         model.addAttribute("offer", new OfferRequest());
-        return new ModelAndView("offer", "offer", offerService.getAllOffer());
+        return new ModelAndView("offers", "offers", offerService.getAllOffer());
     }
 }

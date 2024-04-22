@@ -21,9 +21,10 @@ public class OfferRequest {
 
     private Transport transport;
 
-    private Hotel hotel;
+    private Long hotelId;
 
     private Float price;
+
 
     public Long getId() {
         return id;
@@ -31,9 +32,6 @@ public class OfferRequest {
 
     public void setId(Long id) {
         this.id = id;
-    }
-    public Long getHotelId() {
-        return this.hotel.getId();
     }
 
     public Type getType() {
@@ -74,12 +72,12 @@ public class OfferRequest {
         this.transport = transport;
     }
 
-    public Hotel getHotel() {
-        return hotel;
+    public Long getHotelId() {
+        return hotelId;
     }
 
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
+    public void setHotelId(Long hotel) {
+        this.hotelId = hotel;
     }
 
     public Float getPrice() {
@@ -90,14 +88,14 @@ public class OfferRequest {
         this.price = price;
     }
 
-    public OfferRequest(Long id, Type type, Country country, Integer numOfTheDays, Date start, Transport transport, Hotel hotel,Float price) {
+    public OfferRequest(Long id, Type type, Country country, Integer numOfTheDays, Date start, Transport transport,Long hotelId,Float price) {
         this.id = id;
         this.type = type;
         this.country = country;
         this.numOfTheDays = numOfTheDays;
         this.start = start;
         this.transport = transport;
-        this.hotel=hotel;
+        this.hotelId=hotelId;
         this.price = price;
     }
 

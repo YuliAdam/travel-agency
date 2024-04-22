@@ -65,7 +65,7 @@ width:24px;
 border:none;
 border-collapse: collapse;
 }
-button[name="searchButton"]{
+button[id="searchButton"]{
 background-image: url(https://cdn.icon-icons.com/icons2/1659/PNG/512/3844432-magnifier-search-zoom_110300.png);
 background-size: 20px 20px;
 height:20px;
@@ -83,50 +83,164 @@ width:15px;
 border:none;
 border-collapse: collapse;
 }
+button[name="page"]{
+background-repeat: no-repeat;
+height:15px;
+width:15px;
+border:none;
+border-collapse: collapse;
+}
+img[name="last"]{
+background-image: url(https://cdn.icon-icons.com/icons2/1415/PNG/512/ic-back_97586.png);
+background-size: 15px 15px;
+height:15px;
+width:15px;
+border:none;
+border-collapse: collapse;
+}
+img[name="next"]{
+background-image: url(https://cdn.icon-icons.com/icons2/1415/PNG/512/ic-next_97622.png);
+background-size: 15px 15px;
+height:15px;
+width:15px;
+border:none;
+border-collapse: collapse;
+}
+img[name="close"]{
+background-image: url( https://cdn.icon-icons.com/icons2/1402/PNG/512/cancel_96921.png);
+background-size: 20px 20px;
+height:20px;
+width:20px;
+border:none;
+border-collapse: collapse;
+}
+
 </style>
 <head>
     <title>Hotels</title>
 </head>
 <body>
-<form id="searchForm" role="search" style="text-align:right;" action="#" th:action="@{/hotel/search?name=*{name}}" th:method="GET">
-    <input type="search" th:value="*{name}" name="name"/>
-    <button name="searchButton"></button>
+<form id="searchForm" role="search" style="text-align:right;" action="#"
+      th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:method="GET">
+    <input type="search" th:value="*{paramtr}" name="paramtr" placeholder="Search"/>
+    <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+    <input type="hidden" name="sort" th:value="${sort}"/>
+    <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+    <button id="searchButton"></button>
 </form>
-<a style="align:left" th:href="@{'/hotel/search'(name='')}">All Hotel</a>
+<form style="text-align:right;" action="#"
+      th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}">
+    <input type="hidden" name="paramtr" th:value=null />
+    <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+    <input type="hidden" name="sort" th:value="${sort}"/>
+    <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+    <button><img name="close"></button>
+</form>
 <h1><b>Hotels</b></h1>
 <table>
     <thead>
     <tr>
-        <th> Country <a th:href="@{'/hotel/search'(sort=country)}">
-            <button name="sortButton"></button>
-        </a></th>
-        <th> Name <a th:href="@{'/hotel/search'(sort=name)}">
-            <button name="sortButton"></button>
-        </a></th>
-        <th> Star <a th:href="@{'/hotel/search'(sort=star)}">
-            <button name="sortButton"></button>
-        </a></th>
-        <th> Guests <a th:href="@{'/hotel/search'(sort=guests)}">
-            <button name="sortButton"></button>
-        </a></th>
-        <th> Breakfast <a th:href="@{'/hotel/search'(sort=breakfast)}">
-            <button name="sortButton"></button>
-        </a></th>
-        <th> Lunch <a th:href="@{'/hotel/search'(sort=lunch)}">
-            <button name="sortButton"></button>
-        </a></th>
-        <th> Dinner <a th:href="@{'/hotel/search'(sort=dinner)}">
-            <button name="sortButton"></button>
-        </a></th>
-        <th> TV <a th:href="@{'/hotel/search'(sort=tv)}">
-            <button name="sortButton"></button>
-        </a></th>
-        <th> Air Conditioner <a th:href="@{'/hotel/search'(sort=air_conditioner)}">
-            <button name="sortButton"></button>
-        </a></th>
-        <th> Balcony <a th:href="@{'/hotel/search'(sort=balcony)}">
-            <button name="sortButton"></button>
-        </a></th>
+        <th> Country
+            <form action="#"
+                  th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="country"/>
+                <button name="sortButton" ></button>
+            </form>
+        </th>
+        <th> Name
+            <form action="#"
+                  th:action=="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="name"/>
+                <button  name="sortButton" ></button>
+            </form>
+        </th>
+        <th> Star
+            <form action="#"
+                  th:action=="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="star"/>
+                <button name="sortButton"></button>
+            </form>
+        </th>
+        <th> Guests
+            <form action="#"
+                  th:action=="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="guests"/>
+                <button  name="sortButton"></button>
+            </form>
+        </th>
+        <th> Breakfast
+            <form action="#"
+                  th:action=="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="breakfast"/>
+                <button  name="sortButton"></button>
+            </form>
+        </th>
+        <th> Lunch
+            <form action="#"
+                  th:action=="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="lunch"/>
+                <button name="sortButton"></button>
+            </form>
+        </th>
+        <th> Dinner
+            <form action="#"
+                  th:action=="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="dinner"/>
+                <button name="sortButton"></button>
+            </form>
+        </th>
+        <th> TV
+            <form action="#"
+                  th:action=="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="tv"/>
+                <button  name="sortButton"></button>
+            </form>
+        </th>
+        <th> Air Conditioner
+            <form action="#"
+                  th:action=="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="air_conditioner"/>
+                <button  name="sortButton"></button>
+            </form>
+        </th>
+        <th> Balcony
+            <form action="#"
+                  th:action=="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="balcony"/>
+                <button  name="sortButton"></button>
+            </form>
+        </th>
         <th hidden="hidden">Delete</th>
     </tr>
     </thead>
@@ -137,7 +251,7 @@ border-collapse: collapse;
             <span th:text="${hotel.name}"> Name </span>
         </a></td>
         <td style="font-size:20px;"><span th:text="${hotel.star}"> Star </span> <img name="star"></td>
-        <td><span th:text="${hotel.guest}"> Guest </span></td>
+        <td style="font-size:20px;"><span th:text="${hotel.guest}"> Guest </span></td>
         <td><span th:if="${hotel.breakfast}"><img name="true"></span>
             <span th:if="${(hotel.breakfast!=null)&&!hotel.breakfast}"><img name="false"></span>
         </td>
@@ -169,25 +283,46 @@ border-collapse: collapse;
 <p><a th:href="@{'/hotel/redirect/create'}" th:object="${hotel}" th:method="GET">Add Hotel</a>
 </p>
 
+<form style="text-align:right;" action="#" th:if="${pageNumber}>0"
+      th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:method="GET">
+    <input type="hidden" name="paramtr" th:value="${paramtr}">
+    <input type="hidden" name="pageSize" th:value="${pageSize}">
+    <input type="hidden" name="sort" th:value="${sort}">
+    <input type="hidden" th:value="${pageNumber}-1" name="pageNumber"/>
+    <button name="pageNumber" type="submit"><img name="last"></button>
+</form>
 
-<form action="#" th:action="@{'/hotel/search'(pageNumber=*{pageNumber})}" th:method="GET">
-    <input type="hidden" th:value="0" name="pageNumber"/>
-    <button style="align:left;" type="submit">1</button>
+<form style="text-align:right;" action="#"
+      th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:method="GET">
+    <input type="hidden" name="paramtr" th:value="${paramtr}">
+    <input type="hidden" name="pageSize" th:value="${pageSize}">
+    <input type="hidden" name="sort" th:value="${sort}">
+    <input type="hidden" th:value="${pageNumber}" name="pageNumber"/>
+    <button name="pageNumber" type="submit"><span th:text="${pageNumber}+1"/></button>
 </form>
-<form action="#" th:action="@{'/hotel/search'(pageNumber=*{pageNumber})}" th:method="GET">
-    <input type="hidden" th:value="1" name="pageNumber"/>
-    <button style="align:centre;" type="submit">2</button>
+<form style="text-align:right;" action="#"
+      th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:method="GET">
+    <input type="hidden" name="paramtr" th:value="${paramtr}">
+    <input type="hidden" name="pageSize" th:value="${pageSize}">
+    <input type="hidden" name="sort" th:value="${sort}">
+    <input type="hidden" th:value="${pageNumber}+1" name="pageNumber"/>
+    <button name="pageNumber" type="submit"><img name="next"></button>
 </form>
-<form action="#" th:action="@{'/hotel/search'(pageNumber=*{pageNumber})}" th:method="GET">
-    <input type="hidden" th:value="1" name="pageNumber"/>
-    <button style="align:centre;" type="submit">2</button>
-</form>
-<form style="align:centre;" action="#" th:action="@{'/hotel/search'(pageSize=*{pageSize})}" th:method="GET">
-    <button style="align:left;" type="submit">Num. </button>
-    <select name="pageSize" >
-        <option th:value="3" name="pageSize"> 0-3 </option>
-        <option th:value="5" name="pageSize"> 0-5 </option>
-        <option th:value="10" name="pageSize"> 0-10 </option>
+
+<form style="text-align:right;" action="#"
+      th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:method="GET">
+    <input type="hidden" name="paramtr" th:value="${paramtr}">
+    <input type="hidden" name="pageNumber" th:value="${pageNumber}">
+    <input type="hidden" name="sort" th:value="${sort}">
+    <button style="align:left;" type="submit">Num.</button>
+    <select name="pageSize">
+        <option th:value="3" name="pageSize"> 0-3</option>
+        <option th:value="5" name="pageSize"> 0-5</option>
+        <option th:value="10" name="pageSize"> 0-10</option>
     </select>
 </form>
 </body>

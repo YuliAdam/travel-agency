@@ -31,15 +31,16 @@ public class HotelService {
         return new HotelResponse(hotelRepository.findById(id).get());
     }
 
-    public List<HotelResponse> getHotelByName(String name, String sort, Integer pageNumber, Integer pageSize) {
+    public List<HotelResponse> getHotelByName(String paramtr, String sort, Integer pageNumber, Integer pageSize) {
         PageRequest page = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, sort));
-        if (name != null) {
-            return hotelRepository.findHotels(name.trim(), page).stream()
+        if (paramtr != null) {
+            return hotelRepository.findHotels(paramtr.trim(), page).stream()
                     .map(HotelResponse::new)
                     .toList();
         } else return hotelRepository.findHotels("", page).stream()
                 .map(HotelResponse::new)
                 .toList();
+
     }
 
     public String deleteHotel(Long id) {

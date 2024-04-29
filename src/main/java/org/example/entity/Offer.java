@@ -36,7 +36,7 @@ public class Offer {
     public Long getHotelId () {
         return hotel.getId();
     }
-    @Column(name = "price$")
+    @Column(name = "price")
     private Float price;
 
     public Long getId() {

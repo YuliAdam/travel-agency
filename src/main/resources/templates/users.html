@@ -32,41 +32,121 @@ background-attachment: fixed;
 background-size: cover;
 }
 button[name="delete button"]{
-background-image: url('https://us.123rf.com/450wm/arhimicrostok/arhimicrostok1704/arhimicrostok170400136/76160041-simbolo-di-segno-di-spazzatura.jpg?ver=6');
+background-image: url('https://cdn.icon-icons.com/icons2/692/PNG/512/seo-social-web-network-internet_262_icon-icons.com_61518.png');
 background-size: 32px 32px;
+background-color:transparent;
+background-repeat: no-repeat;
 height:32px;
 width:32px;
 border:none;
 border-collapse: collapse;
 }
-img[name="true"]{
-background-image: url(https://cdn.icon-icons.com/icons2/1506/PNG/512/emblemok_103757.png);
-background-size: 32px 32px;
-height:32px;
-width:32px;
+button[id="searchButton"]{
+background-image: url(https://cdn.icon-icons.com/icons2/1659/PNG/512/3844432-magnifier-search-zoom_110300.png);
+background-size: 20px 20px;
+height:20px;
+width:20px;
 border:none;
 border-collapse: collapse;
 }
-img[name="false"]{
-background-image: url(https://cdn.icon-icons.com/icons2/10/PNG/256/remove_delete_exit_close_1545.png);
-background-size: 32px 32px;
-height:32px;
-width:32px;
+button[name="sortButton"]{
+background-image: url(https://cdn.icon-icons.com/icons2/1302/PNG/512/sort_85744.png);
+background-size: 15px 15px;
+background-color:transparent;
+background-repeat: no-repeat;
+height:15px;
+width:15px;
 border:none;
 border-collapse: collapse;
 }
+button[name="page"]{
+background-repeat: no-repeat;
+height:15px;
+width:15px;
+border:none;
+border-collapse: collapse;
+}
+img[name="last"]{
+background-image: url(https://cdn.icon-icons.com/icons2/1415/PNG/512/ic-back_97586.png);
+background-size: 15px 15px;
+height:15px;
+width:15px;
+border:none;
+border-collapse: collapse;
+}
+img[name="next"]{
+background-image: url(https://cdn.icon-icons.com/icons2/1415/PNG/512/ic-next_97622.png);
+background-size: 15px 15px;
+height:15px;
+width:15px;
+border:none;
+border-collapse: collapse;
+}
+img[name="close"]{
+background-image: url( https://cdn.icon-icons.com/icons2/1402/PNG/512/cancel_96921.png);
+background-size: 20px 20px;
+height:20px;
+width:20px;
+border:none;
+border-collapse: collapse;
+}
+
 </style>
 <head>
     <title>Users</title>
 </head>
 <body>
+<form id="searchForm" role="search" style="text-align:right;" action="#"
+      th:action="@{/user/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:method="GET">
+    <input type="search" th:value="*{paramtr}" name="paramtr" placeholder="Search"/>
+    <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+    <input type="hidden" name="sort" th:value="${sort}"/>
+    <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+    <button id="searchButton"></button>
+</form>
+<form style="text-align:right;" action="#"
+      th:action="@{/user/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}">
+    <input type="hidden" name="paramtr" th:value=null />
+    <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+    <input type="hidden" name="sort" th:value="${sort}"/>
+    <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+    <button><img name="close"></button>
+</form>
 <h1 style="text-align:center;"><b>Users</b></h1>
 <table>
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Tell</th>
+        <th>Name
+            <form action="#"
+                  th:action="@{/user/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="user_name"/>
+                <button name="sortButton" ></button>
+            </form>
+        </th>
+        <th>Email
+            <form action="#"
+                  th:action="@{/user/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="email"/>
+                <button name="sortButton" ></button>
+            </form>
+        </th>
+        <th>Tell
+            <form action="#"
+                  th:action="@{/user/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="tell"/>
+                <button name="sortButton" ></button>
+            </form>
+        </th>
         <th>Delete</th>
     </tr>
     </thead>
@@ -93,5 +173,47 @@ border-collapse: collapse;
 </table>
 <p><a th:href="@{'/user/redirect/create'}" th:object="${user}" th:method="GET">Add User</a>
 </p>
+<form style="text-align:right;" action="#" th:if="${pageNumber}>0"
+      th:action="@{/user/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:method="GET">
+    <input type="hidden" name="paramtr" th:value="${paramtr}">
+    <input type="hidden" name="pageSize" th:value="${pageSize}">
+    <input type="hidden" name="sort" th:value="${sort}">
+    <input type="hidden" th:value="${pageNumber}-1" name="pageNumber"/>
+    <button name="pageNumber" type="submit"><img name="last"></button>
+</form>
+
+<form style="text-align:right;" action="#"
+      th:action="@{/user/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:method="GET">
+    <input type="hidden" name="paramtr" th:value="${paramtr}">
+    <input type="hidden" name="pageSize" th:value="${pageSize}">
+    <input type="hidden" name="sort" th:value="${sort}">
+    <input type="hidden" th:value="${pageNumber}" name="pageNumber"/>
+    <button name="pageNumber" type="submit"><span th:text="${pageNumber}+1"/></button>
+</form>
+<form style="text-align:right;" action="#"
+      th:action="@{/user/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:method="GET">
+    <input type="hidden" name="paramtr" th:value="${paramtr}">
+    <input type="hidden" name="pageSize" th:value="${pageSize}">
+    <input type="hidden" name="sort" th:value="${sort}">
+    <input type="hidden" th:value="${pageNumber}+1" name="pageNumber"/>
+    <button name="pageNumber" type="submit"><img name="next"></button>
+</form>
+
+<form style="text-align:right;" action="#"
+      th:action="@{/user/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:method="GET">
+    <input type="hidden" name="paramtr" th:value="${paramtr}">
+    <input type="hidden" name="pageNumber" th:value="${pageNumber}">
+    <input type="hidden" name="sort" th:value="${sort}">
+    <button style="align:left;" type="submit">Num.</button>
+    <select name="pageSize">
+        <option th:value="3" name="pageSize"> 0-3</option>
+        <option th:value="5" name="pageSize"> 0-5</option>
+        <option th:value="10" name="pageSize"> 0-10</option>
+    </select>
+</form>
 </body>
 </html>

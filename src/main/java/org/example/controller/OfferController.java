@@ -25,14 +25,21 @@ public class OfferController {
     HotelService hotelService;
 
     @GetMapping("/search")
-    public ModelAndView getOffers(Model model) {
+    public ModelAndView getOffers(Model model, @RequestParam(required = false, defaultValue = "") String paramtr,
+                                  @RequestParam(required = false, defaultValue = "start") String sort,
+                                  @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+                                  @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+        model.addAttribute("paramtr", paramtr);
+        model.addAttribute("sort", sort);
+        model.addAttribute("pageNumber", pageNumber);
+        model.addAttribute("pageSize", pageSize);
         model.addAttribute("types", Type.values());
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
         model.addAttribute("offer", new OfferRequest());
         model.addAttribute("hotelId", offerService.getAllHotelId());
         model.addAttribute("hotels", hotelService.getAllHotel());
-        return new ModelAndView("offers", "offers", offerService.getAllOffer());
+        return new ModelAndView("offers", "offers", offerService.findOffers(paramtr, sort, pageNumber, pageSize));
     }
 
     @GetMapping("/{id}/redirect/update")
@@ -56,28 +63,54 @@ public class OfferController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public ModelAndView deleteOffer(@PathVariable Long id, Model model) {
+    public ModelAndView deleteOffer(@PathVariable Long id, Model model,
+                                    @RequestParam(required = false, defaultValue = "") String paramtr,
+                                    @RequestParam(required = false, defaultValue = "start") String sort,
+                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+                                    @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+        model.addAttribute("paramtr", paramtr);
+        model.addAttribute("sort", sort);
+        model.addAttribute("pageNumber", pageNumber);
+        model.addAttribute("pageSize", pageSize);
         offerService.deleteOffer(id);
         model.addAttribute("types", Type.values());
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
         model.addAttribute("offer", new OfferRequest());
-        return new ModelAndView("offers", "offers", offerService.getAllOffer());
+        return new ModelAndView("offers", "offers", offerService.findOffers(paramtr, sort, pageNumber, pageSize));
     }
 
     @PostMapping("/create")
-    public ModelAndView createOffer(@ModelAttribute("offer") OfferRequest offerRequest, Model model) {
+    public ModelAndView createOffer(@ModelAttribute("offer") OfferRequest offerRequest, Model model,
+                                    @RequestParam(required = false, defaultValue = "") String paramtr,
+                                    @RequestParam(required = false, defaultValue = "start") String sort,
+                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+                                    @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+        paramtr=offerRequest.getCountry().toString();
+        model.addAttribute("paramtr", paramtr);
+        model.addAttribute("sort", sort);
+        model.addAttribute("pageNumber", pageNumber);
+        model.addAttribute("pageSize", pageSize);
         offerService.createOffer(offerRequest);
         model.addAttribute("types", Type.values());
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
         model.addAttribute("hotels", hotelService.getAllHotel());
         model.addAttribute("offer", new OfferRequest());
-        return new ModelAndView("offers", "offers", offerService.getAllOffer());
+        return new ModelAndView("offers", "offers", offerService.findOffers(paramtr, sort, pageNumber, pageSize));
     }
 
     @PutMapping("/update")
-    public ModelAndView updateOffer(@ModelAttribute("offer") OfferRequest offerRequest, Model model) {
+    public ModelAndView updateOffer(@ModelAttribute("offer") OfferRequest offerRequest, Model model,
+                                    @RequestParam(required = false, defaultValue = "") String paramtr,
+                                    @RequestParam(required = false, defaultValue = "start") String sort,
+                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+                                    @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+        paramtr=offerRequest.getCountry().toString();
+        model.addAttribute("paramtr", paramtr);
+        model.addAttribute("sort", sort);
+        model.addAttribute("pageNumber", pageNumber);
+        model.addAttribute("pageSize", pageSize);
         offerService.updateOffer(offerRequest.getId(), offerRequest);
         model.addAttribute("types", Type.values());
         model.addAttribute("transports", Transport.values());
@@ -85,6 +118,6 @@ public class OfferController {
         model.addAttribute("hotelId", offerService.getAllHotelId());
         model.addAttribute("hotels", hotelService.getAllHotel());
         model.addAttribute("offer", new OfferRequest());
-        return new ModelAndView("offers", "offers", offerService.getAllOffer());
+        return new ModelAndView("offers", "offers", offerService.findOffers(paramtr, sort, pageNumber, pageSize));
     }
 }

@@ -9,6 +9,8 @@ import org.example.entity.User;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,50 +19,63 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-@Autowired
+    @Autowired
     UserRepository userRepository;
+
     public List<UserResponse> getAllUser() {
-        return userRepository.findAll().stream().map(UserResponse::new).toList();
+        return userRepository.findAllUsers().stream().map(UserResponse::new).toList();
     }
-    public List<UserResponse> findUserByName(String name) {
-        return userRepository.findAll().stream().map(UserResponse::new).filter( user -> user.getUserName().replaceAll(" ","").equals(name)).toList();
+
+    public List<UserResponse> findUsers(String paramtr, String sort, Integer pageNumber, Integer pageSize) {
+        PageRequest page = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, sort));
+        if (paramtr != null) {
+            return userRepository.findUsers(paramtr.trim(), page).stream()
+                    .map(UserResponse::new)
+                    .toList();
+        } else return userRepository.findUsers("", page).stream()
+                .map(UserResponse::new)
+                .toList();
     }
-    public UserResponse getUser(Long id){
+
+    public UserResponse getUser(Long id) {
         return new UserResponse(userRepository.findById(id).get());
     }
-    public String deleteUser(Long id){
+
+    public String deleteUser(Long id) {
         try {
-            userRepository.findById(id).get() ;
+            userRepository.findById(id).get();
             userRepository.deleteById(id);
             return "User deleted. ";
-        } catch (NoSuchElementException e){
-            System.out.println("Error. Class UserService. User not found. "+ e);
-            return "User not found. "+e;
+        } catch (NoSuchElementException e) {
+            System.out.println("Error. Class UserService. User not found. " + e);
+            return "User not found. " + e;
         }
     }
-    public UserResponse createUser(UserRequest userRequest){
+
+    public UserResponse createUser(UserRequest userRequest) {
         try {
-        User user= new User(userRequest.getUserName(), userRequest.getEmail(),userRequest.getTell());
-        return  new UserResponse(userRepository.save(user));
-        } catch (DataIntegrityViolationException e){
-            System.out.println("Error. Class UserService. User_name cannot be null. "+e);
-            return new UserResponse("User_name cannot be null. "+e);
+            User user = new User(userRequest.getUserName(), userRequest.getEmail(), userRequest.getTell());
+            return new UserResponse(userRepository.save(user));
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Error. Class UserService. User_name cannot be null. " + e);
+            return new UserResponse("User_name cannot be null. " + e);
         }
     }
-    public UserResponse updateUser(Long id, UserRequest userRequest){
+
+    public UserResponse updateUser(Long id, UserRequest userRequest) {
         try {
-        User existingUser = userRepository.findById(id).get();
-        existingUser.setUserName(userRequest.getUserName());
-        existingUser.setEmail(userRequest.getEmail());
-        existingUser.setTell(userRequest.getTell());
-        return new UserResponse(userRepository.save(existingUser));
-    }catch (NoSuchElementException e){
-        System.out.println("Error. Class UserService. User not found. "+e);
-        return new UserResponse("User not found. "+e);
-    }catch (DataIntegrityViolationException e){
-        System.out.println("Error. Class UserService. User_name cannot be null. "+e);
-        return new UserResponse("User_name cannot be null. "+e);
-    }
+            User existingUser = userRepository.findById(id).get();
+            existingUser.setUserName(userRequest.getUserName());
+            existingUser.setEmail(userRequest.getEmail());
+            existingUser.setTell(userRequest.getTell());
+            return new UserResponse(userRepository.save(existingUser));
+        } catch (NoSuchElementException e) {
+            System.out.println("Error. Class UserService. User not found. " + e);
+            return new UserResponse("User not found. " + e);
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Error. Class UserService. User_name cannot be null. " + e);
+            return new UserResponse("User_name cannot be null. " + e);
+        }
     }
 
 }

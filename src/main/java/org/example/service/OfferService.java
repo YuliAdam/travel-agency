@@ -12,6 +12,8 @@ import org.example.repository.HotelRepository;
 import org.example.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +36,16 @@ public class OfferService {
     }
     public HotelResponse getHotelById(Long hotelId){
         return new HotelResponse( offerRepository.findHotelById(hotelId));
+    }
+    public List<OfferResponse> findOffers(String paramtr, String sort, Integer pageNumber, Integer pageSize) {
+        PageRequest page = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, sort));
+        if (paramtr != null) {
+            return offerRepository.findOffer(paramtr.trim(), page).stream()
+                    .map(OfferResponse::new)
+                    .toList();
+        } else return offerRepository.findOffer("", page).stream()
+                .map(OfferResponse::new)
+                .toList();
     }
     public OfferResponse findById(Long id) {
         return new OfferResponse(offerRepository.findById(id).get());

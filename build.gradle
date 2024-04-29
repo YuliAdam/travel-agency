@@ -23,6 +23,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'mysql:mysql-connector-java:8.0.15'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.2.3'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 tasks.named('test') {

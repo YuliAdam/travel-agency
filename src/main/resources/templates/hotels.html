@@ -283,7 +283,7 @@ border-collapse: collapse;
 <p><a th:href="@{'/hotel/redirect/create'}" th:object="${hotel}" th:method="GET">Add Hotel</a>
 </p>
 
-<form style="text-align:right;" action="#" th:if="${pageNumber}>0"
+<form style="text-align:right;" action="#" th:if="${pageNumber &gt; 0}"
       th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
       th:method="GET">
     <input type="hidden" name="paramtr" th:value="${paramtr}">

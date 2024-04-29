@@ -17,21 +17,21 @@ public class UserController {
     @Autowired
     public UserService userService;
 
-    @GetMapping
-    public List<UserResponse> getAllUser() {
-        return userService.getAllUser();
+    @GetMapping("/search")
+    public  ModelAndView findUsers(Model model, @RequestParam(required = false,defaultValue = "") String paramtr,
+                                        @RequestParam(required = false,defaultValue = "user_name") String sort,
+                                        @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+                                        @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+        model.addAttribute("paramtr",paramtr );
+        model.addAttribute("sort",sort );
+        model.addAttribute("pageNumber",pageNumber );
+        model.addAttribute("pageSize",pageSize );
+        return new ModelAndView("users","users",userService.findUsers(paramtr, sort, pageNumber, pageSize));
     }
-
     @GetMapping("/redirect/create")
     public ModelAndView getUser(Model model) {
         model.addAttribute("user", new UserRequest());
         return new ModelAndView("addUser");
-    }
-
-    @GetMapping("/{name}/redirect/search")
-    public  ModelAndView findUserByName(@PathVariable String name,Model model) {
-        model.addAttribute("users", userService.getAllUser());
-        return new ModelAndView("searchUser","users",userService.findUserByName(name));
     }
     @GetMapping(value = "/{id}/redirect/update")
     public ModelAndView getUser(@PathVariable Long id, Model model) {
@@ -39,23 +39,49 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public ModelAndView deleteUser(@PathVariable Long id,Model model) {
+    public ModelAndView deleteUser(@PathVariable Long id,Model model,
+                                   @RequestParam(required = false,defaultValue = "") String paramtr,
+                                   @RequestParam(required = false,defaultValue = "user_name") String sort,
+                                   @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+                                   @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+        model.addAttribute("paramtr",paramtr );
+        model.addAttribute("sort",sort );
+        model.addAttribute("pageNumber",pageNumber );
+        model.addAttribute("pageSize",pageSize );
         userService.deleteUser(id);
         model.addAttribute("user", new UserRequest());
-        return new ModelAndView("users","users",userService.getAllUser());
+        return new ModelAndView("users","users",userService.findUsers(paramtr, sort, pageNumber, pageSize));
     }
 
     @PostMapping("/create")
-    public ModelAndView createUser(@ModelAttribute("user") UserRequest userRequest,Model model) {
+    public ModelAndView createUser(@ModelAttribute("user") UserRequest userRequest,Model model,
+                                   @RequestParam(required = false,defaultValue = "") String paramtr,
+                                   @RequestParam(required = false,defaultValue = "user_name") String sort,
+                                   @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+                                   @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+        paramtr= userRequest.getUserName();
+        model.addAttribute("paramtr",paramtr );
+        model.addAttribute("sort",sort );
+        model.addAttribute("pageNumber",pageNumber );
+        model.addAttribute("pageSize",pageSize );
         userService.createUser(userRequest);
         model.addAttribute("user", new UserRequest());
-        return new ModelAndView("users","users",userService.getAllUser());
+        return new ModelAndView("users","users",userService.findUsers(paramtr, sort, pageNumber, pageSize));
     }
 
     @PutMapping("/update")
-    public ModelAndView updateUser(@ModelAttribute("user") UserRequest userRequest,Model model) {
+    public ModelAndView updateUser(@ModelAttribute("user") UserRequest userRequest,Model model,
+                                   @RequestParam(required = false,defaultValue = "") String paramtr,
+                                   @RequestParam(required = false,defaultValue = "user_name") String sort,
+                                   @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+                                   @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+        paramtr= userRequest.getUserName();
+        model.addAttribute("paramtr",paramtr );
+        model.addAttribute("sort",sort );
+        model.addAttribute("pageNumber",pageNumber );
+        model.addAttribute("pageSize",pageSize );
         userService.updateUser(userRequest.getId(),userRequest);
         model.addAttribute("user", new UserRequest());
-        return new ModelAndView("users","users",userService.getAllUser());
+        return new ModelAndView("users","users",userService.findUsers(paramtr, sort, pageNumber, pageSize));
     }
 }

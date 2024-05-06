@@ -2,20 +2,20 @@ package org.example.controller.response;
 
 import org.example.entity.Offer;
 import org.example.entity.Orders;
-import org.example.entity.User;
+import org.example.entity.Users;
 
 import java.sql.Timestamp;
 
 public class OrdersResponse {
     private Long id;
 
-    private User user;
+    private Users user;
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser( User user) {
+    public void setUser( Users user) {
         this.user = user;
     }
 
@@ -51,7 +51,7 @@ public class OrdersResponse {
         this.offer=orders.getOffer();
         this.orderDate = orders.getOrderDate();
     }
-    public OrdersResponse(User user) {
+    public OrdersResponse(Users user) {
         this.user=user;
     }
 

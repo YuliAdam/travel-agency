@@ -1,22 +1,18 @@
 package org.example.service;
 
 import org.example.controller.request.OrdersRequest;
-import org.example.controller.response.OfferResponse;
 import org.example.controller.response.OrdersResponse;
-import org.example.entity.Hotel;
 import org.example.entity.Orders;
-import org.example.entity.User;
+import org.example.entity.Users;
 import org.example.repository.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 public class OrdersService {
@@ -46,7 +42,7 @@ public class OrdersService {
         return  new OrdersResponse(ordersRepository.save(orders));
         }catch (DataIntegrityViolationException e){
             System.out.println("Error. Class OrdersService. The order's user and offer cannot be null. "+e);
-            User user= new User();
+            Users user= new Users();
             user.setUserName("The order's user and offer cannot be null. "+e);
             return new OrdersResponse(user);
         }
@@ -59,12 +55,12 @@ public class OrdersService {
         return new OrdersResponse(ordersRepository.save(existingOrders));
         }catch (NoSuchElementException e){
             System.out.println("Error. Class OrdersService. Order not found. "+ e);
-            User user= new User();
+            Users user= new Users();
             user.setUserName("Order not found. "+e);
             return new OrdersResponse(user);
         }catch (DataIntegrityViolationException e){
             System.out.println("Error. Class OrdersService. The order's user and offer cannot be null. "+e);
-            User user= new User();
+            Users user= new Users();
             user.setUserName("The order's user and offer cannot be null. "+e);
             return new OrdersResponse(user);
         }

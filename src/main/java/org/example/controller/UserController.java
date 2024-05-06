@@ -1,8 +1,6 @@
 package org.example.controller;
 
 import org.example.controller.request.UserRequest;
-import org.example.controller.response.UserResponse;
-import org.example.entity.characteristic.Country;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -66,7 +64,7 @@ public class UserController {
         model.addAttribute("pageSize",pageSize );
         userService.createUser(userRequest);
         model.addAttribute("user", new UserRequest());
-        return new ModelAndView("users","users",userService.findUsers(paramtr, sort, pageNumber, pageSize));
+        return new ModelAndView("/login");
     }
 
     @PutMapping("/update")

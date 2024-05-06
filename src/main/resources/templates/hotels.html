@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <style>
     h1{
 font-size: 40px;
@@ -120,6 +121,9 @@ border-collapse: collapse;
     <title>Hotels</title>
 </head>
 <body>
+<p>
+    <a th:href="@{/logout}">Logout</a>
+</p>
 <form id="searchForm" role="search" style="text-align:right;" action="#"
       th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
       th:method="GET">
@@ -131,7 +135,7 @@ border-collapse: collapse;
 </form>
 <form style="text-align:right;" action="#"
       th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}">
-    <input type="hidden" name="paramtr" th:value=null />
+    <input type="hidden" name="paramtr" th:value=null/>
     <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
     <input type="hidden" name="sort" th:value="${sort}"/>
     <input type="hidden" name="pageSize" th:value="${pageSize}"/>
@@ -148,7 +152,7 @@ border-collapse: collapse;
                 <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
                 <input type="hidden" name="pageSize" th:value="${pageSize}"/>
                 <input type="hidden" name="sort" th:value="country"/>
-                <button name="sortButton" ></button>
+                <button name="sortButton"></button>
             </form>
         </th>
         <th> Name
@@ -158,7 +162,7 @@ border-collapse: collapse;
                 <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
                 <input type="hidden" name="pageSize" th:value="${pageSize}"/>
                 <input type="hidden" name="sort" th:value="name"/>
-                <button  name="sortButton" ></button>
+                <button name="sortButton"></button>
             </form>
         </th>
         <th> Star
@@ -178,7 +182,7 @@ border-collapse: collapse;
                 <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
                 <input type="hidden" name="pageSize" th:value="${pageSize}"/>
                 <input type="hidden" name="sort" th:value="guests"/>
-                <button  name="sortButton"></button>
+                <button name="sortButton"></button>
             </form>
         </th>
         <th> Breakfast
@@ -188,7 +192,7 @@ border-collapse: collapse;
                 <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
                 <input type="hidden" name="pageSize" th:value="${pageSize}"/>
                 <input type="hidden" name="sort" th:value="breakfast"/>
-                <button  name="sortButton"></button>
+                <button name="sortButton"></button>
             </form>
         </th>
         <th> Lunch
@@ -218,7 +222,7 @@ border-collapse: collapse;
                 <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
                 <input type="hidden" name="pageSize" th:value="${pageSize}"/>
                 <input type="hidden" name="sort" th:value="tv"/>
-                <button  name="sortButton"></button>
+                <button name="sortButton"></button>
             </form>
         </th>
         <th> Air Conditioner
@@ -228,7 +232,7 @@ border-collapse: collapse;
                 <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
                 <input type="hidden" name="pageSize" th:value="${pageSize}"/>
                 <input type="hidden" name="sort" th:value="air_conditioner"/>
-                <button  name="sortButton"></button>
+                <button name="sortButton"></button>
             </form>
         </th>
         <th> Balcony
@@ -238,7 +242,7 @@ border-collapse: collapse;
                 <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
                 <input type="hidden" name="pageSize" th:value="${pageSize}"/>
                 <input type="hidden" name="sort" th:value="balcony"/>
-                <button  name="sortButton"></button>
+                <button name="sortButton"></button>
             </form>
         </th>
         <th hidden="hidden">Delete</th>
@@ -280,9 +284,9 @@ border-collapse: collapse;
     </tr>
     </tbody>
 </table>
-<p><a th:href="@{'/hotel/redirect/create'}" th:object="${hotel}" th:method="GET">Add Hotel</a>
+<p><a th:if="${role}=='[ROLE_ADMIN]'" th:href="@{'/hotel/redirect/create'}" th:object="${hotel}" th:method="GET">Add
+    Hotel</a>
 </p>
-
 <form style="text-align:right;" action="#" th:if="${pageNumber &gt; 0}"
       th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
       th:method="GET">

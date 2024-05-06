@@ -5,16 +5,23 @@ import org.example.entity.Hotel;
 import org.example.entity.characteristic.Country;
 import org.example.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Stack;
 
 @RestController
 @RequestMapping("/hotel")
 public class HotelController {
+    @Value("${spring.datasource.url}")
+    private String url;
     @Autowired
     HotelService hotelService;
 
@@ -23,6 +30,9 @@ public class HotelController {
                                   @RequestParam(required = false, defaultValue = "name") String sort,
                                   @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                   @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+
+        String authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+        model.addAttribute("role",authorities);
         model.addAttribute("paramtr", paramtr);
         model.addAttribute("sort", sort);
         model.addAttribute("pageNumber", pageNumber);

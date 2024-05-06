@@ -1,13 +1,8 @@
 package org.example.controller.request;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import org.example.entity.Offer;
-import org.example.entity.User;
+import org.example.entity.Users;
 
-import javax.xml.crypto.Data;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -15,13 +10,13 @@ public class OrdersRequest {
 
     private Long id;
 
-    private User user;
+    private Users user;
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser( User user) {
+    public void setUser( Users user) {
         this.user = user;
     }
 
@@ -51,7 +46,7 @@ public class OrdersRequest {
     public void setOrderDate( Timestamp orderDate) {
         this.orderDate = orderDate;
     }
-    public OrdersRequest(Long id, User user, Offer offer) {
+    public OrdersRequest(Long id, Users user, Offer offer) {
         this.id = id;
         this.user=user;
         this.offer=offer;

@@ -1,9 +1,7 @@
 package org.example.repository;
 
-import org.example.controller.response.HotelResponse;
 import org.example.entity.Hotel;
 import org.example.entity.Offer;
-import org.example.entity.User;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

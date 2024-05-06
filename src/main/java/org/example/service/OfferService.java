@@ -1,14 +1,9 @@
 package org.example.service;
 
 import org.example.controller.request.OfferRequest;
-import org.example.controller.response.AdminResponse;
 import org.example.controller.response.HotelResponse;
 import org.example.controller.response.OfferResponse;
-import org.example.entity.Hotel;
 import org.example.entity.Offer;
-import org.example.entity.User;
-import org.example.entity.characteristic.Type;
-import org.example.repository.HotelRepository;
 import org.example.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 public class OfferService {

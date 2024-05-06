@@ -105,6 +105,9 @@ border-collapse: collapse;
     <title>Offers</title>
 </head>
 <body>
+<p>
+    <a th:href="@{/logout}">Logout</a>
+</p>
 <form id="searchForm" role="search" style="text-align:right;" action="#"
       th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
       th:method="GET">

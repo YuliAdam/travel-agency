@@ -21,9 +21,10 @@ background-size: cover;
 <h1 style="text-align:center;"><b>UPDATE USER </b></h1>
 <form style="text-align:center;" action="#" th:action="@{/user/update}" th:object="${user}" th:method="put">
     <input type="text" th:field="*{id}" hidden="true"/>
+    <input type="text" th:field="*{password}" hidden="true"/>
+    <input type="text" th:field="*{role}" hidden="true"/>
+    <input type="text" th:field="*{login}" hidden="true"/>
     <p>Name: <input type="text" th:field="*{userName}"/></p>
-    <p>Email:<label for="email"></label>
-        <input type="email" id="email" name="email" placeholder="you@email.com" pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/" th:field="*{email}"/></p>
     <p>Tell: <input type="text" placeholder="+39 3806959384" pattern="[1-9+]{5,12}" th:field="*{tell}"/></p>
     <p><input type="submit" value="Update User"/></p>
 </form>

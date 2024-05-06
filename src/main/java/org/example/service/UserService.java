@@ -5,12 +5,15 @@ import org.example.controller.response.AdminResponse;
 import org.example.controller.response.HotelResponse;
 import org.example.controller.response.UserResponse;
 import org.example.entity.Admin;
-import org.example.entity.User;
+import org.example.entity.Users;
+import org.example.entity.characteristic.Role;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,10 +54,10 @@ public class UserService {
             return "User not found. " + e;
         }
     }
-
     public UserResponse createUser(UserRequest userRequest) {
         try {
-            User user = new User(userRequest.getUserName(), userRequest.getEmail(), userRequest.getTell());
+            Users user = new Users(userRequest.getUserName(), userRequest.getLogin(), userRequest.getTell()
+                    ,new BCryptPasswordEncoder(12).encode(userRequest.getPassword()), Role.USER);
             return new UserResponse(userRepository.save(user));
         } catch (DataIntegrityViolationException e) {
             System.out.println("Error. Class UserService. User_name cannot be null. " + e);
@@ -64,10 +67,12 @@ public class UserService {
 
     public UserResponse updateUser(Long id, UserRequest userRequest) {
         try {
-            User existingUser = userRepository.findById(id).get();
+            Users existingUser = userRepository.findById(id).get();
             existingUser.setUserName(userRequest.getUserName());
-            existingUser.setEmail(userRequest.getEmail());
+            existingUser.setLogin(userRequest.getLogin());
             existingUser.setTell(userRequest.getTell());
+            existingUser.setPassword(userRequest.getPassword());
+            existingUser.setRole(userRequest.getRole());
             return new UserResponse(userRepository.save(existingUser));
         } catch (NoSuchElementException e) {
             System.out.println("Error. Class UserService. User not found. " + e);

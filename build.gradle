@@ -22,8 +22,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'mysql:mysql-connector-java:8.0.15'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.2.3'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.2.5'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-config'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
+    implementation 'org.springframework.security:spring-security-taglibs:5.2.2.RELEASE'
+    implementation 'org.springframework.webflow:spring-faces:3.0.0'
+    implementation 'org.flywaydb:flyway-maven-plugin:10.11.0'
+    implementation 'org.flywaydb:flyway-core:10.11.0'
+    implementation 'org.flywaydb:flyway-mysql:10.11.0'
 }
 
 tasks.named('test') {

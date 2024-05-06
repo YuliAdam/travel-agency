@@ -1,6 +1,5 @@
 package org.example.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -14,13 +13,13 @@ public class Orders {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users user;
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser( User user) {
+    public void setUser( Users user) {
         this.user = user;
     }
     @ManyToOne
@@ -51,18 +50,18 @@ public class Orders {
     public void setOrderDate( Timestamp orderDate) {
         this.orderDate = orderDate;
     }
-    public Orders(Long id, User user, Offer offer, Timestamp orderDate) {
+    public Orders(Long id, Users user, Offer offer, Timestamp orderDate) {
         this.id = id;
         this.user=user;
         this.offer=offer;
         this.orderDate = orderDate;
     }
-    public Orders(User user, Offer offer,Timestamp orderDate) {
+    public Orders(Users user, Offer offer, Timestamp orderDate) {
         this.user=user;
         this.offer=offer;
         this.orderDate=orderDate;
     }
-    public Orders(User user, Offer offer) {
+    public Orders(Users user, Offer offer) {
         this.user=user;
         this.offer=offer;
     }

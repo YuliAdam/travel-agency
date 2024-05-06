@@ -19,7 +19,7 @@ background-size: cover;
 </head>
 <body>
 <h1><b>UPDATE HOTEL </b></h1>
-<form style="text-align:center;" action="#" th:action="@{/hotel/update}" th:object="${hotel}" th:method="put">
+<form style="text-align:center;" action="#" th:action="@{/hotel/update}" th:object="${hotel}" th:method="PUT">
     <input type="text" th:field="*{id}" hidden="true"/>
     <p>Country:<select th:field="*{country}">
         <option th:each="country : ${countries}"

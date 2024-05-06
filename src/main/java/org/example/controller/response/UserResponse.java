@@ -1,5 +1,7 @@
 package org.example.controller.response;
-import org.example.entity.User;
+
+import org.example.entity.Users;
+import org.example.entity.characteristic.Role;
 
 public class UserResponse {
 
@@ -7,9 +9,28 @@ public class UserResponse {
 
     private String userName;
 
-    private String email;
+    private String login;
 
     private Long tell;
+    private String password;
+    private Role role;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -18,8 +39,8 @@ public class UserResponse {
         this.userName = userName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
 
@@ -35,8 +56,8 @@ public class UserResponse {
         return userName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLogin() {
+        return login;
     }
 
     public Long getTell() {
@@ -45,14 +66,18 @@ public class UserResponse {
 
     public UserResponse() {
     }
-    public UserResponse(User user) {
-        this.id= user.getId();
-        this.userName=user.getUserName();
-        this.email=user.getEmail();
-        this.tell=user.getTell();
+
+    public UserResponse(Users user) {
+        this.id = user.getId();
+        this.userName = user.getUserName();
+        this.login = user.getLogin();
+        this.tell = user.getTell();
+        this.password = user.getPassword();
+        this.role = user.getRole();
     }
-    public UserResponse(String userName){
-        this.userName=userName;
+
+    public UserResponse(String userName) {
+        this.userName = userName;
     }
 
 }

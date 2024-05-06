@@ -96,6 +96,9 @@ border-collapse: collapse;
     <title>Users</title>
 </head>
 <body>
+<p>
+    <a th:href="@{/logout}">Logout</a>
+</p>
 <form id="searchForm" role="search" style="text-align:right;" action="#"
       th:action="@{/user/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
       th:method="GET">
@@ -127,13 +130,13 @@ border-collapse: collapse;
                 <button name="sortButton" ></button>
             </form>
         </th>
-        <th>Email
+        <th>Login
             <form action="#"
                   th:action="@{/user/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
                 <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
                 <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
                 <input type="hidden" name="pageSize" th:value="${pageSize}"/>
-                <input type="hidden" name="sort" th:value="email"/>
+                <input type="hidden" name="sort" th:value="login"/>
                 <button name="sortButton" ></button>
             </form>
         </th>
@@ -147,6 +150,16 @@ border-collapse: collapse;
                 <button name="sortButton" ></button>
             </form>
         </th>
+        <th>Role
+            <form action="#"
+                  th:action="@{/user/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
+                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
+                <input type="hidden" name="sort" th:value="role"/>
+                <button name="sortButton" ></button>
+            </form>
+        </th>
         <th>Delete</th>
     </tr>
     </thead>
@@ -155,12 +168,13 @@ border-collapse: collapse;
         <td><a th:href="@{'/user/{id}/redirect/update'(id=${user.id})}">
             <span th:text="${user.userName}"> Name </span>
         </a></td>
-        <td><a href="email:<${user.email}>">
-            <span th:text="${user.email}"> Email </span>
+        <td><a href="email:<${user.login}>">
+            <span th:text="${user.login}"> Login </span>
         </a></td>
         <td><a href="tell:<${user.tell}>">
             <span th:text="${user.tell}"> Tell </span>
         </a></td>
+        <td><span th:text="${user.role}"> Role </span></td>
         <td>
             <form action="#" th:action="@{'/user/{id}/delete'(id=${user.id})}" th:object="${user}"
                   th:method="DELETE">

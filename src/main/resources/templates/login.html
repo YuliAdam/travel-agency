@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<style>
+    form{
+    display:flex;
+    justify-content:center;
+    flex-direction:column;
+    align-items:center;
+    }
+    input{
+    border-radius:5px;
+    width:25%;
+    height:25px;
+    border:1px solid #bbbbbb;
+    display: block;
+    padding-left:20px;
+    }
+    body{
+    background-image: linear-gradient(180deg,rgba(250,100,64,0.5),rgba(50,150,180,0.7)),url( "https://www.bsr.org/images/heroes/bsr-travel-hero..jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    }
+</style>
+<head>
+    <title> Login </title>
+</head>
+<body>
+<h1 style="text-align:center"><b>Login</b></h1>
+<p th:if="${loginError}" class="error">Wrong user or password</p>
+<b>
+    <form th:action="@{/login}" method="post">
+        <label for="username">Email:</label>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" value="Login">
+    </form>
+    <p style="text-align:center" >Not registered <a th:href="@{'/user/redirect/create'}" th:object="${user}" th:method="GET"> Register </a></p>
+</b>
+</body>
+</html>

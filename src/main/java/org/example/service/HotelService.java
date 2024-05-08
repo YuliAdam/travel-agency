@@ -33,13 +33,15 @@ public class HotelService {
 
     public List<HotelResponse> findHotels(String paramtr, String sort, Integer pageNumber, Integer pageSize) {
         PageRequest page = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, sort));
-        if (paramtr != null) {
+        if (paramtr == null || paramtr.equals("")) {
+            return hotelRepository.findHotels(page).stream()
+                    .map(HotelResponse::new)
+                    .toList();
+        } else {
             return hotelRepository.findHotels(paramtr.trim(), page).stream()
                     .map(HotelResponse::new)
                     .toList();
-        } else return hotelRepository.findHotels("", page).stream()
-                .map(HotelResponse::new)
-                .toList();
+        }
     }
 
     public String deleteHotel(Long id) {

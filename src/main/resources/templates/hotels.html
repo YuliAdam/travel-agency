@@ -3,127 +3,143 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <style>
     h1{
-font-size: 40px;
-color:red;
-text-align:center;
-}
-table{
-width : 100%;
-}
-table, th, td {
-border: 1px solid black;
-border-collapse: collapse;
-font: verdana 50px;
-font-size: 15px;
-}
-td {
-padding: 5px;
-text-align: center;
-}
-th {
-color: red;
-text-align: center;
-font-weight: bold;
-font-size: 20px;
-}
-body{
-background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/ed/95/07/limak-eurasia-luxury.jpg?w=700&h=-1&s=1");
-background-repeat: no-repeat;
-background-attachment: fixed;
-background-size: cover;
-}
-button[name="delete button"]{
-background-image: url('https://cdn.icon-icons.com/icons2/692/PNG/512/seo-social-web-network-internet_262_icon-icons.com_61518.png');
-background-size: 32px 32px;
-background-color:transparent;
-background-repeat: no-repeat;
-height:32px;
-width:32px;
-border:none;
-border-collapse: collapse;
-}
-img[name="true"]{
-background-image: url(https://cdn.icon-icons.com/icons2/1506/PNG/512/emblemok_103757.png);
-background-size: 32px 32px;
-height:32px;
-width:32px;
-border:none;
-border-collapse: collapse;
-}
-img[name="false"]{
-background-image: url(https://cdn.icon-icons.com/icons2/10/PNG/256/remove_delete_exit_close_1545.png);
-background-size: 32px 32px;
-height:32px;
-width:32px;
-border:none;
-border-collapse: collapse;
-}
-img[name="star"]{
-background-image: url(https://cdn.icon-icons.com/icons2/1527/PNG/512/star_106651.png);
-background-size: 24px 24px;
-height:24px;
-width:24px;
-border:none;
-border-collapse: collapse;
-}
-button[id="searchButton"]{
-background-image: url(https://cdn.icon-icons.com/icons2/1659/PNG/512/3844432-magnifier-search-zoom_110300.png);
-background-size: 20px 20px;
-height:20px;
-width:20px;
-border:none;
-border-collapse: collapse;
-}
-button[name="sortButton"]{
-background-image: url(https://cdn.icon-icons.com/icons2/1302/PNG/512/sort_85744.png);
-background-size: 15px 15px;
-background-color:transparent;
-background-repeat: no-repeat;
-height:15px;
-width:15px;
-border:none;
-border-collapse: collapse;
-}
-button[name="page"]{
-background-repeat: no-repeat;
-height:15px;
-width:15px;
-border:none;
-border-collapse: collapse;
-}
-img[name="last"]{
-background-image: url(https://cdn.icon-icons.com/icons2/1415/PNG/512/ic-back_97586.png);
-background-size: 15px 15px;
-height:15px;
-width:15px;
-border:none;
-border-collapse: collapse;
-}
-img[name="next"]{
-background-image: url(https://cdn.icon-icons.com/icons2/1415/PNG/512/ic-next_97622.png);
-background-size: 15px 15px;
-height:15px;
-width:15px;
-border:none;
-border-collapse: collapse;
-}
-img[name="close"]{
-background-image: url( https://cdn.icon-icons.com/icons2/1402/PNG/512/cancel_96921.png);
-background-size: 20px 20px;
-height:20px;
-width:20px;
-border:none;
-border-collapse: collapse;
-}
-
+        font-size: 40px;
+        color:red;
+        text-align:center;
+    }
+    table{
+        width : 100%;
+    }
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        font: verdana 50px;
+        font-size: 15px;
+    }
+    td {
+        padding: 5px;
+        text-align: center;
+    }
+    th {
+        color: red;
+        text-align: center;
+        font-weight: bold;
+        font-size: 20px;
+    }
+    body{
+        background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/ed/95/07/limak-eurasia-luxury.jpg?w=700&h=-1&s=1");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+    button[name="delete button"]{
+        background-image: url('https://cdn.icon-icons.com/icons2/692/PNG/512/seo-social-web-network-internet_262_icon-icons.com_61518.png');
+        background-size: 32px 32px;
+        background-color:transparent;
+        background-repeat: no-repeat;
+        height:32px;
+        width:32px;
+        border:none;
+        border-collapse: collapse;
+    }
+    img[name="true"]{
+        background-image: url(https://cdn.icon-icons.com/icons2/1506/PNG/512/emblemok_103757.png);
+        background-size: 32px 32px;
+        height:32px;
+        width:32px;
+        border:none;
+        border-collapse: collapse;
+    }
+    img[name="false"]{
+        background-image: url(https://cdn.icon-icons.com/icons2/10/PNG/256/remove_delete_exit_close_1545.png);
+        background-size: 32px 32px;
+        height:32px;
+        width:32px;
+        border:none;
+        border-collapse: collapse;
+    }
+    img[name="star"]{
+        background-image: url(https://cdn.icon-icons.com/icons2/1527/PNG/512/star_106651.png);
+        background-size: 24px 24px;
+        height:24px;
+        width:24px;
+        border:none;
+        border-collapse: collapse;
+    }
+    button[id="searchButton"]{
+        background-image: url(https://cdn.icon-icons.com/icons2/1659/PNG/512/3844432-magnifier-search-zoom_110300.png);
+        background-size: 20px 20px;
+        height:20px;
+        width:20px;
+        border:none;
+        border-collapse: collapse;
+    }
+    button[name="sortButton"]{
+        background-image: url(https://cdn.icon-icons.com/icons2/1302/PNG/512/sort_85744.png);
+        background-size: 15px 15px;
+        background-color:transparent;
+        background-repeat: no-repeat;
+        height:15px;
+        width:15px;
+        border:none;
+        border-collapse: collapse;
+    }
+    button[name="page"]{
+        background-repeat: no-repeat;
+        height:15px;
+        width:15px;
+        border:none;
+        border-collapse: collapse;
+    }
+    img[name="last"]{
+        background-image: url(https://cdn.icon-icons.com/icons2/1415/PNG/512/ic-back_97586.png);
+        background-size: 15px 15px;
+        height:15px;
+        width:15px;
+        border:none;
+        border-collapse: collapse;
+    }
+        img[name="next"]{
+        background-image: url(https://cdn.icon-icons.com/icons2/1415/PNG/512/ic-next_97622.png);
+        background-size: 15px 15px;
+        height:15px;
+        width:15px;
+        border:none;
+        border-collapse: collapse;
+    }
+    img[name="close"]{
+        background-image: url( https://cdn.icon-icons.com/icons2/1402/PNG/512/cancel_96921.png);
+        background-size: 20px 20px;
+        height:20px;
+        width:20px;
+        border:none;
+        border-collapse: collapse;
+    }
+    h2{
+        text-align:left;
+        position:down;
+        color:black;
+        font-size: 30px;
+    }
+    h3{
+        text-align:left;
+        color:black;
+        font-size: 30px;
+    }
 </style>
 <head>
     <title>Hotels</title>
 </head>
 <body>
-<p>
-    <a th:href="@{/logout}">Logout</a>
-</p>
+<h3>
+    <a th:href="@{'/menu'}">Menu</a>
+</h3>
+<h3>
+    <a th:href="@{'/user/{id}/redirect/update'(id=${currentUserId})}">My Profile</a>
+</h3>
+<h3>
+    <a th:href="@{'/orders/myOrder'}">Shopping Bag</a>
+</h3>
 <form id="searchForm" role="search" style="text-align:right;" action="#"
       th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
       th:method="GET">
@@ -245,15 +261,15 @@ border-collapse: collapse;
                 <button name="sortButton"></button>
             </form>
         </th>
-        <th hidden="hidden">Delete</th>
+        <th th:if="${role}=='[ROLE_ADMIN]'" hidden="hidden">Delete</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="hotel : ${hotels}">
         <td><span th:text="${hotel.country}"> Country </span></td>
-        <td><a th:href="@{'/hotel/{id}/redirect/update'(id=${hotel.id})}">
+        <td><a th:if="${role}=='[ROLE_ADMIN]'" th:href="@{'/hotel/{id}/redirect/update'(id=${hotel.id})}">
             <span th:text="${hotel.name}"> Name </span>
-        </a></td>
+        </a><span th:if="${role}=='[ROLE_USER]'" th:text="${hotel.name}"> Name </span></td>
         <td style="font-size:20px;"><span th:text="${hotel.star}"> Star </span> <img name="star"></td>
         <td style="font-size:20px;"><span th:text="${hotel.guest}"> Guest </span></td>
         <td><span th:if="${hotel.breakfast}"><img name="true"></span>
@@ -274,7 +290,7 @@ border-collapse: collapse;
         <td><span th:if="${hotel.balcony}"><img name="true"></span>
             <span th:if="${(hotel.balcony!=null)&&!hotel.balcony}"><img name="false"></span>
         </td>
-        <td>
+        <td th:if="${role}=='[ROLE_ADMIN]'">
             <form action="#" th:action="@{'/hotel/{id}/delete'(id=${hotel.id})}" th:object="${hotel}"
                   th:method="DELETE">
                 <input type="hidden" ,value="${hotel}">
@@ -329,5 +345,8 @@ border-collapse: collapse;
         <option th:value="10" name="pageSize"> 0-10</option>
     </select>
 </form>
+<h2>
+    <a th:href="@{/logout}">Logout</a>
+</h2>
 </body>
 </html>

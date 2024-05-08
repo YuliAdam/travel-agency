@@ -2,22 +2,30 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <style>
     h1{
-font-size: 40px;
-color:red;
-text-align:center;
-}
-body{
-background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/ed/95/07/limak-eurasia-luxury.jpg?w=700&h=-1&s=1");
-background-repeat: no-repeat;
-background-attachment: fixed;
-background-size: cover;
-}
+        font-size: 40px;
+        color:red;
+        text-align:center;
+    }
+    body{
+        background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/ed/95/07/limak-eurasia-luxury.jpg?w=700&h=-1&s=1");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+    h3{
+        text-align:left;
+        color:black;
+        font-size: 30px;
+    }
 </style>
 <head>
     <meta charset="UTF-8">
     <title>Update Offer</title>
 </head>
 <body>
+<h3>
+    <a th:href="@{'/menu'}">Menu</a>
+</h3>
 <h1>Update Offer</h1>
 <form style="text-align:center;" action="#" th:action="@{/offer/update}" th:object="${offer}" th:method="put">
     <input type="text" th:field="*{id}"  hidden="true"/>

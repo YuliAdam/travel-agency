@@ -2,19 +2,114 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <style>
     h1{
-    text-align:center;
-    color:red;
-    font-size: 30px;
-    }
+        text-align:center;
+        color:blue;
+        font-size:60px;
+        }
+    body{
+        background-image: linear-gradient(180deg,rgba(250,100,64,0.5),rgba(50,150,180,0.7)),url( "https://www.bsr.org/images/heroes/bsr-travel-hero..jpg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        }
+    img[name="hotels"]{
+        background-image: url(https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/ed/95/07/limak-eurasia-luxury.jpg?w=700&h=-1&s=1);
+        background-repeat: no-repeat;
+        background-size: 450px 450px;
+        height:450px;
+        width:450px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius:50%;
+        }
+    img[name="offers"]{
+        background-image: url(https://www.lasovana.com/public/Files/rif000002/696/valigia.jpg);
+        background-repeat: no-repeat;
+        background-size: 450px 450px;
+        margin-left: auto;
+        margin-right: auto;
+        height:450px;
+        width:450px;
+        border-radius:50%;
+        }
+    img[name="users"]{
+        background-image: url(https://static.vecteezy.com/ti/vettori-gratis/p3/29337463-uomo-e-donna-vuoto-avatar-impostare-predefinito-foto-segnaposto-per-sociale-reti-riprende-forum-e-incontri-siti-maschio-e-femmina-no-foto-immagini-per-non-riempito-utente-profilo-vettore-illustrazione-vettoriale.jpg);
+        background-repeat: no-repeat;
+        background-size: 450px 450px;
+        margin-left: auto;
+        margin-right: auto;
+        height:450px;
+        width:450px;
+        border-radius:50%;
+        }
+    img[name="orders"]{
+        background-image: url(https://comeviaggio.it/wp-content/uploads/2018/06/consigli-su-passaporto-e-documenti-di-viaggio-01-800x533.jpg);
+        background-repeat: no-repeat;
+        background-size: 450px 450px;
+        margin-left: auto;
+        margin-right: auto;
+        height:450px;
+        width:450px;
+        border-radius:50%;
+        }
+    table{
+        width : 100%;
+        text-align:center;
+        font-weight: bold;
+        font-size: 30px;
+        }
+    h2{
+        text-align:left;
+        position:down;
+        color:black;
+        font-size: 30px;
+        }
+    h3{
+        text-align:left;
+        color:black;
+        font-size: 30px;
+        }
 </style>
 <head>
     <meta charset="UTF-8">
     <title>Menu</title>
 </head>
 <body>
+<h3>
+    <a th:href="@{'/user/{id}/redirect/update'(id=${currentUserId})}">My Profile</a>
+</h3>
+<h3>
+    <a th:href="@{'/orders/myOrder'}">Shopping Bag</a>
+</h3>
 <h1><b>Travel Agency</b></h1>
-<p><a th:if="username" th:href="@{'/hotel/search'}" th:method="GET">Hotels</a>
-<a th:href="@{'/offer/search'}" th:method="GET">Offers</a>
-</p>
+<table>
+    <thead>
+    <tr>
+        <th>Hotels</th>
+        <th>Offers</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a th:href="@{'/hotel/search'}" th:method="GET"><img name="hotels"/></a></td>
+        <td><a th:href="@{'/offer/search'}" th:method="GET"><img name="offers"/></a></td>
+    </tr>
+    </tbody>
+    <thead th:if="${role}=='[ROLE_ADMIN]'">
+    <tr>
+        <th>Users</th>
+        <th>Orders</th>
+    </tr>
+    </thead>
+    <tbody th:if="${role}=='[ROLE_ADMIN]'">
+    <tr>
+        <td><a th:href="@{'/user/search'}" th:method="GET"><img name="users"/></a></td>
+        <td><a th:href="@{'/orders/search'}" th:method="GET"><img name="orders"/></a></td>
+    </tr>
+    </tbody>
+</table>
+<h2>
+    <a th:href="@{/logout}">Logout</a>
+</h2>
 </body>
 </html>

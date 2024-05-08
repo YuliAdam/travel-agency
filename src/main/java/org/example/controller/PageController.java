@@ -2,15 +2,13 @@ package org.example.controller;
 
 import org.example.controller.request.HotelRequest;
 import org.example.controller.request.OfferRequest;
+import org.example.controller.request.OrdersRequest;
 import org.example.controller.request.UserRequest;
 import org.example.controller.response.HotelResponse;
 import org.example.entity.characteristic.Country;
 import org.example.entity.characteristic.Transport;
 import org.example.entity.characteristic.Type;
-import org.example.service.CustomUserDetailsService;
-import org.example.service.HotelService;
-import org.example.service.OfferService;
-import org.example.service.UserService;
+import org.example.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +31,8 @@ public class PageController {
     private UserService userService;
     @Autowired
     private OfferService offerService;
+    @Autowired
+    private OrdersService ordersService;
 
     @GetMapping("/hotels")
     public ModelAndView viewHomePageHotel(Model model) {
@@ -59,6 +59,17 @@ public class PageController {
         model.addAttribute("hotels", hotelService.getAllHotel());
         return new ModelAndView("offers", "offers", offerService.getAllOffer());
     }
+    @GetMapping("/orders")
+    public ModelAndView viewHomePageOrders(Model model) {
+        model.addAttribute("types", Type.values());
+        model.addAttribute("transports", Transport.values());
+        model.addAttribute("countries", Country.values());
+        model.addAttribute("offers", offerService.getAllOffer());
+        model.addAttribute("hotels", hotelService.getAllHotel());
+        model.addAttribute("orders", ordersService.getAllOrder());
+        model.addAttribute("order", new OrdersRequest());
+        return new ModelAndView("orders", "orders", ordersService.getAllOrder());
+    }
     @GetMapping("/login")
     public ModelAndView viewHomePageLogin(Model model) {
         model.addAttribute("user", new UserRequest());
@@ -66,6 +77,8 @@ public class PageController {
     }
     @GetMapping("/menu")
     public ModelAndView viewHomePageMenu(Model model) {
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("menu");
     }
 

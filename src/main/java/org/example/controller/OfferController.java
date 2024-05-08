@@ -9,7 +9,9 @@ import org.example.entity.characteristic.Type;
 import org.example.repository.HotelRepository;
 import org.example.service.HotelService;
 import org.example.service.OfferService;
+import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,15 +22,19 @@ import java.util.List;
 @RequestMapping("/offer")
 public class OfferController {
     @Autowired
-    OfferService offerService;
+    private OfferService offerService;
     @Autowired
-    HotelService hotelService;
+    private HotelService hotelService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/search")
     public ModelAndView getOffers(Model model, @RequestParam(required = false, defaultValue = "") String paramtr,
                                   @RequestParam(required = false, defaultValue = "start") String sort,
                                   @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                   @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         model.addAttribute("paramtr", paramtr);
         model.addAttribute("sort", sort);
         model.addAttribute("pageNumber", pageNumber);

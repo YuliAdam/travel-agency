@@ -1,8 +1,10 @@
 package org.example.controller;
 
 import org.example.controller.request.UserRequest;
+import org.example.entity.characteristic.Role;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,10 +22,12 @@ public class UserController {
                                         @RequestParam(required = false,defaultValue = "user_name") String sort,
                                         @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                         @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("paramtr",paramtr );
         model.addAttribute("sort",sort );
         model.addAttribute("pageNumber",pageNumber );
         model.addAttribute("pageSize",pageSize );
+        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("users","users",userService.findUsers(paramtr, sort, pageNumber, pageSize));
     }
     @GetMapping("/redirect/create")
@@ -33,6 +37,9 @@ public class UserController {
     }
     @GetMapping(value = "/{id}/redirect/update")
     public ModelAndView getUser(@PathVariable Long id, Model model) {
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        model.addAttribute("allRoles", Role.values());
         return new ModelAndView("user", "user", userService.getUser(id));
     }
 
@@ -42,6 +49,7 @@ public class UserController {
                                    @RequestParam(required = false,defaultValue = "user_name") String sort,
                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                    @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("paramtr",paramtr );
         model.addAttribute("sort",sort );
         model.addAttribute("pageNumber",pageNumber );
@@ -74,12 +82,16 @@ public class UserController {
                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                    @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
         paramtr= userRequest.getUserName();
+        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("paramtr",paramtr );
         model.addAttribute("sort",sort );
         model.addAttribute("pageNumber",pageNumber );
         model.addAttribute("pageSize",pageSize );
         userService.updateUser(userRequest.getId(),userRequest);
         model.addAttribute("user", new UserRequest());
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        model.addAttribute("allRoles", Role.values());
         return new ModelAndView("users","users",userService.findUsers(paramtr, sort, pageNumber, pageSize));
     }
 }

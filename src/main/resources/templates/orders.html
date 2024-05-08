@@ -13,7 +13,7 @@
         border: 1px solid black;
         border-collapse: collapse;
         font: verdana 50px;
-        font-size:15px;
+        font-size: 15px;
     }
     td {
         padding: 5px;
@@ -25,8 +25,19 @@
         font-weight: bold;
         font-size: 20px;
     }
+    table[name="secondary"]{
+        width : 100%;
+        padding: 5px;
+        text-align: center;
+    }
+    th[name="secondary"] {
+        color: black;
+        text-align: center;
+        font-weight: bold;
+        font-size: 15px;
+    }
     body{
-        background-image: linear-gradient(180deg,rgba(250,100,64,0.5),rgba(50,150,180,0.7)),url( "https://www.lasovana.com/public/Files/rif000002/696/valigia.jpg");
+        background-image: linear-gradient(180deg,rgba(250,100,64,0.5),rgba(50,150,180,0.7)),url( "https://comeviaggio.it/wp-content/uploads/2018/06/consigli-su-passaporto-e-documenti-di-viaggio-01-800x533.jpg");
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: cover;
@@ -56,16 +67,6 @@
         background-repeat: no-repeat;
         height:15px;
         width:15px;
-        border:none;
-        border-collapse: collapse;
-    }
-    button[name="info"]{
-        background-image: url(https://cdn.icon-icons.com/icons2/79/PNG/256/info_15260.png);
-        background-size: 50px 50px;
-        background-color:transparent;
-        background-repeat: no-repeat;
-        height:50px;
-        width:50px;
         border:none;
         border-collapse: collapse;
     }
@@ -106,6 +107,16 @@
         color:black;
         font-size: 30px;
     }
+     button[name="info"]{
+        background-image: url(https://cdn.icon-icons.com/icons2/79/PNG/256/info_15260.png);
+        background-size: 50px 50px;
+        background-color:transparent;
+        background-repeat: no-repeat;
+        height:50px;
+        width:50px;
+        border:none;
+        border-collapse: collapse;
+    }
     h3{
         text-align:left;
         color:black;
@@ -113,7 +124,8 @@
     }
 </style>
 <head>
-    <title>Offers</title>
+    <meta charset="UTF-8">
+    <title>Orders</title>
 </head>
 <body>
 <h3>
@@ -126,7 +138,7 @@
     <a th:href="@{'/orders/myOrder'}">Shopping Bag</a>
 </h3>
 <form id="searchForm" role="search" style="text-align:right;" action="#"
-      th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:action="@{/orders/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
       th:method="GET">
     <input type="search" th:value="*{paramtr}" name="paramtr" placeholder="Search"/>
     <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
@@ -135,84 +147,54 @@
     <button id="searchButton"></button>
 </form>
 <form style="text-align:right;" action="#"
-      th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}">
+      th:action="@{/orders/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}">
     <input type="hidden" name="paramtr" th:value=null/>
     <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
     <input type="hidden" name="sort" th:value="${sort}"/>
     <input type="hidden" name="pageSize" th:value="${pageSize}"/>
     <button><img name="close"></button>
 </form>
-<h1 style="text-align:center;"><b>Offers</b></h1>
+<h1 style="text-align:center;"><b>Orders</b></h1>
 <table>
     <thead>
     <tr>
-        <th>Type
+        <th>ID
             <form action="#"
-                  th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                  th:action="@{/orders/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
                 <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
                 <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
                 <input type="hidden" name="pageSize" th:value="${pageSize}"/>
-                <input type="hidden" name="sort" th:value="type"/>
+                <input type="hidden" name="sort" th:value="id"/>
                 <button name="sortButton"></button>
             </form>
         </th>
-        <th>Country
+        <th>User
             <form action="#"
-                  th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                  th:action="@{/orders/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
                 <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
                 <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
                 <input type="hidden" name="pageSize" th:value="${pageSize}"/>
-                <input type="hidden" name="sort" th:value="country"/>
+                <input type="hidden" name="sort" th:value="user_id"/>
                 <button name="sortButton"></button>
             </form>
         </th>
-        <th>Number of the days
+        <th>Offer
             <form action="#"
-                  th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                  th:action="@{/orders/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
                 <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
                 <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
                 <input type="hidden" name="pageSize" th:value="${pageSize}"/>
-                <input type="hidden" name="sort" th:value="num_of_the_days"/>
+                <input type="hidden" name="sort" th:value="offer_id"/>
                 <button name="sortButton"></button>
             </form>
         </th>
-        <th>Start trip
+        <th>Order Date
             <form action="#"
-                  th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                  th:action="@{/orders/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
                 <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
                 <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
                 <input type="hidden" name="pageSize" th:value="${pageSize}"/>
-                <input type="hidden" name="sort" th:value="start"/>
-                <button name="sortButton"></button>
-            </form>
-        </th>
-        <th>Transport
-            <form action="#"
-                  th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
-                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
-                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
-                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
-                <input type="hidden" name="sort" th:value="transport"/>
-                <button name="sortButton"></button>
-            </form>
-        </th>
-        <th>Hotel
-            <form action="#"
-                  th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
-                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
-                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
-                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
-                <input type="hidden" name="sort" th:value="id_hotel"/>
-                <button name="sortButton"></button>
-            </form>
-        </th>
-        <th>Price ($)
-            <form action="#"
-                  th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
-                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
-                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
-                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
-                <input type="hidden" name="sort" th:value="price"/>
+                <input type="hidden" name="sort" th:value="order_date"/>
                 <button name="sortButton"></button>
             </form>
         </th>
@@ -221,45 +203,76 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="offer : ${offers}">
-        <td><span th:text="${offer.type}">Type</span></td>
-        <td><span th:text="${offer.country}"> Country </span></td>
-        <td><span th:text="${offer.numOfTheDays}"> Number of the days </span></td>
-        <td><span th:text="${offer.start}">Start trip</span></td>
-        <td><span th:text="${offer.transport}">Transport</span></td>
-        <td> <span th:if="${offer.hotelId!=null}">
-            <span th:each="hotel : ${hotels}" th:if="${hotel.id}==${offer.hotelId}">
+    <tr th:each="order : ${orders}">
+        <td><span th:text="${order.id}">ID</span></td>
+        <td><span th:each="user : ${users}" th:if="${user.id}==${order.userId}">
             <form action="#"
-                  th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
-                <input type="hidden" th:value="${hotel.name}" name="paramtr"/>
+                  th:action="@{/user/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="${user.login}" name="paramtr"/>
                 <input type="hidden" name="pageNumber" th:value="0"/>
                 <input type="hidden" name="pageSize" th:value="10"/>
-                <input type="hidden" name="sort" th:value="country"/>
-                <button th:text="${hotel.name}" name="info"></button>
+                <input type="hidden" name="sort" th:value="id"/>
+                <button name="info" th:text="${user.userName}"></button>
             </form>
             </span>
-            </span>
-            <span th:if="${offer.hotelId==null}">---</span>
         </td>
-        <td><span th:text="${offer.price}">Price ($)</span></td>
-        <td th:if="${role}=='[ROLE_ADMIN]'"><a th:href="@{'/offer/{id}/redirect/update'(id=${offer.id})}">
+        <td><span th:each="offer : ${offers}" th:if="${offer.id}==${order.offerId}">
+            <table name="secondary">
+                <thead>
+                <tr>
+                    <th name="secondary">Type</th>
+                    <th name="secondary">Country</th>
+                    <th name="secondary">Number of the days</th>
+                    <th name="secondary">Start trip</th>
+                    <th name="secondary">Transport</th>
+                    <th name="secondary">Hotel</th>
+                    <th name="secondary">Price ($)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><span th:text="${offer.type}"> Type </span></td>
+                    <td><span th:text="${offer.country}"> Country </span></td>
+                    <td><span th:text="${offer.numOfTheDays}"> Number of the days </span></td>
+                    <td><span th:text="${offer.start}">Start trip</span></td>
+                    <td><span th:text="${offer.transport}">Transport</span></td>
+                    <td> <span th:if="${offer.hotelId!=null}">
+                        <span th:each="hotel : ${hotels}" th:if="${hotel.id}==${offer.hotelId}">
+                        <form action="#"
+                              th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                            <input type="hidden" th:value="${hotel.name}" name="paramtr"/>
+                            <input type="hidden" name="pageNumber" th:value="0"/>
+                            <input type="hidden" name="pageSize" th:value="10"/>
+                            <input type="hidden" name="sort" th:value="country"/>
+                            <button name="info" th:text="${hotel.name}"></button>
+                        </form>
+                        </span>
+                        </span>
+                        <span th:if="${offer.hotelId==null}">---</span>
+                    </td>
+                    <td><span th:text="${offer.price}">Price ($)</span></td>
+                </tr>
+                </tbody>
+            </table>
+            </span>
+        </td>
+        <td><span th:text="${order.orderDate}">Order Date</span></td>
+        <td th:if="${role}=='[ROLE_ADMIN]'"><a th:href="@{'/orders/{id}/redirect/update'(id=${order.id})}">
             <span th:text="Update">Update</span>
         </a></td>
         <td th:if="${role}=='[ROLE_ADMIN]'">
-            <form action="#" th:action="@{'/offer/{id}/delete'(id=${offer.id})}" th:object="${offer}"
+            <form action="#" th:action="@{'/orders/{id}/delete'(id=${order.id})}" th:object="${order}"
                   th:method="DELETE">
-                <input type="hidden" ,value="${offer}">
+                <input type="hidden" value="${order}">
                 <button type="submit" name="delete button"></button>
             </form>
         </td>
     </tr>
     </tbody>
 </table>
-<p><a th:if="${role}=='[ROLE_ADMIN]'" th:href="@{'/offer/redirect/create'}" th:object="${offer}" th:method="GET">Add
-    Offer</a>
-</p>
+
 <form style="text-align:right;" action="#" th:if="${pageNumber &gt; 0}"
-      th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:action="@{/orders/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
       th:method="GET">
     <input type="hidden" name="paramtr" th:value="${paramtr}">
     <input type="hidden" name="pageSize" th:value="${pageSize}">
@@ -269,7 +282,7 @@
 </form>
 
 <form style="text-align:right;" action="#"
-      th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:action="@{/orders/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
       th:method="GET">
     <input type="hidden" name="paramtr" th:value="${paramtr}">
     <input type="hidden" name="pageSize" th:value="${pageSize}">
@@ -278,7 +291,7 @@
     <button name="pageNumber" type="submit"><span th:text="${pageNumber}+1"/></button>
 </form>
 <form style="text-align:right;" action="#"
-      th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:action="@{/orders/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
       th:method="GET">
     <input type="hidden" name="paramtr" th:value="${paramtr}">
     <input type="hidden" name="pageSize" th:value="${pageSize}">
@@ -288,7 +301,7 @@
 </form>
 
 <form style="text-align:right;" action="#"
-      th:action="@{/offer/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
+      th:action="@{/orders/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
       th:method="GET">
     <input type="hidden" name="paramtr" th:value="${paramtr}">
     <input type="hidden" name="pageNumber" th:value="${pageNumber}">

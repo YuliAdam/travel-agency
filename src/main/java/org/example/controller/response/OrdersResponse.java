@@ -9,17 +9,17 @@ import java.sql.Timestamp;
 public class OrdersResponse {
     private Long id;
 
-    private Users user;
+    private Long userId;
 
-    public Users getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser( Users user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    private Offer offer;
+    private Long offerId;
 
     private Timestamp orderDate;
 
@@ -31,12 +31,12 @@ public class OrdersResponse {
         this.id = id;
     }
 
-    public Offer getOffer() {
-        return offer;
+    public Long getOfferId() {
+        return offerId;
     }
 
-    public void setOffer( Offer offer) {
-        this.offer = offer;
+    public void setOfferId(Long offerId) {
+        this.offerId = offerId;
     }
 
     public Timestamp getOrderDate() {
@@ -47,12 +47,9 @@ public class OrdersResponse {
     }
     public OrdersResponse(Orders orders) {
         this.id = orders.getId();
-        this.user=orders.getUser();
-        this.offer=orders.getOffer();
+        this.userId=orders.getUser().getId();
+        this.offerId=orders.getOffer().getId();
         this.orderDate = orders.getOrderDate();
-    }
-    public OrdersResponse(Users user) {
-        this.user=user;
     }
 
     public OrdersResponse() {}

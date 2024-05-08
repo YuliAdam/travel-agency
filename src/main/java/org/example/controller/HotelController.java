@@ -4,6 +4,7 @@ import org.example.controller.request.HotelRequest;
 import org.example.entity.Hotel;
 import org.example.entity.characteristic.Country;
 import org.example.service.HotelService;
+import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -23,16 +24,18 @@ public class HotelController {
     @Value("${spring.datasource.url}")
     private String url;
     @Autowired
-    HotelService hotelService;
+    private HotelService hotelService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/search")
-    public ModelAndView getHotels(Model model, @RequestParam(required = false, defaultValue = "") String paramtr,
+    public ModelAndView getHotels(Model model,
+                                  @RequestParam(required = false) String paramtr,
                                   @RequestParam(required = false, defaultValue = "name") String sort,
                                   @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                   @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
-
-        String authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
-        model.addAttribute("role",authorities);
+        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         model.addAttribute("paramtr", paramtr);
         model.addAttribute("sort", sort);
         model.addAttribute("pageNumber", pageNumber);
@@ -62,7 +65,7 @@ public class HotelController {
 
     @DeleteMapping("/{id}/delete")
     public ModelAndView deleteHotel(@PathVariable Long id, Model model,
-                                    @RequestParam(required = false, defaultValue = "") String paramtr,
+                                    @RequestParam(required = false) String paramtr,
                                     @RequestParam(required = false, defaultValue = "name") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                     @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
@@ -78,7 +81,7 @@ public class HotelController {
 
     @PostMapping("/create")
     public ModelAndView createHotel(@ModelAttribute("hotel") HotelRequest hotel, Model model,
-                                    @RequestParam(required = false, defaultValue = "") String paramtr,
+                                    @RequestParam(required = false) String paramtr,
                                     @RequestParam(required = false, defaultValue = "name") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                     @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
@@ -95,7 +98,7 @@ public class HotelController {
 
     @PutMapping("/update")
     public ModelAndView updateHotel(@ModelAttribute("hotel") HotelRequest hotel, Model model,
-                                    @RequestParam(required = false, defaultValue = "") String paramtr,
+                                    @RequestParam(required = false) String paramtr,
                                     @RequestParam(required = false, defaultValue = "name") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                     @RequestParam(required = false, defaultValue = "5") Integer pageSize) {

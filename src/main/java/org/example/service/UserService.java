@@ -43,6 +43,9 @@ public class UserService {
     public UserResponse getUser(Long id) {
         return new UserResponse(userRepository.findById(id).get());
     }
+    public UserResponse getUserByLogin(String login) {
+        return new UserResponse(userRepository.findByLogin(login));
+    }
 
     public String deleteUser(Long id) {
         try {

@@ -10,17 +10,9 @@ public class OrdersRequest {
 
     private Long id;
 
-    private Users user;
+    private Long userId;
 
-    public Users getUser() {
-        return user;
-    }
-
-    public void setUser( Users user) {
-        this.user = user;
-    }
-
-    private Offer offer;
+    private Long offerId;
 
     private Timestamp orderDate;
 
@@ -32,12 +24,20 @@ public class OrdersRequest {
         this.id = id;
     }
 
-    public Offer getOffer() {
-        return offer;
+    public void setOfferId(Long offerId) {
+        this.offerId = offerId;
     }
 
-    public void setOffer( Offer offer) {
-        this.offer = offer;
+    public Long getOfferId() {
+        return offerId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     public Timestamp getOrderDate() {
@@ -46,10 +46,10 @@ public class OrdersRequest {
     public void setOrderDate( Timestamp orderDate) {
         this.orderDate = orderDate;
     }
-    public OrdersRequest(Long id, Users user, Offer offer) {
+    public OrdersRequest(Long id, Long userId, Long offerId) {
         this.id = id;
-        this.user=user;
-        this.offer=offer;
+        this.userId=userId;
+        this.offerId=offerId;
         this.orderDate = new Timestamp(new Date().getTime());
     }
 

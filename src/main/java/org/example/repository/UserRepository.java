@@ -17,6 +17,8 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     List<Users> findUsers(@Param("paramtr")String paramtr, PageRequest page);
     Users findByLogin(String login);
 
+
+
 }
 
 

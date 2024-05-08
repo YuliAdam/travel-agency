@@ -30,7 +30,9 @@ public class SecurityConfig {
         http.userDetailsService(customUserDetailsService)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers("/user/redirect/create","/user/create").permitAll()
-                        .requestMatchers("/user/search").hasRole("ADMIN")
+                        .requestMatchers("/user/search","/hotel/create","/hotel/update","/hotel/delete",
+                                "/hotel/redirect/**","/offer/create","/offer/update","/offer/delete",
+                                "/offer/redirect/**","/orders/search").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/login").permitAll()

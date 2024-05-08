@@ -1,31 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <style>
-    h1{
-font-size: 40px;
-color:red;
-text-align:center;
-}
-body{
-background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://static.vecteezy.com/ti/vettori-gratis/p3/29337463-uomo-e-donna-vuoto-avatar-impostare-predefinito-foto-segnaposto-per-sociale-reti-riprende-forum-e-incontri-siti-maschio-e-femmina-no-foto-immagini-per-non-riempito-utente-profilo-vettore-illustrazione-vettoriale.jpg");
-background-repeat: no-repeat;
-background-attachment: fixed;
-background-size: cover;
-}
+     h1{
+        font-size: 40px;
+        color:red;
+        text-align:center;
+     }
+        body{
+        background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://static.vecteezy.com/ti/vettori-gratis/p3/29337463-uomo-e-donna-vuoto-avatar-impostare-predefinito-foto-segnaposto-per-sociale-reti-riprende-forum-e-incontri-siti-maschio-e-femmina-no-foto-immagini-per-non-riempito-utente-profilo-vettore-illustrazione-vettoriale.jpg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+     }
+     h2{
+        text-align:left;
+        position:down;
+        color:black;
+        font-size: 30px;
+    }
+    h3{
+        text-align:left;
+        color:black;
+        font-size: 30px;
+    }
 </style>
 <head>
     <meta charset="UTF-8">
-    <title>Update Hotel</title>
+    <title>Update User</title>
 </head>
 <body>
+<h3>
+    <a th:href="@{'/menu'}">Menu</a>
+</h3>
 <h1 style="text-align:center;"><b>UPDATE USER </b></h1>
 <form style="text-align:center;" action="#" th:action="@{/user/update}" th:object="${user}" th:method="put">
     <input type="text" th:field="*{id}" hidden="true"/>
-    <input type="text" th:field="*{password}" hidden="true"/>
-    <input type="text" th:field="*{role}" hidden="true"/>
-    <input type="text" th:field="*{login}" hidden="true"/>
-    <p>Name: <input type="text" th:field="*{userName}"/></p>
-    <p>Tell: <input type="text" placeholder="+39 3806959384" pattern="[1-9+]{5,12}" th:field="*{tell}"/></p>
+    <div th:if="*{id}==${currentUserId}">
+        <p>Name: <input type="text" th:field="*{userName}"/></p>
+        <p>Login:<label for="email"></label>
+            <input type="email" id="email" name="login" placeholder="you@email.com"
+                   pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/" th:field="*{login}"/></p>
+        <p>Password: <input type="text" th:field="*{password}"/></p>
+        <p>Tell: <input type="text" placeholder="+39 3806959384" pattern="[1-9+]{5,12}" th:field="*{tell}"/></p>
+    </div>
+    <div th:if="*{login}!=${login}">
+        <input type="text" th:field="*{userName}" hidden="true"/>
+        <input type="text" th:field="*{login}" hidden="true"/>
+        <input type="text" th:field="*{password}" hidden="true"/>
+        <input type="text" th:field="*{tell}" hidden="true"/>
+    </div>
+    <div th:if="${role}=='[ROLE_ADMIN]'">
+        <p>Role: <select th:field="*{role}">
+            <option th:each="role : ${allRoles}"
+                    th:value="${role}"
+                    th:text="${role}"> Country
+            </option>
+        </select></p>
+    </div>
+    <input th:if="${role}=='[ROLE_USER]'" type="text" th:field="*{role}" hidden="true"/>
     <p><input type="submit" value="Update User"/></p>
 </form>
 </body>

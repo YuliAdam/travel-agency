@@ -6,7 +6,9 @@ import org.example.controller.response.OrdersResponse;
 import org.example.controller.response.UserResponse;
 import org.example.entity.Orders;
 import org.example.entity.Users;
+import org.example.repository.OfferRepository;
 import org.example.repository.OrdersRepository;
+import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +23,11 @@ import java.util.NoSuchElementException;
 @Service
 public class OrdersService {
     @Autowired
-    OrdersRepository ordersRepository;
+    private OrdersRepository ordersRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private OfferRepository offerRepository;
 
     public List<OrdersResponse> getAllOrder() {
         return ordersRepository.findAllOrders().stream().map(OrdersResponse::new).toList();
@@ -39,10 +45,11 @@ public class OrdersService {
                     .toList();
         }
     }
-
-
     public List<OrdersResponse> findById(Long id) {
         return ordersRepository.findAll().stream().map(OrdersResponse::new).filter(orders -> orders.getId() == id).toList();
+    }
+    public List<OrdersResponse> findOrderByUserId(Long id){
+        return ordersRepository.findOrderByUserId(id).stream().map(OrdersResponse::new).toList();
     }
 
     public String deleteOrder(Long id) {
@@ -58,7 +65,7 @@ public class OrdersService {
 
     public OrdersResponse createOrder(OrdersRequest ordersRequest) {
         try {
-            Orders orders = new Orders(ordersRepository.findUserById(ordersRequest.getUserId()), ordersRepository.findOfferById(ordersRequest.getOfferId()));
+            Orders orders = new Orders(userRepository.findUserById(ordersRequest.getUserId()), offerRepository.findOfferById(ordersRequest.getOfferId()));
             orders.setOrderDate(new Timestamp(new Date().getTime()));
             return new OrdersResponse(ordersRepository.save(orders));
         } catch (DataIntegrityViolationException e) {
@@ -70,8 +77,8 @@ public class OrdersService {
     public OrdersResponse updateOrder(Long id, OrdersRequest ordersRequest) {
         try {
             Orders existingOrders = ordersRepository.findById(id).get();
-            existingOrders.setUser(ordersRepository.findUserById(ordersRequest.getUserId()));
-            existingOrders.setOffer(ordersRepository.findOfferById(ordersRequest.getOfferId()));
+            existingOrders.setUser(userRepository.findUserById(ordersRequest.getUserId()));
+            existingOrders.setOffer(offerRepository.findOfferById(ordersRequest.getOfferId()));
             return new OrdersResponse(ordersRepository.save(existingOrders));
         } catch (NoSuchElementException e) {
             System.out.println("Error. Class OrdersService. Order not found. " + e);

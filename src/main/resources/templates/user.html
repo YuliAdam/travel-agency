@@ -43,7 +43,7 @@
         <p>Password: <input type="text" th:field="*{password}"/></p>
         <p>Tell: <input type="text" placeholder="+39 3806959384" pattern="[1-9+]{5,12}" th:field="*{tell}"/></p>
     </div>
-    <div th:if="*{login}!=${login}">
+    <div th:if="*{id}!=${currentUserId}">
         <input type="text" th:field="*{userName}" hidden="true"/>
         <input type="text" th:field="*{login}" hidden="true"/>
         <input type="text" th:field="*{password}" hidden="true"/>

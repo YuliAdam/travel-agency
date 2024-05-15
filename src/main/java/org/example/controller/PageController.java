@@ -81,6 +81,9 @@ public class PageController {
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("menu");
     }
-
+    @GetMapping("/exception")
+    public ModelAndView viewHomePageException(Model model) {
+        return new ModelAndView("exceptionPage");
+    }
 
 }

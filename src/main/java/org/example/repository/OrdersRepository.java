@@ -22,6 +22,6 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
     List<Orders> findOrders(@Param("paramtr")String paramtr, PageRequest page);
     @Query(value = "SELECT * FROM touristvoucher.user WHERE id=:userId", nativeQuery = true)
     public Users findUserById (@Param("userId") Long userId);
-    @Query(value = "SELECT * FROM touristvoucher.offer WHERE id=:offerId", nativeQuery = true)
-    public Offer findOfferById (@Param("offerId") Long offerId);
+    @Query(value = "SELECT * FROM touristvoucher.orders WHERE user_id=:id", nativeQuery = true)
+    public List<Orders> findOrderByUserId (@Param("id") Long id);
 }

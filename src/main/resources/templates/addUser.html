@@ -28,13 +28,14 @@
 </h3>
 <h1><b>ADD NEW USER </b></h1>
 <form style="text-align:center;" action="#" th:action="@{/user/create}" th:object="${user}" th:method="POST">
-    <p>Name: <input type="text" th:field="*{userName}"/></p>
+    <p>Name: <input type="text" required th:field="*{userName}"/></p>
     <p>Login:<label for="email"></label>
         <input type="email" id="email" name="login" placeholder="you@email.com"
-               pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/" th:field="*{login}"/></p>
-    <p>Tell: <input type="text" placeholder="+39 3806959384" pattern="[0-9+]{5,12}" th:field="*{tell}"/></p>
-    <p>Password: <input type="text" th:field="*{password}"/></p>
+               pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/" required th:field="*{login}"/></p>
+    <p>Tell: <input type="text" placeholder="+39 3806959384" pattern="[0-9+]{5,12}" required th:field="*{tell}"/></p>
+    <p>Password: <input type="text" minlength="4" required th:field="*{password}"/></p>
     <p><input type="submit" value="Save User"/></p>
+
 </form>
 </body>
 </html>

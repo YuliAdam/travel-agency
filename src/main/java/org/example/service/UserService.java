@@ -58,14 +58,9 @@ public class UserService {
         }
     }
     public UserResponse createUser(UserRequest userRequest) {
-        try {
             Users user = new Users(userRequest.getUserName(), userRequest.getLogin(), userRequest.getTell()
                     ,new BCryptPasswordEncoder(12).encode(userRequest.getPassword()), Role.USER);
             return new UserResponse(userRepository.save(user));
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("Error. Class UserService. User_name cannot be null. " + e);
-            return new UserResponse("User_name cannot be null. " + e);
-        }
     }
 
     public UserResponse updateUser(Long id, UserRequest userRequest) {
@@ -80,9 +75,6 @@ public class UserService {
         } catch (NoSuchElementException e) {
             System.out.println("Error. Class UserService. User not found. " + e);
             return new UserResponse("User not found. " + e);
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("Error. Class UserService. User_name cannot be null. " + e);
-            return new UserResponse("User_name cannot be null. " + e);
         }
     }
 

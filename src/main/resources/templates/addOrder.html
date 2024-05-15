@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<style>
+    h1{
+        font-size: 40px;
+        color:red;
+        text-align:center;
+    }
+    body{
+        background-image: linear-gradient(180deg,rgba(250,100,64,0.5),rgba(50,150,180,0.7)),url( "https://comeviaggio.it/wp-content/uploads/2018/06/consigli-su-passaporto-e-documenti-di-viaggio-01-800x533.jpg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+    h3{
+        text-align:left;
+        color:black;
+        font-size: 30px;
+    }
+    table{
+        width : 100%;
+    }
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        font: verdana 50px;
+        font-size:15px;
+    }
+    td {
+        padding: 5px;
+        text-align: center;
+    }
+    th {
+        color: red;
+        text-align: center;
+        font-weight: bold;
+        font-size: 20px;
+    }
+    button[name="info"]{
+        background-image: url(https://cdn.icon-icons.com/icons2/79/PNG/256/info_15260.png);
+        background-size: 50px 50px;
+        background-color:transparent;
+        background-repeat: no-repeat;
+        height:50px;
+        width:50px;
+        border:none;
+        border-collapse: collapse;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Add Order</title>
+</head>
+<body>
+<h1 style="text-align:center"><b>Buy Offer</b></h1>
+<b>
+    <table>
+        <thead>
+        <tr>
+            <th>Type</th>
+            <th>Country</th>
+            <th>Number of the days</th>
+            <th>Start trip</th>
+            <th>Transport</th>
+            <th>Hotel</th>
+            <th>Price ($)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="offer : ${offerByCurrentId}">
+            <td><span th:text="${offer.type}">Type</span></td>
+            <td><span th:text="${offer.country}"> Country </span></td>
+            <td><span th:text="${offer.numOfTheDays}"> Number of the days </span></td>
+            <td><span th:text="${offer.start}">Start trip</span></td>
+            <td><span th:text="${offer.transport}">Transport</span></td>
+            <td> <span th:if="${offer.hotelId!=null}">
+            <span th:each="hotel : ${hotels}" th:if="${hotel.id}==${offer.hotelId}">
+            <form action="#"
+                  th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
+                <input type="hidden" th:value="${hotel.name}" name="paramtr"/>
+                <input type="hidden" name="pageNumber" th:value="0"/>
+                <input type="hidden" name="pageSize" th:value="10"/>
+                <input type="hidden" name="sort" th:value="country"/>
+                <button th:text="${hotel.name}" name="info"></button>
+            </form>
+            </span>
+            </span>
+                <span th:if="${offer.hotelId==null}">---</span>
+            </td>
+            <td><span th:text="${offer.price}">Price ($)</span></td>
+        </tr>
+        </tbody>
+    </table>
+    <form style="text-align:center;" action="#" th:action="@{/orders/create}" th:object="${order}" th:method="POST">
+        <input type="text" th:value="${offerId}" name="offerId" hidden="hidden"/>
+        <input type="text" th:value="${currentUserId}" name="userId" hidden="hidden"/>
+        <p><input type="submit" value="Confirm"/></p>
+    </form>
+</b>
+</body>
+</html>

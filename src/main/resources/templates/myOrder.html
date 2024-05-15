@@ -158,41 +158,14 @@
 <table>
     <thead>
     <tr>
-        <th>User
-            <form action="#"
-                  th:action="@{/orders/myOrder?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
-                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
-                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
-                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
-                <input type="hidden" name="sort" th:value="user_id"/>
-                <button name="sortButton"></button>
-            </form>
-        </th>
-        <th>Offer
-            <form action="#"
-                  th:action="@{/orders/myOrder?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
-                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
-                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
-                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
-                <input type="hidden" name="sort" th:value="offer_id"/>
-                <button name="sortButton"></button>
-            </form>
-        </th>
-        <th>Order Date
-            <form action="#"
-                  th:action="@{/orders/myOrder?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}}">
-                <input type="hidden" th:value="*{paramtr}" name="paramtr"/>
-                <input type="hidden" name="pageNumber" th:value="${pageNumber}"/>
-                <input type="hidden" name="pageSize" th:value="${pageSize}"/>
-                <input type="hidden" name="sort" th:value="order_date"/>
-                <button name="sortButton"></button>
-            </form>
-        </th>
+        <th>User</th>
+        <th>Offer</th>
+        <th>Order Date</th>
         <th hidden="hidden">Delete</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="order : ${orders}" th:if="${order.userId}==${currentUserId}">
+    <tr th:each="order : ${orderByCurrentUserId}">
         <td><span th:each="user : ${users}" th:if="${user.id}==${order.userId}">
                 <span th:text="${user.userName}">User</span>
             </span>
@@ -245,7 +218,6 @@
                 <button type="submit" name="delete button"></button>
             </form>
         </td>
-        </div>
     </tr>
     </tbody>
 </table>

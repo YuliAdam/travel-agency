@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.controller.request.OfferRequest;
+import org.example.controller.request.OrdersRequest;
 import org.example.controller.response.HotelResponse;
 import org.example.controller.response.OfferResponse;
 import org.example.entity.characteristic.Country;
@@ -35,6 +36,7 @@ public class OfferController {
                                   @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+
         model.addAttribute("paramtr", paramtr);
         model.addAttribute("sort", sort);
         model.addAttribute("pageNumber", pageNumber);
@@ -45,6 +47,8 @@ public class OfferController {
         model.addAttribute("offer", new OfferRequest());
         model.addAttribute("hotelId", offerService.getAllHotelId());
         model.addAttribute("hotels", hotelService.getAllHotel());
+
+        model.addAttribute("order", new OrdersRequest());
         return new ModelAndView("offers", "offers", offerService.findOffers(paramtr, sort, pageNumber, pageSize));
     }
 
@@ -83,6 +87,10 @@ public class OfferController {
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
         model.addAttribute("offer", new OfferRequest());
+
+        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        model.addAttribute("hotels", hotelService.getAllHotel());
         return new ModelAndView("offers", "offers", offerService.findOffers(paramtr, sort, pageNumber, pageSize));
     }
 
@@ -103,6 +111,9 @@ public class OfferController {
         model.addAttribute("countries", Country.values());
         model.addAttribute("hotels", hotelService.getAllHotel());
         model.addAttribute("offer", new OfferRequest());
+
+        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("offers", "offers", offerService.findOffers(paramtr, sort, pageNumber, pageSize));
     }
 
@@ -124,6 +135,8 @@ public class OfferController {
         model.addAttribute("hotelId", offerService.getAllHotelId());
         model.addAttribute("hotels", hotelService.getAllHotel());
         model.addAttribute("offer", new OfferRequest());
+        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("offers", "offers", offerService.findOffers(paramtr, sort, pageNumber, pageSize));
     }
 }

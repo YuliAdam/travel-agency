@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import jakarta.validation.Valid;
 import org.example.controller.request.HotelRequest;
 import org.example.entity.Hotel;
 import org.example.entity.characteristic.Country;
@@ -11,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,6 +22,7 @@ import java.util.Stack;
 
 @RestController
 @RequestMapping("/hotel")
+@Validated
 public class HotelController {
     @Value("${spring.datasource.url}")
     private String url;
@@ -76,11 +79,13 @@ public class HotelController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("countries", Country.values());
         model.addAttribute("hotel", new HotelRequest());
+        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("hotels", "hotels", hotelService.findHotels(paramtr, sort, pageNumber, pageSize));
     }
 
     @PostMapping("/create")
-    public ModelAndView createHotel(@ModelAttribute("hotel") HotelRequest hotel, Model model,
+    public ModelAndView createHotel(@ModelAttribute("hotel") @Valid HotelRequest hotel, Model model,
                                     @RequestParam(required = false) String paramtr,
                                     @RequestParam(required = false, defaultValue = "name") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
@@ -93,11 +98,13 @@ public class HotelController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("countries", Country.values());
         model.addAttribute("hotel", new HotelRequest());
+        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("hotels", "hotels", hotelService.findHotels(paramtr, sort, pageNumber, pageSize));
     }
 
     @PutMapping("/update")
-    public ModelAndView updateHotel(@ModelAttribute("hotel") HotelRequest hotel, Model model,
+    public ModelAndView updateHotel(@ModelAttribute("hotel") @Valid HotelRequest hotel, Model model,
                                     @RequestParam(required = false) String paramtr,
                                     @RequestParam(required = false, defaultValue = "name") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
@@ -110,6 +117,8 @@ public class HotelController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("countries", Country.values());
         model.addAttribute("hotel", new HotelRequest());
+        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("hotels", "hotels", hotelService.findHotels(paramtr, sort, pageNumber, pageSize));
     }
 }

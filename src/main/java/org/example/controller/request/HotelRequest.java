@@ -1,128 +1,32 @@
 package org.example.controller.request;
 
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.entity.characteristic.Country;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class HotelRequest {
     private Long id;
+    @NotNull
     private Country country;
-
+    @NotBlank(message = "Name cannot be empty")
+    @Size(min=1,max=50, message = "Country name is not valid. Max 50 chars.")
     private String name;
-
+    @NotNull(message = "Star cannot be empty")
+    @Min(value = 1, message = "Min is 1 star")
+    @Max(value = 5,message = "Max is 5 star")
     private Integer star;
-
+    @Min(value = 1,message = "Min is 1 guest")
+    @Max(value = 200,message = "Max is 200 guest")
     private Integer guest;
-
     private Boolean breakfast;
-
     private Boolean lunch;
-
     private Boolean dinner;
-
     private Boolean tv;
-
     private Boolean airConditioner;
-
     private Boolean balcony;
-
-    public Long getId() {
-        return id;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getStar() {
-        return star;
-    }
-
-    public Integer getGuest() {
-        return guest;
-    }
-
-    public Boolean getBreakfast() {
-        return breakfast;
-    }
-
-    public Boolean getLunch() {
-        return lunch;
-    }
-
-    public Boolean getDinner() {
-        return dinner;
-    }
-
-    public Boolean getTv() {
-        return tv;
-    }
-
-    public Boolean getAirConditioner() {
-        return airConditioner;
-    }
-    public Boolean getBalcony() {
-        return balcony;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setStar(Integer star) {
-        this.star = star;
-    }
-
-    public void setGuest(Integer guest) {
-        this.guest = guest;
-    }
-
-    public void setBreakfast(Boolean breakfast) {
-        this.breakfast = breakfast;
-    }
-
-    public void setLunch(Boolean lunch) {
-        this.lunch = lunch;
-    }
-
-    public void setDinner(Boolean dinner) {
-        this.dinner = dinner;
-    }
-
-    public void setTv(Boolean tv) {
-        this.tv = tv;
-    }
-
-    public void setAirConditioner(Boolean airConditioner) {
-        this.airConditioner = airConditioner;
-    }
-
-    public void setBalcony(Boolean balcony) {
-        this.balcony = balcony;
-    }
-
-    public HotelRequest(Long id, Country country, String name, Integer star, Integer guest, Boolean breakfast, Boolean lunch, Boolean dinner, Boolean tv, Boolean airConditioner, Boolean balcony) {
-        this.id = id;
-        this.country = country;
-        this.name = name;
-        this.star = star;
-        this.guest = guest;
-        this.breakfast = breakfast;
-        this.lunch = lunch;
-        this.dinner = dinner;
-        this.tv = tv;
-        this.airConditioner = airConditioner;
-        this.balcony = balcony;
-    }
-    public HotelRequest(){}
 }

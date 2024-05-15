@@ -111,6 +111,14 @@
         color:black;
         font-size: 30px;
     }
+        img[name="buy"]{
+        background-image: url(https://cdn.icon-icons.com/icons2/1182/PNG/512/1490129319-rounded09_82169.png);
+        background-size: 40px 40px;
+        height:40px;
+        width:40px;
+        border:none;
+        border-collapse: collapse;
+    }
 </style>
 <head>
     <title>Offers</title>
@@ -216,7 +224,8 @@
                 <button name="sortButton"></button>
             </form>
         </th>
-        <th th:if="${role}=='[ROLE_ADMIN]'">Update</th>
+        <th hidden="hidden">Buy</th>
+        <th hidden="hidden" th:if="${role}=='[ROLE_ADMIN]'">Update</th>
         <th hidden="hidden" th:if="${role}=='[ROLE_ADMIN]'">Delete</th>
     </tr>
     </thead>
@@ -242,6 +251,9 @@
             <span th:if="${offer.hotelId==null}">---</span>
         </td>
         <td><span th:text="${offer.price}">Price ($)</span></td>
+        <td><a th:href="@{'/orders/{offerId}/redirect/create'(offerId=${offer.id})}"  th:object="${order}" th:method="GET">
+                <img name="buy"></a>
+        </td>
         <td th:if="${role}=='[ROLE_ADMIN]'"><a th:href="@{'/offer/{id}/redirect/update'(id=${offer.id})}">
             <span th:text="Update">Update</span>
         </a></td>

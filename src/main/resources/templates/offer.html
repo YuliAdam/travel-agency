@@ -43,8 +43,8 @@
         </option>
     </select>
     </p>
-    <p>Number of the days:<input type="number" th:field="*{numOfTheDays}"/></p>
-    <p>Start trip:<input type="date" th:field="*{start}"/></p>
+    <p>Number of the days:<input type="number" max="130" min="1" th:field="*{numOfTheDays}"/></p>
+    <p>Start trip:<input type="date" min="${date}" max="2100-01-01" th:field="*{start}"/></p>
     <p>Transport:<select th:field="*{transport}">
         <option th:each="transport : ${transports}"
                 th:value="${transport}"
@@ -59,7 +59,7 @@
         </option>
     </select>
     </p>
-    <p>Price ($):<input type="text" th:field="*{price}"></p>
+    <p>Price ($):<input type="number" min="1" max="1000000" th:field="*{price}"></p>
     <p><input type="submit" value="Update Offer"/></p>
 </form>
 </body>

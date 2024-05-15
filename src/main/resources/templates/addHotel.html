@@ -35,11 +35,11 @@
         </option>
     </select>
     </p>
-    <p>Name: <input type="text" th:field="*{name}"/></p>
+    <p>Name: <input type="text" minlength="1" maxlength="50" required th:field="*{name}"/></p>
     <p>Star: <label for="quantity"></label>
-        <input type="number" id="quantity" name="quantity" min="1" max="5" th:field="*{star}"/></p>
+        <input type="number" required id="quantity" name="quantity" min="1" max="5" th:field="*{star}"/></p>
     <p>Guest <label for="quantity"></label>
-        <input type="number" id="quantitys" name="quantity" min="1" th:field="*{guest}"/></p>
+        <input type="number" required id="quantitys" name="quantity" min="1" max="100" th:field="*{guest}"/></p>
     <p>Breakfast:<input type="checkbox" name="breakfast" value="1" th:field="*{breakfast}"/>
         Lunch:<input type="checkbox" name="lunch" value="1" th:field="*{lunch}"/>
         Dinner:<input type="checkbox" name="dinner" value="1" th:field="*{dinner}"/>

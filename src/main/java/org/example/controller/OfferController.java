@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import jakarta.validation.Valid;
 import org.example.controller.request.OfferRequest;
 import org.example.controller.request.OrdersRequest;
 import org.example.controller.response.HotelResponse;
@@ -14,13 +15,16 @@ import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/offer")
+@Validated
 public class OfferController {
     @Autowired
     private OfferService offerService;
@@ -95,7 +99,7 @@ public class OfferController {
     }
 
     @PostMapping("/create")
-    public ModelAndView createOffer(@ModelAttribute("offer") OfferRequest offerRequest, Model model,
+    public ModelAndView createOffer(@ModelAttribute("offer") @Valid OfferRequest offerRequest, Model model,
                                     @RequestParam(required = false, defaultValue = "") String paramtr,
                                     @RequestParam(required = false, defaultValue = "start") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
@@ -112,13 +116,14 @@ public class OfferController {
         model.addAttribute("hotels", hotelService.getAllHotel());
         model.addAttribute("offer", new OfferRequest());
 
+        model.addAttribute("date", LocalDate.now());
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("offers", "offers", offerService.findOffers(paramtr, sort, pageNumber, pageSize));
     }
 
     @PutMapping("/update")
-    public ModelAndView updateOffer(@ModelAttribute("offer") OfferRequest offerRequest, Model model,
+    public ModelAndView updateOffer(@ModelAttribute("offer") @Valid OfferRequest offerRequest, Model model,
                                     @RequestParam(required = false, defaultValue = "") String paramtr,
                                     @RequestParam(required = false, defaultValue = "start") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
@@ -135,6 +140,8 @@ public class OfferController {
         model.addAttribute("hotelId", offerService.getAllHotelId());
         model.addAttribute("hotels", hotelService.getAllHotel());
         model.addAttribute("offer", new OfferRequest());
+
+        model.addAttribute("date", LocalDate.now());
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("offers", "offers", offerService.findOffers(paramtr, sort, pageNumber, pageSize));

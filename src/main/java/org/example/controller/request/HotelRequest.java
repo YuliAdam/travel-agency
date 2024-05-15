@@ -17,11 +17,11 @@ public class HotelRequest {
     @Size(min=1,max=50, message = "Country name is not valid. Max 50 chars.")
     private String name;
     @NotNull(message = "Star cannot be empty")
-    @Min(value = 1, message = "Min is 1 star")
-    @Max(value = 5,message = "Max is 5 star")
+    @Min(value = 1, message = "Star is not valid. Min is 1 star")
+    @Max(value = 5,message = "Star is not valid. Max is 5 star")
     private Integer star;
-    @Min(value = 1,message = "Min is 1 guest")
-    @Max(value = 200,message = "Max is 200 guest")
+    @Min(value = 1,message = "Guests number is not valid")
+    @Max(value = 100,message = "Guests number is not valid. Max is 100 guest")
     private Integer guest;
     private Boolean breakfast;
     private Boolean lunch;

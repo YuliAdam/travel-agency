@@ -33,7 +33,7 @@
         <input type="email" id="email" name="login" placeholder="you@email.com"
                pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/" required th:field="*{login}"/></p>
     <p>Tell: <input type="text" placeholder="+39 3806959384" pattern="[0-9+]{5,12}" required th:field="*{tell}"/></p>
-    <p>Password: <input type="text" minlength="4" required th:field="*{password}"/></p>
+    <p>Password: <input type="text" minlength="4" maxlength="12" required th:field="*{password}"/></p>
     <p><input type="submit" value="Save User"/></p>
 
 </form>

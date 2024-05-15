@@ -34,23 +34,23 @@
 </h3>
 <h1 style="text-align:center;"><b>UPDATE USER </b></h1>
 <form style="text-align:center;" action="#" th:action="@{/user/update}" th:object="${user}" th:method="put">
-    <input type="text" th:field="*{id}" hidden="true"/>
+    <input type="text" required th:field="*{id}" hidden="true"/>
     <div th:if="*{id}==${currentUserId}">
-        <p>Name: <input type="text" th:field="*{userName}"/></p>
+        <p>Name: <input type="text" required th:field="*{userName}"/></p>
         <p>Login:<label for="email"></label>
-            <input type="email" id="email" name="login" placeholder="you@email.com"
+            <input type="email" id="email" name="login" required placeholder="you@email.com"
                    pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/" th:field="*{login}"/></p>
-        <p>Password: <input type="text" th:field="*{password}"/></p>
-        <p>Tell: <input type="text" placeholder="+39 3806959384" pattern="[1-9+]{5,12}" th:field="*{tell}"/></p>
+        <p>Password: <input type="text" required minlength="4" maxlength="12" th:field="*{password}"/></p>
+        <p>Tell: <input type="text" required placeholder="+39 3806959384" pattern="[1-9+]{5,12}" th:field="*{tell}"/></p>
     </div>
     <div th:if="*{id}!=${currentUserId}">
-        <input type="text" th:field="*{userName}" hidden="true"/>
-        <input type="text" th:field="*{login}" hidden="true"/>
-        <input type="text" th:field="*{password}" hidden="true"/>
-        <input type="text" th:field="*{tell}" hidden="true"/>
+        <input type="text" required th:field="*{userName}" hidden="true"/>
+        <input type="text" required th:field="*{login}" hidden="true"/>
+        <input type="text" required th:field="*{password}" hidden="true"/>
+        <input type="text" required th:field="*{tell}" hidden="true"/>
     </div>
     <div th:if="${role}=='[ROLE_ADMIN]'">
-        <p>Role: <select th:field="*{role}">
+        <p>Role: <select required th:field="*{role}">
             <option th:each="role : ${allRoles}"
                     th:value="${role}"
                     th:text="${role}"> Country

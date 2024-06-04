@@ -126,6 +126,11 @@
         color:black;
         font-size: 30px;
     }
+    div[name="balance"]{
+        text-align:left;
+        color:black;
+        font-size: 15px;
+    }
 </style>
 <head>
     <title>Hotels</title>
@@ -139,6 +144,10 @@
 </h3>
 <h3>
     <a th:href="@{'/orders/myOrder'}">Shopping Bag</a>
+</h3>
+<h3 th:if="${moneyByCurrentUserId}!=null">
+    <a  th:href="@{'/money/{userId}/redirect/update'(userId=${currentUserId})}">Wallet</a>
+    <div name="balance">(Balance: <span th:text="${moneyByCurrentUserId.balance}"/>)</div>
 </h3>
 <form id="searchForm" role="search" style="text-align:right;" action="#"
       th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
@@ -302,6 +311,8 @@
 </table>
 <p><a th:if="${role}=='[ROLE_ADMIN]'" th:href="@{'/hotel/redirect/create'}" th:object="${hotel}" th:method="GET">Add
     Hotel</a>
+</p>
+<p><a th:if="${role}=='[ROLE_ADMIN]'" th:href="@{'/hotel/uploadimage'}"  th:method="GET">Add Image</a>
 </p>
 <form style="text-align:right;" action="#" th:if="${pageNumber &gt; 0}"
       th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"

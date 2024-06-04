@@ -29,7 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.userDetailsService(customUserDetailsService)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-                        .requestMatchers("/user/redirect/create","/user/create").permitAll()
+                        .requestMatchers("/user/redirect/create","/user/create","/hotel/uploadFile").permitAll()
                         .requestMatchers("/user/search","/hotel/create","/hotel/update","/hotel/delete",
                                 "/hotel/redirect/**","/offer/create","/offer/update","/offer/delete",
                                 "/offer/redirect/**","/orders/search").hasRole("ADMIN")

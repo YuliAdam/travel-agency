@@ -3,6 +3,7 @@ package org.example.controller;
 import jakarta.validation.Valid;
 import org.example.controller.request.UserRequest;
 import org.example.entity.characteristic.Role;
+import org.example.service.MoneyService;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,15 +19,18 @@ import java.util.List;
 @Validated
 public class UserController {
     @Autowired
-    public UserService userService;
+    private UserService userService;
+    @Autowired
+    private MoneyService moneyService;
 
     @GetMapping("/search")
-    public  ModelAndView findUsers(Model model, @RequestParam(required = false,defaultValue = "") String paramtr,
+    public  ModelAndView findUsers(Model model, @RequestParam(required = false) String paramtr,
                                         @RequestParam(required = false,defaultValue = "user_name") String sort,
                                         @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                         @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
 
         model.addAttribute("paramtr",paramtr );
         model.addAttribute("sort",sort );
@@ -49,7 +53,7 @@ public class UserController {
 
     @DeleteMapping("/{id}/delete")
     public ModelAndView deleteUser(@PathVariable Long id,Model model,
-                                   @RequestParam(required = false,defaultValue = "") String paramtr,
+                                   @RequestParam(required = false) String paramtr,
                                    @RequestParam(required = false,defaultValue = "user_name") String sort,
                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                    @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
@@ -60,6 +64,7 @@ public class UserController {
         model.addAttribute("pageSize",pageSize );
         userService.deleteUser(id);
         model.addAttribute("user", new UserRequest());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
 
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
@@ -68,7 +73,7 @@ public class UserController {
 
     @PostMapping("/create")
     public ModelAndView createUser(@ModelAttribute("user") @Valid UserRequest userRequest, Model model,
-                                   @RequestParam(required = false,defaultValue = "") String paramtr,
+                                   @RequestParam(required = false) String paramtr,
                                    @RequestParam(required = false,defaultValue = "user_name") String sort,
                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                    @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
@@ -84,7 +89,7 @@ public class UserController {
 
     @PutMapping("/update")
     public ModelAndView updateUser(@ModelAttribute("user") @Valid UserRequest userRequest,Model model,
-                                   @RequestParam(required = false,defaultValue = "") String paramtr,
+                                   @RequestParam(required = false) String paramtr,
                                    @RequestParam(required = false,defaultValue = "user_name") String sort,
                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                    @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
@@ -96,6 +101,7 @@ public class UserController {
         model.addAttribute("pageSize",pageSize );
         userService.updateUser(userRequest.getId(),userRequest);
         model.addAttribute("user", new UserRequest());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
 
         model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());

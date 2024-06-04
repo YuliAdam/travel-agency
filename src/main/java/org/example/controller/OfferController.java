@@ -10,6 +10,7 @@ import org.example.entity.characteristic.Transport;
 import org.example.entity.characteristic.Type;
 import org.example.repository.HotelRepository;
 import org.example.service.HotelService;
+import org.example.service.MoneyService;
 import org.example.service.OfferService;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,11 @@ public class OfferController {
     private HotelService hotelService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private MoneyService moneyService;
 
     @GetMapping("/search")
-    public ModelAndView getOffers(Model model, @RequestParam(required = false, defaultValue = "") String paramtr,
+    public ModelAndView getOffers(Model model, @RequestParam(required = false) String paramtr,
                                   @RequestParam(required = false, defaultValue = "start") String sort,
                                   @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                   @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
@@ -51,6 +54,7 @@ public class OfferController {
         model.addAttribute("offer", new OfferRequest());
         model.addAttribute("hotelId", offerService.getAllHotelId());
         model.addAttribute("hotels", hotelService.getAllHotel());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
 
         model.addAttribute("order", new OrdersRequest());
         return new ModelAndView("offers", "offers", offerService.findOffers(paramtr, sort, pageNumber, pageSize));
@@ -78,7 +82,7 @@ public class OfferController {
 
     @DeleteMapping("/{id}/delete")
     public ModelAndView deleteOffer(@PathVariable Long id, Model model,
-                                    @RequestParam(required = false, defaultValue = "") String paramtr,
+                                    @RequestParam(required = false) String paramtr,
                                     @RequestParam(required = false, defaultValue = "start") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                     @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
@@ -91,6 +95,7 @@ public class OfferController {
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
         model.addAttribute("offer", new OfferRequest());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
 
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
@@ -100,7 +105,7 @@ public class OfferController {
 
     @PostMapping("/create")
     public ModelAndView createOffer(@ModelAttribute("offer") @Valid OfferRequest offerRequest, Model model,
-                                    @RequestParam(required = false, defaultValue = "") String paramtr,
+                                    @RequestParam(required = false) String paramtr,
                                     @RequestParam(required = false, defaultValue = "start") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                     @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
@@ -115,6 +120,7 @@ public class OfferController {
         model.addAttribute("countries", Country.values());
         model.addAttribute("hotels", hotelService.getAllHotel());
         model.addAttribute("offer", new OfferRequest());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
 
         model.addAttribute("date", LocalDate.now());
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
@@ -124,7 +130,7 @@ public class OfferController {
 
     @PutMapping("/update")
     public ModelAndView updateOffer(@ModelAttribute("offer") @Valid OfferRequest offerRequest, Model model,
-                                    @RequestParam(required = false, defaultValue = "") String paramtr,
+                                    @RequestParam(required = false) String paramtr,
                                     @RequestParam(required = false, defaultValue = "start") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                     @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
@@ -141,6 +147,7 @@ public class OfferController {
         model.addAttribute("hotels", hotelService.getAllHotel());
         model.addAttribute("offer", new OfferRequest());
 
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
         model.addAttribute("date", LocalDate.now());
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());

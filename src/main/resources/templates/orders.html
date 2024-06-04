@@ -122,6 +122,11 @@
         color:black;
         font-size: 30px;
     }
+    div[name="balance"]{
+        text-align:left;
+        color:black;
+        font-size: 15px;
+    }
 </style>
 <head>
     <meta charset="UTF-8">
@@ -136,6 +141,10 @@
 </h3>
 <h3>
     <a th:href="@{'/orders/myOrder'}">Shopping Bag</a>
+</h3>
+<h3 th:if="${moneyByCurrentUserId}!=null">
+    <a th:href="@{'/money/{userId}/redirect/update'(userId=${currentUserId})}">Wallet</a>
+    <div name="balance">(Balance: <span th:text="${moneyByCurrentUserId.balance}"/>)</div>
 </h3>
 <form id="searchForm" role="search" style="text-align:right;" action="#"
       th:action="@{/orders/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"
@@ -198,7 +207,6 @@
                 <button name="sortButton"></button>
             </form>
         </th>
-        <th th:if="${role}=='[ROLE_ADMIN]'">Update</th>
         <th hidden="hidden" th:if="${role}=='[ROLE_ADMIN]'">Delete</th>
     </tr>
     </thead>
@@ -257,9 +265,6 @@
             </span>
         </td>
         <td><span th:text="${order.orderDate}">Order Date</span></td>
-        <td th:if="${role}=='[ROLE_ADMIN]'"><a th:href="@{'/orders/{id}/redirect/update'(id=${order.id})}">
-            <span th:text="Update">Update</span>
-        </a></td>
         <td th:if="${role}=='[ROLE_ADMIN]'">
             <form action="#" th:action="@{'/orders/{id}/delete'(id=${order.id})}" th:object="${order}"
                   th:method="DELETE">

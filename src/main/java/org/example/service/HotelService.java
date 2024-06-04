@@ -45,29 +45,18 @@ public class HotelService {
     }
 
     public String deleteHotel(Long id) {
-        try {
             hotelRepository.findById(id).get();
             hotelRepository.deleteById(id);
             return "Hotel deleted";
-        } catch (NoSuchElementException e) {
-            System.out.println("Error. Class HotelService. Hotel not found. " + e);
-            return "Hotel not found." + e;
-        }
     }
 
     public HotelResponse createHotel(HotelRequest hotelRequest) {
-        try {
             Hotel hotel = new Hotel(hotelRequest.getCountry(), hotelRequest.getName(), hotelRequest.getStar(), hotelRequest.getGuest(), hotelRequest.getBreakfast(),
                     hotelRequest.getLunch(), hotelRequest.getDinner(), hotelRequest.getTv(), hotelRequest.getAirConditioner(), hotelRequest.getBalcony());
             return new HotelResponse(hotelRepository.save(hotel));
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("Error. Class HotelService. The hotel Name cannot be null. " + e);
-            return new HotelResponse("The hotel's Name cannot be null. " + e);
-        }
     }
 
     public HotelResponse updateHotel(Long id, HotelRequest hotel) {
-        try {
             Hotel existingHotel = hotelRepository.findById(id).get();
             existingHotel.setCountry(hotel.getCountry());
             existingHotel.setName(hotel.getName());
@@ -80,13 +69,6 @@ public class HotelService {
             existingHotel.setAirConditioner(hotel.getAirConditioner());
             existingHotel.setBalcony(hotel.getBalcony());
             return new HotelResponse(hotelRepository.save(existingHotel));
-        } catch (NoSuchElementException e) {
-            System.out.println("Error. Class HotelService. Hotel not found. " + e);
-            return new HotelResponse("Hotel not found. " + e);
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("Error. Class HotelService. The hotel Name cannot be null. " + e);
-            return new HotelResponse("The hotel's Name cannot be null. " + e);
-        }
     }
 
 }

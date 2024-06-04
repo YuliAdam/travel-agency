@@ -69,6 +69,11 @@
         color:black;
         font-size: 30px;
         }
+    div[name="balance"]{
+        text-align:left;
+        color:black;
+        font-size: 15px;
+        }
 </style>
 <head>
     <meta charset="UTF-8">
@@ -80,6 +85,17 @@
 </h3>
 <h3>
     <a th:href="@{'/orders/myOrder'}">Shopping Bag</a>
+</h3>
+<h3 th:if="${moneyByCurrentUserId}!=null">
+    <a th:href="@{'/money/{userId}/redirect/update'(userId=${currentUserId})}">Wallet</a>
+    <div name="balance">(Balance: <span th:text="${moneyByCurrentUserId.balance}"/>)</div>
+</h3>
+<h3>
+    <form action="#" th:if="${moneyByCurrentUserId}==null"
+          th:action="@{'/money/{userId}/create'(userId=${currentUserId})}" th:method="POST">
+        <input type="hidden" value="${currentUserId}">
+        <button type="submit">Create Wallet</button>
+    </form>
 </h3>
 <h1><b>Travel Agency</b></h1>
 <table>

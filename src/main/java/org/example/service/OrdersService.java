@@ -28,6 +28,8 @@ public class OrdersService {
     private UserRepository userRepository;
     @Autowired
     private OfferRepository offerRepository;
+    @Autowired
+    private MoneyService moneyService;
 
     public List<OrdersResponse> getAllOrder() {
         return ordersRepository.findAllOrders().stream().map(OrdersResponse::new).toList();
@@ -53,39 +55,26 @@ public class OrdersService {
     }
 
     public String deleteOrder(Long id) {
-        try {
-            ordersRepository.findById(id).get();
+            Orders order=ordersRepository.findById(id).get();
+            moneyService.updateMoney(order.getUser().getId(),order.getOffer().getPrice());
             ordersRepository.deleteById(id);
             return "Order deleted.";
-        } catch (NoSuchElementException e) {
-            System.out.println("Error. Class OrdersService. Order not found. " + e);
-            return "Order not found. " + e;
-        }
     }
 
     public OrdersResponse createOrder(OrdersRequest ordersRequest) {
-        try {
+            moneyService.updateMoney(ordersRequest.getUserId(),-offerRepository.findOfferById(ordersRequest.getOfferId()).getPrice());
             Orders orders = new Orders(userRepository.findUserById(ordersRequest.getUserId()), offerRepository.findOfferById(ordersRequest.getOfferId()));
             orders.setOrderDate(new Timestamp(new Date().getTime()));
             return new OrdersResponse(ordersRepository.save(orders));
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("Error. Class OrdersService. The order's user and offer cannot be null. " + e);
-            return new OrdersResponse();
-        }
     }
 
     public OrdersResponse updateOrder(Long id, OrdersRequest ordersRequest) {
-        try {
             Orders existingOrders = ordersRepository.findById(id).get();
+            moneyService.updateMoney(existingOrders.getUser().getId(),existingOrders.getOffer().getPrice());
+            moneyService.updateMoney(ordersRequest.getUserId(),-offerRepository.findOfferById(ordersRequest.getOfferId()).getPrice());
+
             existingOrders.setUser(userRepository.findUserById(ordersRequest.getUserId()));
             existingOrders.setOffer(offerRepository.findOfferById(ordersRequest.getOfferId()));
             return new OrdersResponse(ordersRepository.save(existingOrders));
-        } catch (NoSuchElementException e) {
-            System.out.println("Error. Class OrdersService. Order not found. " + e);
-            return new OrdersResponse();
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("Error. Class OrdersService. The order's user and offer cannot be null. " + e);
-            return new OrdersResponse();
-        }
     }
 }

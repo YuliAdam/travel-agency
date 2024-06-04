@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import jakarta.validation.Valid;
 import org.example.controller.request.OfferRequest;
 import org.example.controller.request.OrdersRequest;
 import org.example.controller.response.OrdersResponse;
@@ -7,13 +8,11 @@ import org.example.entity.Orders;
 import org.example.entity.characteristic.Country;
 import org.example.entity.characteristic.Transport;
 import org.example.entity.characteristic.Type;
-import org.example.service.HotelService;
-import org.example.service.OfferService;
-import org.example.service.OrdersService;
-import org.example.service.UserService;
+import org.example.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
+@Validated
 public class OrdersController {
     @Autowired
     private OrdersService ordersService;
@@ -30,6 +30,8 @@ public class OrdersController {
     private UserService userService;
     @Autowired
     private HotelService hotelService;
+    @Autowired
+    private MoneyService moneyService;
 
     @GetMapping("/search")
     public ModelAndView getOrders(Model model,
@@ -47,6 +49,7 @@ public class OrdersController {
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
 
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         model.addAttribute("users",userService.getAllUser());
@@ -72,6 +75,7 @@ public class OrdersController {
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         model.addAttribute("orderByCurrentUserId",ordersService.findOrderByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
 
         model.addAttribute("users",userService.getAllUser());
         model.addAttribute("offers",offerService.getAllOffer());
@@ -85,7 +89,7 @@ public class OrdersController {
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
         model.addAttribute("order", new OrdersRequest());
-
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
         return new ModelAndView("order", "order", ordersService.findById(id));
     }
 
@@ -95,6 +99,8 @@ public class OrdersController {
         model.addAttribute("transports", Transport.values());
         model.addAttribute("countries", Country.values());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
+
         model.addAttribute("order", new OrdersRequest());
         model.addAttribute("offerId",offerId);
         model.addAttribute("offerByCurrentId",offerService.findById(offerId));
@@ -118,6 +124,7 @@ public class OrdersController {
         model.addAttribute("countries", Country.values());
         model.addAttribute("order", new OrdersRequest());
 
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         model.addAttribute("users",userService.getAllUser());
@@ -127,7 +134,7 @@ public class OrdersController {
     }
 
     @PostMapping("/create")
-    public ModelAndView createOrder(@ModelAttribute("orders")OrdersRequest ordersRequest, Model model,
+    public ModelAndView createOrder(@ModelAttribute("orders") @Valid OrdersRequest ordersRequest, Model model,
                                     @RequestParam(required = false) String paramtr,
                                     @RequestParam(required = false, defaultValue = "start") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
@@ -142,6 +149,7 @@ public class OrdersController {
         model.addAttribute("countries", Country.values());
         model.addAttribute("order", new OrdersRequest());
 
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         model.addAttribute("users",userService.getAllUser());
@@ -151,7 +159,7 @@ public class OrdersController {
     }
 
     @PutMapping("/update")
-    public ModelAndView updateOrder(@ModelAttribute("orders") OrdersRequest ordersRequest, Model model,
+    public ModelAndView updateOrder(@ModelAttribute("orders") @Valid OrdersRequest ordersRequest, Model model,
                                     @RequestParam(required = false) String paramtr,
                                     @RequestParam(required = false, defaultValue = "order_date") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
@@ -161,6 +169,7 @@ public class OrdersController {
         model.addAttribute("sort", sort);
         model.addAttribute("pageNumber", pageNumber);
         model.addAttribute("pageSize", pageSize);
+
         ordersService.updateOrder(ordersRequest.getId(),ordersRequest);
         model.addAttribute("types", Type.values());
         model.addAttribute("transports", Transport.values());
@@ -168,6 +177,7 @@ public class OrdersController {
         model.addAttribute("hotelId", offerService.getAllHotelId());
         model.addAttribute("order", new OrdersRequest());
 
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         model.addAttribute("users",userService.getAllUser());

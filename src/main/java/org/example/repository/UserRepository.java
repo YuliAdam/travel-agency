@@ -13,6 +13,8 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<Users, Long> {
     @Query(value = "SELECT * FROM touristvoucher.user", nativeQuery = true)
     List<Users> findAllUsers();
+    @Query(value = "SELECT * FROM touristvoucher.user", nativeQuery = true)
+    List<Users> findUsers(PageRequest page);
     @Query(value = "SELECT * FROM touristvoucher.user WHERE user_name like %:paramtr% OR login like %:paramtr% OR tell like %:paramtr%", nativeQuery = true)
     List<Users> findUsers(@Param("paramtr")String paramtr, PageRequest page);
     Users findByLogin(String login);

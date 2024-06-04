@@ -1,24 +1,39 @@
 package org.example.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.example.controller.request.HotelRequest;
+import org.example.controller.response.UploadFileResponse;
 import org.example.entity.Hotel;
 import org.example.entity.characteristic.Country;
+import org.example.service.FileStorageService;
 import org.example.service.HotelService;
+import org.example.service.MoneyService;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.Collection;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Stack;
+import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/hotel")
@@ -30,6 +45,8 @@ public class HotelController {
     private HotelService hotelService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private MoneyService moneyService;
 
     @GetMapping("/search")
     public ModelAndView getHotels(Model model,
@@ -39,6 +56,8 @@ public class HotelController {
                                   @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
+
         model.addAttribute("paramtr", paramtr);
         model.addAttribute("sort", sort);
         model.addAttribute("pageNumber", pageNumber);
@@ -80,6 +99,7 @@ public class HotelController {
         model.addAttribute("countries", Country.values());
         model.addAttribute("hotel", new HotelRequest());
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("hotels", "hotels", hotelService.findHotels(paramtr, sort, pageNumber, pageSize));
     }
@@ -99,6 +119,7 @@ public class HotelController {
         model.addAttribute("countries", Country.values());
         model.addAttribute("hotel", new HotelRequest());
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("hotels", "hotels", hotelService.findHotels(paramtr, sort, pageNumber, pageSize));
     }
@@ -118,7 +139,20 @@ public class HotelController {
         model.addAttribute("countries", Country.values());
         model.addAttribute("hotel", new HotelRequest());
         model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("hotels", "hotels", hotelService.findHotels(paramtr, sort, pageNumber, pageSize));
+    }
+    @Autowired
+    private FileStorageService fileStorageService;
+
+    @GetMapping("/uploadimage") public ModelAndView displayUploadForm(Model model) {
+        return new ModelAndView("uploadFile");
+    }
+
+    @PostMapping("/upload") public ModelAndView uploadImage(Model model, @RequestParam("image") MultipartFile file) throws IOException {
+       fileStorageService.storeFile(file);
+        model.addAttribute("msg", "Uploaded images: " + file.getOriginalFilename().toString());
+        return new ModelAndView("menu");
     }
 }

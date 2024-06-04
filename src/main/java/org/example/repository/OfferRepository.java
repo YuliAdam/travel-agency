@@ -20,8 +20,10 @@ public interface OfferRepository extends JpaRepository<Offer,Long> {
     public List<Hotel> findAllHotel ();
     @Query(value = "SELECT * FROM touristvoucher.hotel WHERE id=:hotelId", nativeQuery = true)
     public Hotel findHotelById (@Param("hotelId") Long hotelId);
-    @Query(value = "SELECT * FROM touristvoucher.offer WHERE type=:paramtr OR country=:paramtr OR transport like %:paramtr%", nativeQuery = true)
+    @Query(value = "SELECT * FROM touristvoucher.offer WHERE type=:paramtr OR country=:paramtr OR transport=:paramtr", nativeQuery = true)
     List<Offer> findOffer(@Param("paramtr")String paramtr, PageRequest page);
+    @Query(value = "SELECT * FROM touristvoucher.offer", nativeQuery = true)
+    List<Offer> findOffer(PageRequest page);
     @Query(value = "SELECT * FROM touristvoucher.offer WHERE id=:offerId", nativeQuery = true)
     public Offer findOfferById (@Param("offerId") Long offerId);
 

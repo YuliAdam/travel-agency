@@ -1,9 +1,6 @@
 package org.example.controller;
 
-import org.example.controller.request.HotelRequest;
-import org.example.controller.request.OfferRequest;
-import org.example.controller.request.OrdersRequest;
-import org.example.controller.request.UserRequest;
+import org.example.controller.request.*;
 import org.example.controller.response.HotelResponse;
 import org.example.entity.characteristic.Country;
 import org.example.entity.characteristic.Transport;
@@ -33,6 +30,8 @@ public class PageController {
     private OfferService offerService;
     @Autowired
     private OrdersService ordersService;
+    @Autowired
+    private MoneyService moneyService;
 
     @GetMapping("/hotels")
     public ModelAndView viewHomePageHotel(Model model) {
@@ -70,6 +69,13 @@ public class PageController {
         model.addAttribute("order", new OrdersRequest());
         return new ModelAndView("orders", "orders", ordersService.getAllOrder());
     }
+    @GetMapping("/moneys")
+    public ModelAndView viewHomePageMoney(Model model) {
+        model.addAttribute("money", new MoneyRequest());
+        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
+        return new ModelAndView("money");
+    }
     @GetMapping("/login")
     public ModelAndView viewHomePageLogin(Model model) {
         model.addAttribute("user", new UserRequest());
@@ -79,6 +85,7 @@ public class PageController {
     public ModelAndView viewHomePageMenu(Model model) {
         model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
         return new ModelAndView("menu");
     }
     @GetMapping("/exception")

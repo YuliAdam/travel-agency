@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<style>
+    h1{
+        font-size: 40px;
+        color:red;
+        text-align:center;
+    }
+    table{
+        width : 100%;
+    }
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        font: verdana 50px;
+        font-size: 15px;
+    }
+    td {
+        padding: 5px;
+        text-align: center;
+    }
+    th {
+        color: red;
+        text-align: center;
+        font-weight: bold;
+        font-size: 20px;
+    }
+    body{
+        background-image: linear-gradient(180deg,rgba(255,221,64,0.5),rgba(165,146,180,0.7)),url( "https://static.vecteezy.com/ti/vettori-gratis/p3/29337463-uomo-e-donna-vuoto-avatar-impostare-predefinito-foto-segnaposto-per-sociale-reti-riprende-forum-e-incontri-siti-maschio-e-femmina-no-foto-immagini-per-non-riempito-utente-profilo-vettore-illustrazione-vettoriale.jpg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+    button[name="delete button"]{
+        background-image: url('https://cdn.icon-icons.com/icons2/692/PNG/512/seo-social-web-network-internet_262_icon-icons.com_61518.png');
+        background-size: 32px 32px;
+        background-color:transparent;
+        background-repeat: no-repeat;
+        height:32px;
+        width:32px;
+        border:none;
+        border-collapse: collapse;
+    }
+    h2{
+        text-align:left;
+        position:down;
+        color:black;
+        font-size: 30px;
+    }
+    h3{
+        text-align:left;
+        color:black;
+        font-size: 30px;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Wallet</title>
+</head>
+<body>
+<h3>
+    <a th:href="@{'/menu'}">Menu</a>
+</h3>
+<h3>
+    <a th:href="@{'/user/{id}/redirect/update'(id=${currentUserId})}">My Profile</a>
+</h3>
+<h3>
+    <a th:href="@{'/orders/myOrder'}">Shopping Bag</a>
+</h3>
+<h1 style="text-align:center;"><b>Wallet</b></h1>
+<table>
+    <thead>
+    <tr>
+        <th>Balance</th>
+        <th>Last Transfer</th>
+        <th>Last Transfer Date</th>
+        <th hidden="hidden">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><span th:text="${moneyByCurrentUserId.balance}"> Balance </span></td>
+        <td><span th:text="${moneyByCurrentUserId.transfer}"> Last Transfer </span></td>
+        <td><span th:text="${moneyByCurrentUserId.lastChangeDate}"> Last Transfer Date </span></td>
+        <td>
+            <form action="#" th:action="@{'/money/{userId}/delete'(userId=${currentUserId})}" th:object="${money}"
+                  th:method="DELETE">
+                <input type="hidden" value="${money}">
+                <button type="submit" name="delete button"></button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<h1 style="text-align:center;"><b>Add money</b></h1>
+<form style="text-align:center;" action="#" th:action="@{/money/update}" th:object="${money}" th:method="put">
+    <input type="text" th:field="*{id}" hidden="true"/>
+    <input type="text" th:field="*{userId}" hidden="true"/>
+    <input type="text" th:field="*{balance}" hidden="true"/>
+    <p>Transfer: <input type="text" required th:field="*{transfer}"/></p>
+    <p><input type="submit" value="Add money"/></p>
+</form>
+</body>
+</html>

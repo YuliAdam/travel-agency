@@ -46,12 +46,27 @@
         border:none;
         border-collapse: collapse;
     }
+    div[name="balance"]{
+        text-align:left;
+        color:black;
+        font-size: 15px;
+    }
 </style>
 <head>
     <meta charset="UTF-8">
     <title>Add Order</title>
 </head>
 <body>
+<h3>
+    <a th:href="@{'/menu'}">Menu</a>
+</h3>
+<h3>
+    <a th:href="@{'/orders/myOrder'}">Shopping Bag</a>
+</h3>
+<h3 th:if="${moneyByCurrentUserId}!=null">
+    <a th:href="@{'/money/{userId}/redirect/update'(userId=${currentUserId})}">Wallet</a>
+    <div name="balance">(Balance: <span th:text="${moneyByCurrentUserId.balance}"/>)</div>
+</h3>
 <h1 style="text-align:center"><b>Buy Offer</b></h1>
 <b>
     <table>

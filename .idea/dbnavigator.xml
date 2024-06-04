@@ -38,9 +38,6 @@
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
   </component>
-  <component name="DBNavigator.Project.FileConnectionMappingManager">
-    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/db/migration/R__V1_First_Migration.sql" connection-id="a663ff23-11fd-4dde-ab42-32ff626a370d" session-id="MAIN" current-schema="touristvoucher" />
-  </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
     <execution-history>
@@ -160,6 +157,7 @@
         <display-mode value="TABBED" />
         <navigation-history-size value="100" />
         <show-object-details value="false" />
+        <enable-sticky-paths value="true" />
       </general>
       <filters>
         <object-type-filter>

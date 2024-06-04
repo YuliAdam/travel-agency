@@ -36,6 +36,21 @@ public class Hotel {
     private Boolean airConditioner;
     @Column(name = "balcony")
     private Boolean balcony;
+    @Column (name="gallery")
+    private String gallery;
+    public Hotel(Country country, String name, Integer star, Integer guest, Boolean breakfast, Boolean lunch, Boolean dinner, Boolean tv, Boolean airConditioner, Boolean balcony,String gallery) {
+        this.country = country;
+        this.name = name;
+        this.star = star;
+        this.guest = guest;
+        this.breakfast = breakfast;
+        this.lunch = lunch;
+        this.dinner = dinner;
+        this.tv = tv;
+        this.airConditioner = airConditioner;
+        this.balcony = balcony;
+        this.gallery=gallery;
+    }
     public Hotel(Country country, String name, Integer star, Integer guest, Boolean breakfast, Boolean lunch, Boolean dinner, Boolean tv, Boolean airConditioner, Boolean balcony) {
         this.country = country;
         this.name = name;
@@ -49,4 +64,7 @@ public class Hotel {
         this.balcony = balcony;
     }
     public Hotel(Long id) { this.id=id; }
+    public Hotel(String gallery) {
+        this.gallery=gallery;
+    }
 }

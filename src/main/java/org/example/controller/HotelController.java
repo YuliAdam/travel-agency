@@ -48,14 +48,15 @@ public class HotelController {
     @Autowired
     private MoneyService moneyService;
 
+
     @GetMapping("/search")
     public ModelAndView getHotels(Model model,
                                   @RequestParam(required = false) String paramtr,
                                   @RequestParam(required = false, defaultValue = "name") String sort,
                                   @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                   @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
-        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
-        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("currentUserId", userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
 
         model.addAttribute("paramtr", paramtr);
@@ -98,9 +99,9 @@ public class HotelController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("countries", Country.values());
         model.addAttribute("hotel", new HotelRequest());
-        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
-        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        model.addAttribute("currentUserId", userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("hotels", "hotels", hotelService.findHotels(paramtr, sort, pageNumber, pageSize));
     }
 
@@ -118,9 +119,9 @@ public class HotelController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("countries", Country.values());
         model.addAttribute("hotel", new HotelRequest());
-        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
-        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        model.addAttribute("currentUserId", userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("hotels", "hotels", hotelService.findHotels(paramtr, sort, pageNumber, pageSize));
     }
 
@@ -138,21 +139,44 @@ public class HotelController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("countries", Country.values());
         model.addAttribute("hotel", new HotelRequest());
-        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
-        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        model.addAttribute("currentUserId", userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
         return new ModelAndView("hotels", "hotels", hotelService.findHotels(paramtr, sort, pageNumber, pageSize));
     }
+
     @Autowired
     private FileStorageService fileStorageService;
 
-    @GetMapping("/uploadimage") public ModelAndView displayUploadForm(Model model) {
+    @GetMapping("/{id}/redirect/uploadimage")
+    public ModelAndView displayUploadForm(@PathVariable Long id, Model model) {
+        model.addAttribute("hotelId", id);
         return new ModelAndView("uploadFile");
     }
 
-    @PostMapping("/upload") public ModelAndView uploadImage(Model model, @RequestParam("image") MultipartFile file) throws IOException {
-       fileStorageService.storeFile(file);
+    @PostMapping("/{id}/upload")
+    public ModelAndView uploadImage(@PathVariable("id") Long id, Model model, @RequestParam("image") MultipartFile file) throws IOException {
+        String fileName = fileStorageService.storeFile(file, id);
         model.addAttribute("msg", "Uploaded images: " + file.getOriginalFilename().toString());
-        return new ModelAndView("menu");
+        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
+        model.addAttribute("currentUserId", userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
+        String paramtr = "";
+        String sort = "country";
+        int pageNumber = 0;
+        int pageSize = 5;
+        model.addAttribute("paramtr", paramtr);
+        model.addAttribute("sort", sort);
+        model.addAttribute("pageNumber", pageNumber);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("countries", Country.values());
+        return new ModelAndView("hotels", "hotels", hotelService.findHotels(paramtr, sort, pageNumber, pageSize));
+    }
+
+    @GetMapping("/{id}/getImage")
+    public ModelAndView getImage(@PathVariable Long id, Model model) {
+        fileStorageService.getImage(id);
+        model.addAttribute("images", fileStorageService.getImage(id));
+        return new ModelAndView("images", "images", fileStorageService.getImage(id));
     }
 }

@@ -2,6 +2,7 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.entity.characteristic.Role;
@@ -11,6 +12,7 @@ import org.example.entity.characteristic.Role;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Users {
     @Id
     @Column(name = "id")

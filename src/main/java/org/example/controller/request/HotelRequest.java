@@ -29,4 +29,5 @@ public class HotelRequest {
     private Boolean tv;
     private Boolean airConditioner;
     private Boolean balcony;
+    private String gallery;
 }

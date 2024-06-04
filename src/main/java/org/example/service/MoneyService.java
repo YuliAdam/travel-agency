@@ -1,6 +1,7 @@
 package org.example.service;
 
 
+import lombok.RequiredArgsConstructor;
 import org.example.entity.Money;
 import org.example.repository.MoneyRepository;
 import org.example.repository.UserRepository;
@@ -12,11 +13,12 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class MoneyService {
-    @Autowired
-    private MoneyRepository moneyRepository;
-    @Autowired
-    private UserRepository userRepository;
+
+    private final MoneyRepository moneyRepository;
+
+    private final UserRepository userRepository;
 
     public MoneyResponse findByUserId(Long userId) {
         if (moneyRepository.findMoneyByUserId(userId) == null) return null;
@@ -34,14 +36,17 @@ public class MoneyService {
         return new MoneyResponse(moneyRepository.save(money));
     }
 
-    public MoneyResponse updateMoney(Long userId, Float transfer) {
+    public float update(Long userId, Float transfer) {
         Money existingMoney = moneyRepository.findMoneyByUserId(userId);
         long actualVersion = existingMoney.getVersion();
         float newBalance = existingMoney.getBalance() + transfer;
-        if (newBalance < 0) throw new RuntimeException();
-        if ((moneyRepository.findMoneyByUserId(userId).getBalance() + transfer) == newBalance && moneyRepository.findMoneyByUserId(userId).getVersion() == actualVersion){
-            moneyRepository.updateById(existingMoney.getUser().getId(), newBalance, actualVersion, transfer,new Timestamp(new Date().getTime()));
-            return new MoneyResponse(moneyRepository.findMoneyByUserId(userId));
-        } else throw new RuntimeException();
+        if (newBalance < 0) throw new RuntimeException("Balance < 0");
+        int result = moneyRepository.updateById(userId, newBalance, actualVersion, transfer, new Timestamp(new Date().getTime()));
+        if (result == 0) throw new RuntimeException("Not updated, try again");
+        return newBalance;
+    }
+    public MoneyResponse updateMoney(Long userId, Float transfer) {
+        update(userId,transfer);
+        return new MoneyResponse(moneyRepository.findMoneyByUserId(userId));
     }
 }

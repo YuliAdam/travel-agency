@@ -23,5 +23,5 @@ public interface MoneyRepository extends JpaRepository<Money, Long> {
     @Modifying
     @Transactional
     @Query(value = "UPDATE touristvoucher.money SET balance=:balance, version=version+1, last_transfer=:transfer, last_change_date=:timeNow WHERE id_user=:user_id and version=:version", nativeQuery = true)
-    public boolean updateById (@Param("user_id") Long userId, @Param("balance") Float balance, @Param("version") long version, @Param("transfer") Float transfer, @Param("timeNow")Timestamp timeNow);
+    public int updateById (@Param("user_id") Long userId, @Param("balance") Float balance, @Param("version") long version, @Param("transfer") Float transfer, @Param("timeNow")Timestamp timeNow);
 }

@@ -20,6 +20,7 @@ public class HotelResponse {
     private Boolean tv;
     private Boolean airConditioner;
     private Boolean balcony;
+    private String gallery;
 
     public HotelResponse(Hotel hotel) {
         this.id = hotel.getId();
@@ -33,11 +34,13 @@ public class HotelResponse {
         this.tv = hotel.getTv();
         this.airConditioner = hotel.getAirConditioner();
         this.balcony = hotel.getBalcony();
+        this.gallery=hotel.getGallery();
     }
-    public HotelResponse(String name) {
-        this.name = name;
-    }
+    //public HotelResponse(String name) {this.name = name;}
     public HotelResponse(Long id) {
         this.id = id;
+    }
+    public HotelResponse(String gallery){
+        this.gallery=gallery;
     }
 }

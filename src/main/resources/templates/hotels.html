@@ -146,7 +146,7 @@
     <a th:href="@{'/orders/myOrder'}">Shopping Bag</a>
 </h3>
 <h3 th:if="${moneyByCurrentUserId}!=null">
-    <a  th:href="@{'/money/{userId}/redirect/update'(userId=${currentUserId})}">Wallet</a>
+    <a th:href="@{'/money/{userId}/redirect/update'(userId=${currentUserId})}">Wallet</a>
     <div name="balance">(Balance: <span th:text="${moneyByCurrentUserId.balance}"/>)</div>
 </h3>
 <form id="searchForm" role="search" style="text-align:right;" action="#"
@@ -270,6 +270,9 @@
                 <button name="sortButton"></button>
             </form>
         </th>
+        <th>Gallery</th>
+        <th th:if="${role}=='[ROLE_ADMIN]'" hidden="hidden">Add Photo</th>
+        <th th:if="${role}=='[ROLE_ADMIN]'" hidden="hidden">Update</th>
         <th th:if="${role}=='[ROLE_ADMIN]'" hidden="hidden">Delete</th>
     </tr>
     </thead>
@@ -299,6 +302,18 @@
         <td><span th:if="${hotel.balcony}"><img name="true"></span>
             <span th:if="${(hotel.balcony!=null)&&!hotel.balcony}"><img name="false"></span>
         </td>
+        <td>
+            <a th:href="@{'/hotel/{id}/getImage'(id=${hotel.id})}" th:method="GET">
+                <img src="../static/img/gallery.webp" alt="gallery">
+            </a>
+        </td>
+        <td><a th:if="${role}=='[ROLE_ADMIN]'" th:href="@{'/hotel/{id}/redirect/uploadimage'(id=${hotel.id})}"
+               th:method="GET">
+                <span th:text="Add Image">Add Image</span>
+        </a></td>
+        <td><a th:if="${role}=='[ROLE_ADMIN]'" th:href="@{'/hotel/{id}/redirect/update'(id=${hotel.id})}">
+            <span th:text="Update">Update</span>
+        </a></td>
         <td th:if="${role}=='[ROLE_ADMIN]'">
             <form action="#" th:action="@{'/hotel/{id}/delete'(id=${hotel.id})}" th:object="${hotel}"
                   th:method="DELETE">
@@ -311,8 +326,6 @@
 </table>
 <p><a th:if="${role}=='[ROLE_ADMIN]'" th:href="@{'/hotel/redirect/create'}" th:object="${hotel}" th:method="GET">Add
     Hotel</a>
-</p>
-<p><a th:if="${role}=='[ROLE_ADMIN]'" th:href="@{'/hotel/uploadimage'}"  th:method="GET">Add Image</a>
 </p>
 <form style="text-align:right;" action="#" th:if="${pageNumber &gt; 0}"
       th:action="@{/hotel/search?paramtr=*{paramtr}&pageNumber=*{pageNumber}&pageSize=*{pageSize}&sort=*{sort}}"

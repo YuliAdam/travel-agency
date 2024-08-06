@@ -13,7 +13,7 @@ import org.example.entity.characteristic.Country;
 @AllArgsConstructor
 public class Hotel {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "country")
     @Enumerated(EnumType.STRING)
@@ -36,9 +36,10 @@ public class Hotel {
     private Boolean airConditioner;
     @Column(name = "balcony")
     private Boolean balcony;
-    @Column (name="gallery")
+    @Column(name = "gallery")
     private String gallery;
-    public Hotel(Country country, String name, Integer star, Integer guest, Boolean breakfast, Boolean lunch, Boolean dinner, Boolean tv, Boolean airConditioner, Boolean balcony,String gallery) {
+
+    public Hotel(Country country, String name, Integer star, Integer guest, Boolean breakfast, Boolean lunch, Boolean dinner, Boolean tv, Boolean airConditioner, Boolean balcony, String gallery) {
         this.country = country;
         this.name = name;
         this.star = star;
@@ -49,8 +50,9 @@ public class Hotel {
         this.tv = tv;
         this.airConditioner = airConditioner;
         this.balcony = balcony;
-        this.gallery=gallery;
+        this.gallery = gallery;
     }
+
     public Hotel(Country country, String name, Integer star, Integer guest, Boolean breakfast, Boolean lunch, Boolean dinner, Boolean tv, Boolean airConditioner, Boolean balcony) {
         this.country = country;
         this.name = name;
@@ -63,8 +65,12 @@ public class Hotel {
         this.airConditioner = airConditioner;
         this.balcony = balcony;
     }
-    public Hotel(Long id) { this.id=id; }
+
+    public Hotel(Long id) {
+        this.id = id;
+    }
+
     public Hotel(String gallery) {
-        this.gallery=gallery;
+        this.gallery = gallery;
     }
 }

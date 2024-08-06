@@ -42,7 +42,7 @@
         </option>
     </select>
     </p>
-    <p>Number of the days:<input type="number"  max="130" min="1" th:field="*{numOfTheDays}"/></p>
+    <p>Number of the days:<input type="number" max="130" min="1" th:field="*{numOfTheDays}"/></p>
     <p>Start trip:<input type="date" min="${date}" max="2100-01-01" th:field="*{start}"/></p>
     <p>Transport:<select th:field="*{transport}">
         <option th:each="transport : ${transports}"
@@ -54,7 +54,7 @@
     <p>Hotel:<select th:field="*{hotelId}">
         <option th:each="hotelId:${hotelId}"
                 th:value="${hotelId}"
-                th:text="${hotelId}" > Hotel
+                th:text="${hotelId}"> Hotel
         </option>
     </select>
     </p>

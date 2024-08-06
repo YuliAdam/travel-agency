@@ -36,11 +36,4 @@ public class HotelResponse {
         this.balcony = hotel.getBalcony();
         this.gallery=hotel.getGallery();
     }
-    //public HotelResponse(String name) {this.name = name;}
-    public HotelResponse(Long id) {
-        this.id = id;
-    }
-    public HotelResponse(String gallery){
-        this.gallery=gallery;
-    }
 }

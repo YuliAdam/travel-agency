@@ -20,14 +20,12 @@ public class Users {
     private Long id;
     @Column(name = "user_name")
     private String userName;
-    @Column(name = "login",unique = true)
+    @Column(name = "login", unique = true)
     private String login;
     @Column(name = "tell")
     private String tell;
     @Column(name = "password")
     private String password;
-    //@Transient
-    //private String passwordConfirm;
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;

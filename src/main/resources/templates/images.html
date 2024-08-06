@@ -153,11 +153,11 @@
     <a th:href="@{'/orders/myOrder'}">Shopping Bag</a>
 </h3>
 <h1><b>Photos</b></h1>
-    <div class="container">
+<div class="container">
     <p th:each="image : ${images}">
-        <img th:src="@{${image}}" alt="img" >
+        <img th:src="@{${image}}" alt="img">
     </p>
-    </div>
+</div>
 <h2>
     <a th:href="@{/logout}">Logout</a>
 </h2>

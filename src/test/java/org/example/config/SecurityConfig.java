@@ -1,6 +1,5 @@
 package org.example.config;
 
-import org.example.entity.characteristic.Role;
 import org.example.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +14,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
@@ -25,7 +25,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/redirect/create", "/user/create", "/hotel/uploadFile").permitAll()
                         .requestMatchers("/user/search", "/hotel/create", "/hotel/update", "/hotel/delete",
                                 "/hotel/redirect/**", "/offer/create", "/offer/update", "/offer/delete",
-                                "/offer/redirect/**", "/orders/search").hasRole(Role.ADMIN.toString())
+                                "/offer/redirect/**", "/orders/search").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/login").permitAll()

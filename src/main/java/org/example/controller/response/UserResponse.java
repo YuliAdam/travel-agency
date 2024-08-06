@@ -3,12 +3,9 @@ package org.example.controller.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.utils.StringConstants;
 import org.example.entity.Users;
 import org.example.entity.characteristic.Role;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,7 +21,7 @@ public class UserResponse {
 
     public String getPassword() {
         StringBuilder pass = new StringBuilder();
-        for (int i = 0; i < password.length(); i++) pass = pass.append("*");
+        for (int i = 0; i < password.length(); i++) pass = pass.append(StringConstants.ASTERISK);
         return pass.toString();
     }
 
@@ -36,9 +33,4 @@ public class UserResponse {
         this.password = user.getPassword();
         this.role = user.getRole();
     }
-
-    public UserResponse(String userName) {
-        this.userName = userName;
-    }
-
 }

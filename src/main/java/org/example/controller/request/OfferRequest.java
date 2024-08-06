@@ -1,11 +1,9 @@
 package org.example.controller.request;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.entity.Hotel;
 import org.example.entity.characteristic.Country;
 import org.example.entity.characteristic.Transport;
 import org.example.entity.characteristic.Type;

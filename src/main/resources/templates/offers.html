@@ -260,8 +260,9 @@
             <span th:if="${offer.hotelId==null}">---</span>
         </td>
         <td><span th:text="${offer.price}">Price ($)</span></td>
-        <td><a th:href="@{'/orders/{offerId}/redirect/create'(offerId=${offer.id})}"  th:object="${order}" th:method="GET">
-                <img name="buy"></a>
+        <td><a th:href="@{'/orders/{offerId}/redirect/create'(offerId=${offer.id})}" th:object="${order}"
+               th:method="GET">
+            <img name="buy"></a>
         </td>
         <td th:if="${role}=='[ROLE_ADMIN]'"><a th:href="@{'/offer/{id}/redirect/update'(id=${offer.id})}">
             <span th:text="Update">Update</span>

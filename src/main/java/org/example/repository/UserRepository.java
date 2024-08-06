@@ -11,16 +11,19 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<Users, Long> {
-    @Query(value = "SELECT * FROM touristvoucher.user", nativeQuery = true)
+    @Query(value = "SELECT * FROM touristvoucher.`user`", nativeQuery = true)
     List<Users> findAllUsers();
-    @Query(value = "SELECT * FROM touristvoucher.user", nativeQuery = true)
-    List<Users> findUsers(PageRequest page);
-    @Query(value = "SELECT * FROM touristvoucher.user WHERE user_name like %:paramtr% OR login like %:paramtr% OR tell like %:paramtr%", nativeQuery = true)
-    List<Users> findUsers(@Param("paramtr")String paramtr, PageRequest page);
-    Users findByLogin(String login);
-    @Query(value = "SELECT * FROM touristvoucher.user WHERE id=:userId", nativeQuery = true)
-    public Users findUserById (@Param("userId") Long userId);
 
+    @Query(value = "SELECT * FROM touristvoucher.``user`", nativeQuery = true)
+    List<Users> findUsers(PageRequest page);
+
+    @Query(value = "SELECT * FROM touristvoucher.`user` WHERE user_name like %:paramtr% OR login like %:paramtr% OR tell like %:paramtr%", nativeQuery = true)
+    List<Users> findUsers(@Param("paramtr") String paramtr, PageRequest page);
+
+    Users findByLogin(String login);
+
+    @Query(value = "SELECT * FROM touristvoucher.`user` WHERE id=:userId", nativeQuery = true)
+    Users findUserById(@Param("userId") Long userId);
 
 
 }

@@ -1,37 +1,29 @@
 package org.example.controller;
 
 import jakarta.validation.Valid;
-import org.example.controller.request.OfferRequest;
+import lombok.RequiredArgsConstructor;
 import org.example.controller.request.OrdersRequest;
-import org.example.controller.response.OrdersResponse;
-import org.example.entity.Orders;
-import org.example.entity.characteristic.Country;
-import org.example.entity.characteristic.Transport;
-import org.example.entity.characteristic.Type;
 import org.example.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/orders")
 @Validated
+@RequiredArgsConstructor
 public class OrdersController {
-    @Autowired
-    private OrdersService ordersService;
-    @Autowired
-    private OfferService offerService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private HotelService hotelService;
-    @Autowired
-    private MoneyService moneyService;
+
+    private final OrderService orderService;
+
+    private final OfferService offerService;
+
+    private final UserService userService;
+
+    private final HotelService hotelService;
+
+    private final MoneyService moneyService;
 
     @GetMapping("/search")
     public ModelAndView getOrders(Model model,
@@ -39,72 +31,40 @@ public class OrdersController {
                                   @RequestParam(required = false, defaultValue = "id") String sort,
                                   @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                   @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
-        model.addAttribute("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
-        model.addAttribute("paramtr", paramtr);
-        model.addAttribute("sort", sort);
-        model.addAttribute("pageNumber", pageNumber);
-        model.addAttribute("pageSize", pageSize);
-
-        model.addAttribute("types", Type.values());
-        model.addAttribute("transports", Transport.values());
-        model.addAttribute("countries", Country.values());
-
-        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
-        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
-        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
-        model.addAttribute("users",userService.getAllUser());
-        model.addAttribute("offers",offerService.getAllOffer());
-        model.addAttribute("hotels",hotelService.getAllHotel());
-        return new ModelAndView("orders", "orders", ordersService.findOrders(paramtr, sort, pageNumber, pageSize));
+        ModelAttributes.paginationAttributes(model, paramtr, sort, pageNumber, pageSize);
+        ModelAttributes.moneyAttributes(model, moneyService, userService);
+        ModelAttributes.offerAttributes(model, offerService, hotelService);
+        model.addAttribute("users", userService.getAllUser());
+        return new ModelAndView("orders", "orders", orderService.findOrders(paramtr, sort, pageNumber, pageSize));
     }
+
     @GetMapping("/myOrder")
     public ModelAndView getMyOrder(Model model,
-                                  @RequestParam(required = false) String paramtr,
-                                  @RequestParam(required = false, defaultValue = "id") String sort,
-                                  @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
-                                  @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
-        model.addAttribute("paramtr", paramtr);
-        model.addAttribute("sort", sort);
-        model.addAttribute("pageNumber", pageNumber);
-        model.addAttribute("pageSize", pageSize);
-
-        model.addAttribute("types", Type.values());
-        model.addAttribute("transports", Transport.values());
-        model.addAttribute("countries", Country.values());
-
-        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
-        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
-        model.addAttribute("orderByCurrentUserId",ordersService.findOrderByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
-        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
-
-        model.addAttribute("users",userService.getAllUser());
-        model.addAttribute("offers",offerService.getAllOffer());
-        model.addAttribute("hotels",hotelService.getAllHotel());
-        model.addAttribute("orders",ordersService.getAllOrder());
-        return new ModelAndView("myOrder", "orders", ordersService.findOrders(paramtr, sort, pageNumber, pageSize));
+                                   @RequestParam(required = false) String paramtr,
+                                   @RequestParam(required = false, defaultValue = "id") String sort,
+                                   @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+                                   @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+        ModelAttributes.paginationAttributes(model, paramtr, sort, pageNumber, pageSize);
+        ModelAttributes.moneyAttributes(model, moneyService, userService);
+        ModelAttributes.offerAttributes(model, offerService, hotelService);
+        ModelAttributes.orderAttributes(model, orderService, userService);
+        return new ModelAndView("myOrder", "orders", orderService.findOrders(paramtr, sort, pageNumber, pageSize));
     }
+
     @GetMapping("/{id}/redirect/update")
     public ModelAndView findById(@PathVariable Long id, Model model) {
-        model.addAttribute("types", Type.values());
-        model.addAttribute("transports", Transport.values());
-        model.addAttribute("countries", Country.values());
-        model.addAttribute("order", new OrdersRequest());
-        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
-        return new ModelAndView("order", "order", ordersService.findById(id));
+        ModelAttributes.orderAttributes(model, orderService, userService);
+        ModelAttributes.offerAttributes(model, offerService, hotelService);
+        return new ModelAndView("order", "order", orderService.findById(id));
     }
 
     @GetMapping("/{offerId}/redirect/create")
-    public ModelAndView getOrder( @PathVariable Long offerId,Model model) {
-        model.addAttribute("types", Type.values());
-        model.addAttribute("transports", Transport.values());
-        model.addAttribute("countries", Country.values());
-        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
-        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
-
+    public ModelAndView getOrder(@PathVariable Long offerId, Model model) {
+        ModelAttributes.offerAttributes(model, offerService, hotelService);
+        ModelAttributes.moneyAttributes(model, moneyService, userService);
         model.addAttribute("order", new OrdersRequest());
-        model.addAttribute("offerId",offerId);
-        model.addAttribute("offerByCurrentId",offerService.findById(offerId));
-        model.addAttribute("hotels",hotelService.getAllHotel());
+        model.addAttribute("offerId", offerId);
+        model.addAttribute("offerByCurrentId", offerService.findById(offerId));
         return new ModelAndView("addOrder");
     }
 
@@ -114,22 +74,11 @@ public class OrdersController {
                                     @RequestParam(required = false, defaultValue = "start") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                     @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
-        model.addAttribute("paramtr", paramtr);
-        model.addAttribute("sort", sort);
-        model.addAttribute("pageNumber", pageNumber);
-        model.addAttribute("pageSize", pageSize);
-        ordersService.deleteOrder(id);
-        model.addAttribute("types", Type.values());
-        model.addAttribute("transports", Transport.values());
-        model.addAttribute("countries", Country.values());
-        model.addAttribute("order", new OrdersRequest());
-
-        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
-        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
-        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
-        model.addAttribute("users",userService.getAllUser());
-        model.addAttribute("offers",offerService.getAllOffer());
-        model.addAttribute("hotels",hotelService.getAllHotel());
+        ModelAttributes.paginationAttributes(model, paramtr, sort, pageNumber, pageSize);
+        orderService.deleteOrder(id);
+        ModelAttributes.moneyAttributes(model, moneyService, userService);
+        ModelAttributes.orderAttributes(model, orderService, userService);
+        ModelAttributes.offerAttributes(model, offerService, hotelService);
         return new ModelAndView("offers", "offers", offerService.findOffers(paramtr, sort, pageNumber, pageSize));
     }
 
@@ -139,22 +88,11 @@ public class OrdersController {
                                     @RequestParam(required = false, defaultValue = "start") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                     @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
-        model.addAttribute("paramtr", paramtr);
-        model.addAttribute("sort", sort);
-        model.addAttribute("pageNumber", pageNumber);
-        model.addAttribute("pageSize", pageSize);
-        ordersService.createOrder(ordersRequest);
-        model.addAttribute("types", Type.values());
-        model.addAttribute("transports", Transport.values());
-        model.addAttribute("countries", Country.values());
-        model.addAttribute("order", new OrdersRequest());
-
-        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
-        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
-        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
-        model.addAttribute("users",userService.getAllUser());
-        model.addAttribute("offers",offerService.getAllOffer());
-        model.addAttribute("hotels",hotelService.getAllHotel());
+        ModelAttributes.paginationAttributes(model, paramtr, sort, pageNumber, pageSize);
+        orderService.createOrder(ordersRequest);
+        ModelAttributes.moneyAttributes(model, moneyService, userService);
+        ModelAttributes.orderAttributes(model, orderService, userService);
+        ModelAttributes.offerAttributes(model, offerService, hotelService);
         return new ModelAndView("offers", "offers", offerService.findOffers(paramtr, sort, pageNumber, pageSize));
     }
 
@@ -164,25 +102,12 @@ public class OrdersController {
                                     @RequestParam(required = false, defaultValue = "order_date") String sort,
                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
                                     @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
-        paramtr=ordersRequest.getUserId().toString();
-        model.addAttribute("paramtr", paramtr);
-        model.addAttribute("sort", sort);
-        model.addAttribute("pageNumber", pageNumber);
-        model.addAttribute("pageSize", pageSize);
-
-        ordersService.updateOrder(ordersRequest.getId(),ordersRequest);
-        model.addAttribute("types", Type.values());
-        model.addAttribute("transports", Transport.values());
-        model.addAttribute("countries", Country.values());
-        model.addAttribute("hotelId", offerService.getAllHotelId());
-        model.addAttribute("order", new OrdersRequest());
-
-        model.addAttribute("moneyByCurrentUserId", moneyService.findByUserId(userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
-        model.addAttribute("role",SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
-        model.addAttribute("currentUserId",userService.getUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
-        model.addAttribute("users",userService.getAllUser());
-        model.addAttribute("offers",offerService.getAllOffer());
-        model.addAttribute("hotels",hotelService.getAllHotel());
-        return new ModelAndView("orders", "orders", ordersService.findOrders(paramtr, sort, pageNumber, pageSize));
+        paramtr = ordersRequest.getUserId().toString();
+        ModelAttributes.paginationAttributes(model, paramtr, sort, pageNumber, pageSize);
+        ModelAttributes.moneyAttributes(model, moneyService, userService);
+        ModelAttributes.orderAttributes(model, orderService, userService);
+        ModelAttributes.offerAttributes(model, offerService, hotelService);
+        orderService.updateOrder(ordersRequest.getId(), ordersRequest);
+        return new ModelAndView("orders", "orders", orderService.findOrders(paramtr, sort, pageNumber, pageSize));
     }
 }

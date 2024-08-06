@@ -9,8 +9,9 @@ public class ErrorResponse {
     private final String fieldName;
     private final String message;
     private final ErrorCode errorCode;
+
     @Override
-    public String toString(){
-        return "Field Name: "+fieldName+". Message: "+message;
+    public String toString() {
+        return "Field Name: " + fieldName + ". Message: " + message;
     }
 }

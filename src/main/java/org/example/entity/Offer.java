@@ -1,6 +1,5 @@
 package org.example.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +9,6 @@ import org.example.entity.characteristic.Transport;
 import org.example.entity.characteristic.Type;
 
 import java.sql.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "offer")

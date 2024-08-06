@@ -11,20 +11,26 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OfferRepository extends JpaRepository<Offer,Long> {
+public interface OfferRepository extends JpaRepository<Offer, Long> {
     @Query(value = "SELECT * FROM touristvoucher.offer", nativeQuery = true)
-    public List<Offer> findAllOffer ();
+    List<Offer> findAllOffer();
+
     @Query(value = "SELECT id FROM touristvoucher.hotel", nativeQuery = true)
-    public List<Long> findAllHotelId ();
+    List<Long> findAllHotelId();
+
     @Query(value = "SELECT * FROM touristvoucher.hotel", nativeQuery = true)
-    public List<Hotel> findAllHotel ();
+    List<Hotel> findAllHotel();
+
     @Query(value = "SELECT * FROM touristvoucher.hotel WHERE id=:hotelId", nativeQuery = true)
-    public Hotel findHotelById (@Param("hotelId") Long hotelId);
+    Hotel findHotelById(@Param("hotelId") Long hotelId);
+
     @Query(value = "SELECT * FROM touristvoucher.offer WHERE type=:paramtr OR country=:paramtr OR transport=:paramtr", nativeQuery = true)
-    List<Offer> findOffer(@Param("paramtr")String paramtr, PageRequest page);
+    List<Offer> findOffer(@Param("paramtr") String paramtr, PageRequest page);
+
     @Query(value = "SELECT * FROM touristvoucher.offer", nativeQuery = true)
     List<Offer> findOffer(PageRequest page);
+
     @Query(value = "SELECT * FROM touristvoucher.offer WHERE id=:offerId", nativeQuery = true)
-    public Offer findOfferById (@Param("offerId") Long offerId);
+    Offer findOfferById(@Param("offerId") Long offerId);
 
 }

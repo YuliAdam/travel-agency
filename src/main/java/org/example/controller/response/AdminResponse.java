@@ -13,7 +13,4 @@ public class AdminResponse {
         this.id=admin.getId();
         this.adminName=admin.getAdminName();
     }
-    public AdminResponse( String adminName){
-        this.adminName=adminName;
-    }
 }

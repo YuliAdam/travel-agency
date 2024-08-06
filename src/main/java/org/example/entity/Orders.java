@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class Orders {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -25,13 +25,15 @@ public class Orders {
     private Offer offer;
     @Column(name = "order_date")
     private Timestamp orderDate;
+
     public Orders(Users user, Offer offer, Timestamp orderDate) {
-        this.user=user;
-        this.offer=offer;
-        this.orderDate=orderDate;
+        this.user = user;
+        this.offer = offer;
+        this.orderDate = orderDate;
     }
+
     public Orders(Users user, Offer offer) {
-        this.user=user;
-        this.offer=offer;
+        this.user = user;
+        this.offer = offer;
     }
 }
